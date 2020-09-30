@@ -26,7 +26,7 @@ cz_lbls <- c('Af', 'Am', 'As', 'Aw', 'BSh', 'BSk', 'BWh', 'BWk', 'Cfa', 'Cfb','C
 # Color palette for climate classification
 cz_cols <- c("#960000", "#FF0000", "#FF6E6E", "#FFCCCC", "#CC8D14", "#CCAA54", "#FFCC00", "#FFFF64", "#007800", "#005000", "#003200", "#96FF00", "#00D700", "#00AA00", "#BEBE00", "#8C8C00", "#5A5A00", "#550055", "#820082", "#C800C8", "#FF6EFF", "#646464", "#8C8C8C", "#BEBEBE", "#E6E6E6", "#6E28B4", "#B464FA", "#C89BFA", "#C8C8FF", "#6496FF", "#64FFFF", "#F5FFFF")
 # Pack it all in legend dataframe
-df_lgd <- data.frame(cz_ID = cz_IDs, cz_name = cz_lbls, cz_colours = cz_cols)
+df_lgd <- data.frame(cz_ID = cz_IDs, cz_name = factor(cz_lbls), cz_colours = cz_cols)
 
 
 # get the final data.frame for the climate zones
@@ -35,7 +35,7 @@ df_cz <- as.data.frame(r_LR, xy = T, long = T) %>%
   left_join(df_lgd, by = "cz_ID")
 
 dir.create(path = 'results/ancillary_info', recursive = T, showWarnings = F)
-save('df_cz', file = 'results/ancillary_info/df_KG_climatezones.RData')
+save('df_cz', 'df_lgd', file = 'results/ancillary_info/df_KG_climatezones.RData')
 
 # make check-plot 
 require(ggplot2)
