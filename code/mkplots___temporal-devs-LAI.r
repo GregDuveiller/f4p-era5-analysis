@@ -14,9 +14,11 @@ load('data/r_data_frames/df_LAI_ERA5sl_025_2010.RData', verbose = T)
 df_LAIra <- df %>% 
   mutate(LAI = cvh * lai_hv + cvl * lai_lv) %>%
   select(x, y, month, LAI) %>%
-  rename(LAI_reanalysis = LAI)
+  rename(LAI_reanalysis = LAI) %>%
+  # need to rotate cold months in Southern Hemisphere
+  mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  
 
-df_all <- data.frame()
+df_LAI_comb <- data.frame()
 
 for(ifile in LAI_files){
   
@@ -26,10 +28,12 @@ for(ifile in LAI_files){
     #filter(`LAI-RMSE` < 0.5, `LAI-NOBS` > 5) %>%
     select(x, y, year, month, LAI) %>%
     rename(LAI_observations = LAI) %>%
-    left_join(df_LAIra, by = c("x", "y", "month")) %>% 
+    # need to rotate cold months in Southern Hemisphere
+    mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
+    left_join(df_LAIra, by = c("x", "y", "month", "monthS")) %>% 
     mutate(LAI_difference = LAI_reanalysis - LAI_observations) %>%
     left_join(df_cz,  by = c("x", "y")) %>%
-    group_by(year, month, cz_name) %>%
+    group_by(year, monthS, cz_name) %>%
     summarise(LAI_obs_mu = mean(LAI_observations, na.rm = T),
               LAI_obs_sd = sd(LAI_observations, na.rm = T),
               LAI_rea_mu = mean(LAI_reanalysis, na.rm = T),
@@ -37,11 +41,12 @@ for(ifile in LAI_files){
               LAI_dif_mu = mean(LAI_difference, na.rm = T),
               LAI_dif_sd = sd(LAI_difference, na.rm = T))
   
-  df_all <- bind_rows(df_all, df_LAI) 
+  df_LAI_comb <- bind_rows(df_LAI_comb, df_LAI) 
 }
 
-df_all <- df_all %>% 
-  mutate(time = as.Date(x = paste(year, month, '15', sep = '-')))
+df_LAI_comb <- df_LAI_comb %>% 
+  mutate(monthS = ifelse(monthS == 0, 12, monthS)) %>% 
+  mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-')))
 
 
 library(ggplot2)
@@ -52,7 +57,7 @@ names(cz_cols) <- df_lgd$cz_name
 sel_cz <- c('Cfc', 'BSh', 'Dfb', 'Af', 'ET')
 
 
-ggplot(df_all %>% 
+ggplot(df_LAI_comb %>% 
          filter(cz_name %in% sel_cz), 
        aes(x = time, colour = cz_name)) + 
   geom_line(aes(y = LAI_obs_mu), linetype = 1) + 
@@ -67,7 +72,7 @@ ggplot(df_all %>%
 
 
 
-ggplot(df_all %>% 
+ggplot(df_LAI_comb %>% 
          filter(cz_name %in% sel_cz), 
        aes(x = time, fill = cz_name)) + 
   geom_ribbon(aes(ymin = LAI_dif_mu - LAI_dif_sd, 

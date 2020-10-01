@@ -18,7 +18,7 @@ SKT_files <- list.files(path = 'data/r_data_frames',
 
 
 
-df_all <- data.frame()
+df_LST_comb <- data.frame()
 
 for(ifile in LST_files){
   
@@ -29,10 +29,15 @@ for(ifile in LST_files){
   df_LST <- df_LSTrs %>% 
     #filter(`LST_count` > 5) %>%
     select(x, y, year, month, LST_max5_mean) %>%
-    left_join(df_SKTra, by = c("x", "y", "month", "year")) %>% 
+    # need to rotate cold months in Southern Hemisphere
+    mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
+    left_join(df_SKTra %>%
+                # need to rotate cold months in Southern Hemisphere
+                mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month)), 
+              by = c("x", "y", "month", "monthS", "year")) %>% 
     mutate(LST_difference = skt_top5avg - LST_max5_mean) %>%
     left_join(df_cz,  by = c("x", "y")) %>%
-    group_by(year, month, cz_name) %>%
+    group_by(year, monthS, cz_name) %>%
     summarise(LST_obs_mu = mean(LST_max5_mean, na.rm = T),
               LST_obs_sd = sd(LST_max5_mean, na.rm = T),
               LST_rea_mu = mean(skt_top5avg, na.rm = T),
@@ -40,12 +45,13 @@ for(ifile in LST_files){
               LST_dif_mu = mean(LST_difference, na.rm = T),
               LST_dif_sd = sd(LST_difference, na.rm = T))
   
-  df_all <- bind_rows(df_all, df_LST) 
+  df_LST_comb <- bind_rows(df_LST_comb, df_LST) 
 }
 
-df_all <- df_all %>% 
-  mutate(time = as.Date(x = paste(year, month, '15', sep = '-')))
-
+df_LST_comb <- df_LST_comb %>% 
+  mutate(monthS = ifelse(monthS == 0, 12, monthS)) %>% 
+  mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-')))
+# NOTE: This time is indicative, and based on the Northern Hemisphere
 
 library(ggplot2)
 
@@ -55,7 +61,7 @@ names(cz_cols) <- df_lgd$cz_name
 sel_cz <- c('Cfc', 'BSh', 'Dfb', 'Af', 'ET')
 
 
-ggplot(df_all %>% 
+ggplot(df_LST_comb %>% 
          filter(cz_name %in% sel_cz), 
        aes(x = time, colour = cz_name)) + 
   geom_line(aes(y = LST_obs_mu), linetype = 1) + 
@@ -70,7 +76,7 @@ ggplot(df_all %>%
 
 
 
-ggplot(df_all %>% 
+ggplot(df_LST_comb %>% 
          filter(cz_name %in% sel_cz), 
        aes(x = time, fill = cz_name)) + 
   geom_ribbon(aes(ymin = LST_dif_mu - LST_dif_sd, 
