@@ -36,3 +36,14 @@ ggplot(df_all_comb %>% filter(cz_name %in% sel_cz)) +
   scale_fill_gradientn(colours = kovesi.cyclic_mygbm_30_95_c78(12)) +
   scale_y_continuous('Bias is LST (ERA - obs)') +
   scale_x_continuous('Bias is LAI (ERA - obs)')
+
+# plot for single climate zone with seasonality
+ggplot(df_all_comb %>% filter(cz_name %in% 'Af')) +
+  geom_point(aes(x = LAI_dif_mu, y = LST_dif_mu, fill = monthS),
+             colour = 'grey35', shape = 21) +
+  geom_hline(yintercept = 0, colour = 'grey20') +
+  geom_vline(xintercept = 0, colour = 'grey20') +
+  facet_wrap(~cz_name, nc = 3) +
+  scale_fill_gradientn(colours = kovesi.cyclic_mygbm_30_95_c78(12)) +
+  scale_y_continuous('Bias is LST (ERA - obs)') +
+  scale_x_continuous('Bias is LAI (ERA - obs)')

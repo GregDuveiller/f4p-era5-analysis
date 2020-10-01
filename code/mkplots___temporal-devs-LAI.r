@@ -30,6 +30,7 @@ for(ifile in LAI_files){
     rename(LAI_observations = LAI) %>%
     # need to rotate cold months in Southern Hemisphere
     mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
+    mutate(monthS = ifelse(monthS == 0, 12, monthS)) %>% 
     left_join(df_LAIra, by = c("x", "y", "month", "monthS")) %>% 
     mutate(LAI_difference = LAI_reanalysis - LAI_observations) %>%
     left_join(df_cz,  by = c("x", "y")) %>%
@@ -45,7 +46,6 @@ for(ifile in LAI_files){
 }
 
 df_LAI_comb <- df_LAI_comb %>% 
-  mutate(monthS = ifelse(monthS == 0, 12, monthS)) %>% 
   mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-')))
 
 
