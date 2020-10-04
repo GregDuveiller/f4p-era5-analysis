@@ -28,6 +28,7 @@ for(ifile in LAI_files){
     #filter(`LAI-RMSE` < 0.5, `LAI-NOBS` > 5) %>%
     select(x, y, year, month, LAI) %>%
     rename(LAI_observations = LAI) %>%
+    filter(LAI_observations >= 1) %>%  # to filter out effects of low veg
     # need to rotate cold months in Southern Hemisphere
     mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
     mutate(monthS = ifelse(monthS == 0, 12, monthS)) %>% 
