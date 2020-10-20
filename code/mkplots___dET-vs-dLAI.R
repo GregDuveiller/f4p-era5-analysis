@@ -2,10 +2,8 @@ require(ggplot2)
 require(dplyr)
 require(pals)
 
-
 source('~/work/workspace/f4p-era5-analysis/code/mkplots___temporal-devs-LAI.r')
 source('~/work/workspace/f4p-era5-analysis/code/mkplots___temporal-devs-ET.r')
-
 
 df_all_comb <- left_join(df_LAI_comb,  df_ET_comb,
                          by = c("year", "monthS", "cz_name", "time"))
