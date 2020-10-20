@@ -1,6 +1,5 @@
 ### Script to make dataframe at 0.25 dd of climate zones
 
-
 require(raster)
 require(dplyr)
 
