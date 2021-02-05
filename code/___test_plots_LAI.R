@@ -5,8 +5,10 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
+
 load('data/r_data_frames/df_LAI_theia_025_2010.RData', verbose = T)
 df_LAIrs <- df
+
 
 load('data/r_data_frames/df_LAI_ERA5sl_025_2010.RData', verbose = T)
 df_LAIra <- df
