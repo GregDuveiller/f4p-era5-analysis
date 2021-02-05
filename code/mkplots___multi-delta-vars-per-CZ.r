@@ -55,8 +55,10 @@ df_all_comb <- bind_rows(
 
 
 # set-up colour palette
-cols7 <- viridis(n = 7)
-cols <- c(cols7, cols7[6:2])
+cols <- c(viridis(n = 6), magma(n = 6)[6:1])
+
+# cols7 <- viridis(n = 7)
+# cols <- c(cols7, cols7[6:2])
 
 # load clim zone locations... 
 load('results/ancillary_info/df_KG_climatezones.RData', verbose = T) # df_lgd
