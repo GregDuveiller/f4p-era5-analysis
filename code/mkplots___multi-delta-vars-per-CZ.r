@@ -113,3 +113,45 @@ plot_per_clim('Dw', 'dry-winter continental climates', df_lgd, 'png')
 plot_per_clim('Df', 'no-dry-season continental climates', df_lgd, 'png')
 
 
+
+
+plot_per_clim_single <- function(sel_cz, sel_var,  df_lgd, fmt = 'png'){
+  
+  cz_cols <- df_lgd$cz_colours
+  names(cz_cols) <- df_lgd$cz_name
+  
+  g_plots <- ggplot(df_all_comb %>% 
+                      filter(cz_name %in% sel_cz) %>% 
+                      filter(y_var %in% sel_var)) +
+    geom_point(aes(x = LAI_dif_mu, y = y_mu_std, fill = monthS),
+               colour = 'grey35', shape = 21) +
+    geom_hline(yintercept = 0, colour = 'grey20') +
+    geom_vline(xintercept = 0, colour = 'grey20') +
+    facet_grid(cz_name~y_var) +
+    scale_fill_gradientn('Month', colours = cols) +
+    scale_y_continuous('Standardized bias in Y_var (ERA - obs)') +
+    scale_x_continuous('Bias in LAI (ERA - obs)') +
+    ggtitle(label = paste0('Patterns for selected variables in ', sel_cz)) + 
+    theme(legend.position = 'left',
+          legend.key.height = unit(1.5, units = 'cm'))
+  
+  g_maps <- ggplot(df_cz %>% 
+                     filter(cz_name %in% sel_cz) %>% 
+                     mutate(cz_grp = paste('Distribution of', sel_cz))) + 
+    geom_sf(data = wmap_df_land, fill='Grey50',colour='Grey50',size=0) + 
+    geom_sf(data = wmap_df_ocean, fill='Grey20',colour='Grey20',size=0) +
+    geom_tile(aes(x = x, y = y, fill = cz_name)) + 
+    facet_grid(cz_name~cz_grp) +
+    scale_fill_manual('Koppen-Geiger climate zones', values = cz_cols) + 
+    scale_y_continuous('Latitude', expand = c(0, 0)) + 
+    scale_x_continuous('Longitude', expand = c(0, 0)) + 
+    theme(legend.position = 'none') + 
+    guides(fill = guide_legend(title.position = 'top', nrow = 4))
+  
+  g_combo <- g_plots + g_maps + plot_layout(ncol = 2, widths = c(3, 8))
+  
+  ggsave(filename = paste0('czd2plot_1var__', sel_cz, '_', sel_var, '.', fmt), 
+         path = out.path, plot = g_combo, width = 10, 
+         height = 4)
+}
+
