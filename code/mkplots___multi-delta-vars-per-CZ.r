@@ -113,8 +113,6 @@ plot_per_clim('Dw', 'dry-winter continental climates', df_lgd, 'png')
 plot_per_clim('Df', 'no-dry-season continental climates', df_lgd, 'png')
 
 
-
-
 plot_per_clim_single <- function(sel_cz, sel_var,  df_lgd, fmt = 'png'){
   
   cz_cols <- df_lgd$cz_colours
@@ -155,3 +153,5 @@ plot_per_clim_single <- function(sel_cz, sel_var,  df_lgd, fmt = 'png'){
          height = 4)
 }
 
+plot_per_clim_single('Aw', 'LST', df_lgd, 'png')
+plot_per_clim_single('Cfa', 'LST', df_lgd, 'png')
