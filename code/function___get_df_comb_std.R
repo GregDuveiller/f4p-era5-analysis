@@ -1,0 +1,44 @@
+get_df_comb_std <- function(target_var, xtrLbl_obs = NULL, xtrLbl_sim = NULL, 
+                        src_obs, src_sim, varDFname_obs, varDFname_sim,
+                        out_path, path_obs, path_sim, spres = '025'){
+  
+  require(dplyr)
+  require(tidyr)
+  
+  dir.create(out_path, showWarnings = F, recursive = T)
+  
+  if(!is.null(xtrLbl_obs)){xtrLbl_obs_full <- paste0('_', xtrLbl_obs)} else {xtrLbl_obs_full = NULL}
+  if(!is.null(xtrLbl_sim)){xtrLbl_sim_full <- paste0('_', xtrLbl_sim)} else {xtrLbl_sim_full = NULL}
+  
+  files_obs <- list.files(path = path_obs, pattern = paste0(target_var, '_', src_obs, '_', spres, xtrLbl_obs_full), full.names = T)
+  files_sim <- list.files(path = path_sim, pattern = paste0(target_var, '_', src_sim, '_', spres, xtrLbl_sim_full), full.names = T)
+  
+  df_comb <- data.frame()
+  
+  for(ifile in files_obs){
+    
+    print(paste(' |> working on file:', basename(ifile), ' <| '))
+    
+    # work on RS file 
+    load(ifile)
+    df_obs <- df
+    
+    # get equivalent from the Reanalysis
+    load(gsub(paste0(path_sim, '/', basename(ifile)), 
+              pattern = paste0(src_obs, '_', spres, xtrLbl_obs_full),
+              replacement =  paste0(src_sim, '_', spres, xtrLbl_sim_full)))
+    df_sim <- df
+    
+    # select and combine
+    df_dum <- df_obs %>% 
+      select(x, y, year, month, matches(varDFname_obs)) %>%
+      inner_join(df_sim %>% select(x, y, year, month, matches(varDFname_sim)),
+                 by = c("x", "y", "month", "year")) %>% 
+      rename(obs = matches(varDFname_obs), sim = matches(varDFname_sim)) 
+    df_comb <- bind_rows(df_comb, df_dum) 
+  }
+  
+  save('df_comb', file = paste0(out_path,'/df_comb___', target_var, xtrLbl_obs_full, '.RData'))
+  print(paste(" ----> finished with:", target_var, xtrLbl_obs, "<----"))
+  
+}
