@@ -8,7 +8,7 @@ out_path <- '/eos/jeodpp/data/projects/COPERNICUSII/transfer/greg_workspace'
 
 spres <- '025'
 
-source('~/work/workspace/f4p-era5-analysis/code/function___get_df_comb_std.R')
+source('code/function___get_df_comb_std.R')
 
 ## ALBEDO - white sky visible ----
 get_df_comb_std(
