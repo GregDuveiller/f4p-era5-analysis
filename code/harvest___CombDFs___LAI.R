@@ -16,7 +16,7 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'theia',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/data/theia/dataframe_res025'),
-  path_sim = paste0(dat_path,'/data/CDS/LAI_ERA5sl/dataframe_res025'), 
+  path_obs = paste0(dat_path,'/theia/dataframe_res025'),
+  path_sim = paste0(dat_path,'/CDS/LAI_ERA5sl/dataframe_res025'), 
   out_path = out_path
 )

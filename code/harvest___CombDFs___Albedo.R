@@ -17,8 +17,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'NASA',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/data/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
-  path_sim = paste0(dat_path,'/data/CDS/albedo_ERA5sl/dataframe_res', spres),
+  path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
+  path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
   varDFname_obs = 'wsa_vis_QAall',
   varDFname_sim = 'aluvd',
   out_path = out_path
@@ -31,8 +31,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'NASA',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/data/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
-  path_sim = paste0(dat_path,'/data/CDS/albedo_ERA5sl/dataframe_res', spres),
+  path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
+  path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
   varDFname_obs = 'wsa_nir_QAall',
   varDFname_sim = 'alnid',
   out_path = out_path
@@ -45,8 +45,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'NASA',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/data/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
-  path_sim = paste0(dat_path,'/data/CDS/albedo_ERA5sl/dataframe_res', spres),
+  path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
+  path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
   varDFname_obs = 'wsa_vis_QAall',
   varDFname_sim = 'aluvp',
   out_path = out_path
@@ -59,8 +59,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'NASA',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/data/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
-  path_sim = paste0(dat_path,'/data/CDS/albedo_ERA5sl/dataframe_res', spres),
+  path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43GF/dataframe_res', spres, '/QA_all'),
+  path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
   varDFname_obs = 'wsa_nir_QAall',
   varDFname_sim = 'alnip',
   out_path = out_path

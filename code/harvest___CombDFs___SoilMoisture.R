@@ -16,8 +16,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'sat',
   src_sim = 'SM',
-  path_obs = paste0(dat_path,'/data/CDS/SM_satellite/dataframe_res', spres),
-  path_sim = paste0(dat_path,'/data/CDS/SM_ERA5l/dataframe_res', spres),
+  path_obs = paste0(dat_path,'/CDS/SM_satellite/dataframe_res', spres),
+  path_sim = paste0(dat_path,'/CDS/SM_ERA5l/dataframe_res', spres),
   varDFname_obs = 'sm',
   varDFname_sim = 'swvl1',
   out_path = out_path
