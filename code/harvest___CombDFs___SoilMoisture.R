@@ -12,7 +12,7 @@ source('code/function___get_df_comb_std.R')
 
 ## Soil Moisture  ----
 get_df_comb_std(
-  target_var = 'soil_moisture',
+  target_var = 'SM',
   spres = spres,
   src_obs = 'sat',
   src_sim = 'SM',

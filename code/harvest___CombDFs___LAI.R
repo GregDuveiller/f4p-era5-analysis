@@ -10,9 +10,9 @@ spres <- '025'
 
 source('code/function___get_df_comb_lai.R')
 
-## LST  ----
+## LAI  ----
 get_df_comb_std(
-  target_var = 'LST',
+  target_var = 'LAI',
   spres = spres,
   src_obs = 'theia',
   src_sim = 'ERA5l',
