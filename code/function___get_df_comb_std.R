@@ -34,9 +34,11 @@ get_df_comb_std <- function(target_var,
     df_obs <- df
     
     # get equivalent from the Reanalysis
-    load(gsub(paste0(path_sim, '/', basename(ifile)), 
-              pattern = paste0(target_var_obs, '_', src_obs, '_', spres, xtrLbl_obs_full),
-              replacement =  paste0(target_var_sim, '_', src_sim, '_', spres, xtrLbl_sim_full)))
+    jfile <- gsub(paste0(path_sim, '/', basename(ifile)), 
+                  pattern = paste0(target_var_obs, '_', src_obs, '_', spres, xtrLbl_obs_full),
+                  replacement =  paste0(target_var_sim, '_', src_sim, '_', spres, xtrLbl_sim_full))
+    if(!file.exists(jfile)){print(paste0('~~> no corresponding SIM file for ', basename(jfile), '<~~')); break}
+    
     df_sim <- df
     
     # select and combine
