@@ -1,18 +1,28 @@
-get_df_comb_std <- function(target_var, xtrLbl_obs = NULL, xtrLbl_sim = NULL, 
-                        src_obs, src_sim, varDFname_obs, varDFname_sim,
-                        out_path, path_obs, path_sim, spres = '025'){
+get_df_comb_std <- function(target_var, 
+                            xtrLbl_obs = NULL, xtrLbl_sim = NULL, 
+                            src_obs, src_sim, varDFname_obs, varDFname_sim,
+                            path_obs, path_sim, 
+                            target_var_obs = NULL, target_var_sim = NULL,
+                            spres = '025', out_path){
   
   require(dplyr)
   require(tidyr)
   
   dir.create(out_path, showWarnings = F, recursive = T)
   
+  # in case target variable has an extra (more specific label) for sim or obs
   if(!is.null(xtrLbl_obs)){xtrLbl_obs_full <- paste0('_', xtrLbl_obs)} else {xtrLbl_obs_full = NULL}
   if(!is.null(xtrLbl_sim)){xtrLbl_sim_full <- paste0('_', xtrLbl_sim)} else {xtrLbl_sim_full = NULL}
   
-  files_obs <- list.files(path = path_obs, pattern = paste0(target_var, '_', src_obs, '_', spres, xtrLbl_obs_full), full.names = T)
-  files_sim <- list.files(path = path_sim, pattern = paste0(target_var, '_', src_sim, '_', spres, xtrLbl_sim_full), full.names = T)
+  # in case the name of the target variable is different in either sim or obs
+  if(is.null(target_var_obs)){target_var_obs <- target_var}
+  if(is.null(target_var_sim)){target_var_sim <- target_var}
   
+  # get list of files
+  files_obs <- list.files(path = path_obs, pattern = paste0(target_var_obs, '_', src_obs, '_', spres, xtrLbl_obs_full), full.names = T)
+  files_sim <- list.files(path = path_sim, pattern = paste0(target_var_sim, '_', src_sim, '_', spres, xtrLbl_sim_full), full.names = T)
+  
+  # init the empty dataframe
   df_comb <- data.frame()
   
   for(ifile in files_obs){
@@ -25,8 +35,8 @@ get_df_comb_std <- function(target_var, xtrLbl_obs = NULL, xtrLbl_sim = NULL,
     
     # get equivalent from the Reanalysis
     load(gsub(paste0(path_sim, '/', basename(ifile)), 
-              pattern = paste0(src_obs, '_', spres, xtrLbl_obs_full),
-              replacement =  paste0(src_sim, '_', spres, xtrLbl_sim_full)))
+              pattern = paste0(target_var_obs, '_', src_obs, '_', spres, xtrLbl_obs_full),
+              replacement =  paste0(target_var_sim, '_', src_sim, '_', spres, xtrLbl_sim_full)))
     df_sim <- df
     
     # select and combine
