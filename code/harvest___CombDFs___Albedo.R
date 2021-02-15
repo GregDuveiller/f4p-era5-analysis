@@ -24,10 +24,10 @@ get_df_comb_std(
   out_path = out_path
   )
 
-## ALBEDO - white sky visible ----
+## ALBEDO - white sky near infrared ----
 get_df_comb_std(
   target_var = 'albedo',
-  xtrLbl_obs = 'bsa_nir',
+  xtrLbl_obs = 'wsa_nir',
   spres = spres,
   src_obs = 'NASA',
   src_sim = 'ERA5l',
@@ -52,7 +52,7 @@ get_df_comb_std(
   out_path = out_path
 )
 
-## ALBEDO - black sky visible ----
+## ALBEDO - black sky near infrared ----
 get_df_comb_std(
   target_var = 'albedo',
   xtrLbl_obs = 'bsa_nir',
