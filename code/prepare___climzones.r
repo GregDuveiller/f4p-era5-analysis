@@ -1,12 +1,15 @@
-### Script to make dataframe at 0.25 dd of climate zones
+#!/usr/local/bin/Rscript
+################################################################################
+# Purpose: Script to make dataframe at 0.25 dd of climate zones
+# Project: f4p-era5-analysis
+# Authors: G.Duveiller
+################################################################################
 
 require(raster)
 require(dplyr)
 
-data_path <- '/Users/greg/work/data/external_datasets/climate_zones/Map_KG-Global/'
 
-file.symlink(to = 'data/climate_zones', from = data_path)
-r_HR <- raster('data/climate_zones/KG_1986-2010.grd')
+r_HR <- raster('data/input_data/climate_zones/KG_1986-2010.grd')
 
 # define function to calc the mode
 getmode <- function(v, na.rm) {
@@ -30,11 +33,11 @@ df_lgd <- data.frame(cz_ID = cz_IDs, cz_name = factor(cz_lbls), cz_colours = cz_
 
 # get the final data.frame for the climate zones
 df_cz <- as.data.frame(r_LR, xy = T, long = T) %>% 
-  rename(cz_ID = value) %>% select(-layer) %>%
+  rename(cz_ID = value) %>% dplyr::select(-layer) %>%
   left_join(df_lgd, by = "cz_ID")
 
-dir.create(path = 'results/ancillary_info', recursive = T, showWarnings = F)
-save('df_cz', 'df_lgd', file = 'results/ancillary_info/df_KG_climatezones.RData')
+dir.create(path = 'data/inter_data/ancillary_info', recursive = T, showWarnings = F)
+save('df_cz', 'df_lgd', file = 'data/inter_data/ancillary_info/df_KG_climatezones.RData')
 
 # make check-plot 
 require(ggplot2)
@@ -48,6 +51,6 @@ gmap <- ggplot(df_cz) +
   theme(legend.position = 'bottom') + 
   guides(fill = guide_legend(title.position = 'top', nrow = 4))
 
-ggsave(filename = 'results/ancillary_info/KG_climatezones_map.png', 
+ggsave(filename = 'data/inter_data/ancillary_info/KG_climatezones_map.png', 
        plot = gmap, width = 9, height = 6)
        
