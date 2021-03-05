@@ -1,6 +1,13 @@
 
 ### PROTOSCRIPT TO REPROCESS THE DATA... based on those harvestd in the JEODPP
 
+
+
+load('data/inter_data/df_comb_obs_vs_sim/df_comb___LAI.RData', verbose = T)
+
+
+
+
 ## STEPS TO ADD>>>
 
 df_comb <- df_comb %>% 
