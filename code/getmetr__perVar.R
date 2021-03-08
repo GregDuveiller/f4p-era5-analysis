@@ -18,7 +18,7 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 varname = 'LST'
 
 
-for( varname in c('LST', 'SM', 'albedo_wsa_vis', 'LAI')){
+for( varname in c('albedo_wsa_vis', 'LAI', 'LST', 'SM')){
   
   print(paste0('|> working on ', varname, '...'))
   
