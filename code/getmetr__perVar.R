@@ -15,23 +15,23 @@ source('../../tools/agreement-index/calculate-agr-metrics.R')
 
 dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, showWarnings = F)
 
-varname = 'albedo_wsa_vis'
+# varname = 'LAI'
 
 
-for( varname in c('LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'SM', 'LAI')){
+for( varname in c( 'SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')){
 
 print(paste0('|> working on ', varname, '...'))
 
 load(paste0('data/inter_data/df_comb_obs_vs_sim/df_comb___', varname,'.RData'))  # <--- df_comb
 
-
+df_comb <- df_comb %>% filter(!is.na(obs)) 
 # get overall agreement
 agr <- get.Agr.Metrics(df_comb$obs, df_comb$sim)
 
 nbins <- 100
 
-min_val <- floor(min(min(df_comb$obs), min(df_comb$sim)))
-max_val <- ceiling(max(max(df_comb$obs), max(df_comb$sim)))
+min_val <- min(round(min(df_comb$obs), digits = 12), round(min(df_comb$sim), digits = 12))
+max_val <- max(round(max(df_comb$obs), digits = 12), round(max(df_comb$sim), digits = 12))
 
 bins <- seq(min_val, max_val, length = nbins)
 centroids <- bins[1:(nbins-1)] + (diff(bins)/2)
