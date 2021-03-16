@@ -18,7 +18,7 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 varname = 'albedo_wsa_vis'
 
 
-for( varname in c('albedo_wsa_vis','LST', 'SM', 'LAI')){
+for( varname in c('LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'SM', 'LAI')){
 
 print(paste0('|> working on ', varname, '...'))
 
@@ -56,13 +56,6 @@ sp_agr <- df_comb %>%
             rmsd = mean(sqrt((obs - sim)^2)),
             bias = mean(obs - sim))
 
-# require(raster)
-# r <- raster(nrows = 720, ncols = 1440, 
-#             xmn = -180, xmx = 180, ymn = -90, ymx = 90, vals = NA)
-# cells <- cellFromXY(object = r, xy = as.matrix(sp_agr[,c('x','y')]))
-# r[cells] <- as.integer(sp_agr$agre$L * 10000)
-# writeRaster(r, filename = 'data/input_data/sp_agr_map_LST.tif', datatype = 'INT2U')
-
 
 # agreement in time (per climzone)
 load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
@@ -77,15 +70,11 @@ df_comb <- df_comb %>%
 
 temp_agr_det <- df_comb %>%
   group_by(cz_name, time) %>%
-  summarise(agre = get.Agr.Metrics(obs, sim),
-            rmsd = mean(sqrt((obs - sim)^2)),
-            bias = mean(obs - sim))
+  summarise(agre = get.Agr.Metrics(obs, sim))
 
 temp_agr_gen <- df_comb %>%
   group_by(cz_major_zone, time) %>%
-  summarise(agre = get.Agr.Metrics(obs, sim),
-            rmsd = mean(sqrt((obs - sim)^2)),
-            bias = mean(obs - sim)) 
+  summarise(agre = get.Agr.Metrics(obs, sim)) 
 
 save('agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det',
      file = paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_',varname,'.RData'))
