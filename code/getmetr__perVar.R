@@ -18,7 +18,7 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 varname = 'albedo_wsa_vis'
 
 
-#for( varname in c('albedo_wsa_vis', 'LAI', 'LST', 'SM')){
+for( varname in c('albedo_wsa_vis','LST', 'SM', 'LAI')){
 
 print(paste0('|> working on ', varname, '...'))
 
@@ -91,4 +91,4 @@ save('agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det',
      file = paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_',varname,'.RData'))
 
 print(paste0('<| all done for ', varname, '!'))
-#}
+}
