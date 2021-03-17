@@ -12,7 +12,7 @@ library(scales)
 library(dplyr)
 
 
-varname <-  'LST'   #'albedo_wsa_vis' #
+varname <-  'SM'   #'albedo_wsa_vis' #
 
 fig.format <- 'png'
 fig.path <- 'results/single_var_agreement'
@@ -55,16 +55,16 @@ if(metric == 'Corr'){
 if(metric == 'RMSD'){
   metric_code <- 'agre$rmsd'
   metric_label <- 'RMSD'
-  metric_colpal <- rev(c("#081a2b", "#14406b", "#2166AC", "#92C5DE", "#F7F7F7", "#F4A582", "#B2182B", "#700f1b", "#2d060b"))  # RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
-  metric_lims_s <- quantile(sp_agr$agre$rmsd, probs = c(0.025, 0.975)) # <--- need to adjust!
-  metric_lims_t <- quantile(temp_agr_gen$agre$rmsd, probs = c(0, 1))  # <--- need to adjust!
+  metric_colpal <- viridisLite::viridis(n = 9, option = "C")  # RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
+  metric_lims_s <- quantile(sp_agr$agre$rmsd, probs = c(0.025, 0.975), na.rm = T) # <--- need to adjust!
+  metric_lims_t <- quantile(temp_agr_gen$agre$rmsd, probs = c(0, 1), na.rm = T)  # <--- need to adjust!
   metric_longname <- 'root mean square deviation'}
 if(metric == 'Bias'){
   metric_code <- 'agre$bias'
   metric_label <- 'B'
   metric_colpal <- rev(c("#081a2b", "#14406b", "#2166AC", "#92C5DE", "#F7F7F7", "#F4A582", "#B2182B", "#700f1b", "#2d060b"))  # RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
-  metric_lims_s <- c(-1,1) * max(abs(quantile(sp_agr$agre$bias, probs = c(0.025, 0.975))))  # <--- need to adjust!
-  metric_lims_t <- c(-1,1) * max(abs(quantile(temp_agr_gen$agre$bias, probs = c(0, 1))))  # <--- need to adjust!
+  metric_lims_s <- c(-1,1) * max(abs(quantile(sp_agr$agre$bias, probs = c(0.025, 0.975), na.rm = T)))  # <--- need to adjust!
+  metric_lims_t <- c(-1,1) * max(abs(quantile(temp_agr_gen$agre$bias, probs = c(0, 1), na.rm = T)))  # <--- need to adjust!
   metric_longname <- 'bias'}
 
 
