@@ -47,7 +47,8 @@ get_df_comb_std <- function(target_var,
       inner_join(df_sim %>% select(x, y, year, month, matches(varDFname_sim)),
                  by = c("x", "y", "month", "year")) %>% 
       rename(obs = matches(varDFname_obs), sim = matches(varDFname_sim)) 
-    df_comb <- bind_rows(df_comb, df_dum) 
+
+    df_comb <- bind_rows(df_comb, df_dum %>% filter(!is.na(obs))) 
   }
   
   save('df_comb', file = paste0(out_path,'/df_comb___', target_var, xtrLbl_obs_full, '.RData'))
