@@ -16,9 +16,11 @@ source('../../tools/agreement-index/calculate-agr-metrics.R')
 dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, showWarnings = F)
 
 # varname = 'LAI'
+varname_list <- c('SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
+varname_list <- c('LAI', 'SM', 'LST', 'albedo_wsa_vis')
 
 
-for( varname in c( 'SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')){
+for( varname in varname_list){
 
 print(paste0('|> working on ', varname, '...'))
 
@@ -45,16 +47,20 @@ freq[,5] <- centroids[freq[,2]]
 
 colnames(freq) <- c('obs_bin', 'sim_bin', 'freq', 'obs_val', 'sim_val')
 
-# freq2D <- diag(nbins)*0
-# freq2D[cbind(freq[,1], freq[,2])] <- freq[,3]
 
 
-# agreement in space (per pixel)
+
+
+# # agreement in space (per pixel)
+
 sp_agr <- df_comb %>%
   group_by(y, x) %>%
   summarise(agre = get.Agr.Metrics(obs, sim),
             rmsd = mean(sqrt((obs - sim)^2)),
             bias = mean(obs - sim))
+
+
+
 
 
 # agreement in time (per climzone)
@@ -68,13 +74,30 @@ df_comb <- df_comb %>%
   mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-'))) %>%
   left_join(df_cz, by = c('x', 'y'))
 
+#LAI_obs_mu LAI_obs_sd LAI_rea_mu LAI_rea_sd  LAI_dif_mu LAI_dif_sd
+
+
 temp_agr_det <- df_comb %>%
   group_by(cz_name, time) %>%
-  summarise(agre = get.Agr.Metrics(obs, sim))
+  summarise(N = sum(!is.na(obs)),
+            agre = get.Agr.Metrics(obs, sim),
+            obs_mu = mean(obs, na.rm = T),
+            obs_sd = sd(obs, na.rm = T),
+            sim_mu = mean(sim, na.rm = T),
+            sim_sd = sd(sim, na.rm = T),
+            dif_mu = mean(sim - obs, na.rm = T),
+            dif_sd = sd(sim - obs, na.rm = T))
 
 temp_agr_gen <- df_comb %>%
   group_by(cz_major_zone, time) %>%
-  summarise(agre = get.Agr.Metrics(obs, sim)) 
+  summarise(N = sum(!is.na(obs)),
+            agre = get.Agr.Metrics(obs, sim),
+            obs_mu = mean(obs, na.rm = T),
+            obs_sd = sd(obs, na.rm = T),
+            sim_mu = mean(sim, na.rm = T),
+            sim_sd = sd(sim, na.rm = T),
+            dif_mu = mean(sim - obs, na.rm = T),
+            dif_sd = sd(sim - obs, na.rm = T)) 
 
 save('agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det',
      file = paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_',varname,'.RData'))

@@ -12,7 +12,7 @@ library(scales)
 library(dplyr)
 
 
-varname <-  'albedo_bsa_vis'# 'SM'   #'albedo_wsa_vis' #
+varname <-  'LAI'# 'SM'   #'albedo_wsa_vis' #
 
 fig.format <- 'png'
 fig.path <- 'results/single_var_agreement'
