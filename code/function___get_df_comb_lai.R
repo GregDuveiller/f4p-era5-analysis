@@ -39,7 +39,7 @@ get_df_comb_lai <- function(target_var,
     
     # select and combine
     df_dum <- df_obs %>% 
-      select(x, y, month, LAI) %>%
+      select(x, y, year, month, LAI) %>%
       inner_join(df_sim %>% 
                    mutate(LAI_sim = cvh * lai_hv + cvl * lai_lv) %>%
                    select(x, y, month, LAI_sim),
