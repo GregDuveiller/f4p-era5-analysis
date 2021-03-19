@@ -12,14 +12,14 @@ library(scales)
 library(dplyr)
 
 
-varname <-  'LAI'# 'SM'   #'albedo_wsa_vis' #
+varname <-  'LST' # 'SM'   #'albedo_wsa_vis' #
 
 fig.format <- 'png'
 fig.path <- 'results/single_var_agreement'
 dir.create(fig.path, showWarnings = F, recursive = T)
 
 
-# varname <- 'albedo_wsa_vis'
+varname <- 'albedo_bsa_vis'
 
 load( paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_', varname,'.RData'))
 # 'agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det'

@@ -18,6 +18,7 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 # varname = 'LAI'
 varname_list <- c('SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
 varname_list <- c('LAI', 'SM', 'LST', 'albedo_wsa_vis')
+varname_list <- c('albedo_wsa_nir', 'albedo_bsa_nir', 'albedo_bsa_vis')
 
 
 for( varname in varname_list){
