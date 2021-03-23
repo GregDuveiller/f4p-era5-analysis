@@ -13,3 +13,6 @@ library(tidyr)
 library(ggplot2)
 
 
+fig.format <- 'png'
+out.path <- 'results/multi_delta_bias'
+dir.create(out.path, showWarnings = F, recursive = T)
