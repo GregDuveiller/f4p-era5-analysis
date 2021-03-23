@@ -72,18 +72,18 @@ getclim <- function(var2process){
 }
 
 
-
-list_var <- list(t2 = list(var_name = 't2', var_tag = 't2_ERA5l_025',
-                           bin.width = 1,  bin.min = -10, bin.max = 30), 
-                 sm = list(var_name = 'sm', var_tag = 'sm_ERA5l_025',
-                           bin.width = 0.01,  bin.min = 0.1, bin.max = 0.5),
-                 et = list(var_name = 'et', var_tag = 'et_GLEAM_025',
-                           bin.width = 5, bin.min = -15, bin.max = 150),
-                 al = list(var_name = 'al', var_tag = 'al_MODIS_025',
-                           bin.width = 0.01, bin.min = 0.02, bin.max = 0.36))  
-
-detVarX <- list_var[binVarX][[binVarX]]
-detVarY <- list_var[binVarY][[binVarY]]
+# 
+# list_var <- list(t2 = list(var_name = 't2', var_tag = 't2_ERA5l_025',
+#                            bin.width = 1,  bin.min = -10, bin.max = 30), 
+#                  sm = list(var_name = 'sm', var_tag = 'sm_ERA5l_025',
+#                            bin.width = 0.01,  bin.min = 0.1, bin.max = 0.5),
+#                  et = list(var_name = 'et', var_tag = 'et_GLEAM_025',
+#                            bin.width = 5, bin.min = -15, bin.max = 150),
+#                  al = list(var_name = 'al', var_tag = 'al_MODIS_025',
+#                            bin.width = 0.01, bin.min = 0.02, bin.max = 0.36))  
+# 
+# detVarX <- list_var[binVarX][[binVarX]]
+# detVarY <- list_var[binVarY][[binVarY]]
 
 
 yrRangeL <- '2003to2019'
@@ -91,28 +91,28 @@ yrRangeL <- '2003to2019'
 df_clim_VarX <- getclim(binVarX)
 df_clim_VarY <- getclim(binVarY)
 
-
-## bring in all together in 2D grid ----
-
-# make bin labels
-x.bin.numlbls <- seq(detVarX$bin.min, detVarX$bin.max, detVarX$bin.width)
-y.bin.numlbls <- seq(detVarY$bin.min, detVarY$bin.max, detVarY$bin.width)
-
-# make bin breaks
-x.bin.breaks <- c(x.bin.numlbls - (detVarX$bin.width/2), Inf)
-y.bin.breaks <- c(y.bin.numlbls - (detVarY$bin.width/2), Inf)
+# 
+# ## bring in all together in 2D grid ----
+# 
+# # make bin labels
+# x.bin.numlbls <- seq(detVarX$bin.min, detVarX$bin.max, detVarX$bin.width)
+# y.bin.numlbls <- seq(detVarY$bin.min, detVarY$bin.max, detVarY$bin.width)
+# 
+# # make bin breaks
+# x.bin.breaks <- c(x.bin.numlbls - (detVarX$bin.width/2), Inf)
+# y.bin.breaks <- c(y.bin.numlbls - (detVarY$bin.width/2), Inf)
 
 
 
 df_climspace <- inner_join(df_clim_VarX, df_clim_VarY, by = c('lat', 'lon'),
-                           suffix = c(".x", ".y")) %>%
+                           suffix = c(paste0(".", binVarX), paste0(".", binVarY))) %>%
   rename(x = lon, y = lat) %>%
-  mutate(x.clim.bin = cut(clim.x, 
-                          breaks = x.bin.breaks, 
-                          labels = x.bin.numlbls)) %>% 
-  mutate(y.clim.bin = cut(clim.y, 
-                          breaks = y.bin.breaks, 
-                          labels = y.bin.numlbls)) %>%
+  # mutate(x.clim.bin = cut(clim.x, 
+  #                         breaks = x.bin.breaks, 
+  #                         labels = x.bin.numlbls)) %>% 
+  # mutate(y.clim.bin = cut(clim.y, 
+  #                         breaks = y.bin.breaks, 
+  #                         labels = y.bin.numlbls)) %>%
   tibble()
 
 fname <- paste0('df_climspace_', binVarX, 'x', binVarY, '.RData')

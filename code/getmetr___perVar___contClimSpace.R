@@ -17,31 +17,47 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 
 
 
-# agreement in time (per climzone)
-load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
-df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
-  select(-cz_ID, -cz_colours)
+load('data/inter_data/ancillary_info/df_climspace_t2xsm.RData')
+#df_climspace <- df_climspace %>% select(x, y, clim.x, clim.y) %>% rename(clim.t2 = clim.x, clim.sm = clim.y)
 
+x.bin.width <- 4
+y.bin.width <- 0.04
 
+# make bin labels
+x.bin.numlbls <- seq(floor(min(df_climspace$clim.t2)),
+                     ceiling(max(df_climspace$clim.t2)) + x.bin.width, 
+                     x.bin.width)
+y.bin.numlbls <- seq(floor(min(df_climspace$clim.sm)), 
+                     ceiling((max(df_climspace$clim.sm) + y.bin.width) * 100)/100,
+                     y.bin.width)
+
+# make bin breaks
+x.bin.breaks <- c(x.bin.numlbls - (x.bin.width/2), Inf)
+y.bin.breaks <- c(y.bin.numlbls - (y.bin.width/2), Inf)
+
+df_climspace_bin <- df_climspace %>%
+  mutate(t2.clim.bin = cut(clim.t2,
+                          breaks = x.bin.breaks,
+                          labels = x.bin.numlbls)) %>%
+  mutate(sm.clim.bin = cut(clim.sm,
+                          breaks = y.bin.breaks,
+                          labels = y.bin.numlbls))
 
 
 # varname = 'LAI'
 varname_list <- c('SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
-varname_list <- c('LAI', 'SM', 'LST', 'albedo_wsa_vis')
 varname_list <- c('albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
+varname_list <- c('LAI', 'SM', 'LST', 'albedo_wsa_vis')
 
 
 # Flag to remove polar areas and sea ice (useful for albedo with MODIS)
 rm_polar_and_sea <- T
-
 
 for( varname in varname_list){
 
 print(paste0('|> working on ', varname, '...'))
 
 load(paste0('data/inter_data/df_comb_obs_vs_sim/df_comb___', varname,'.RData'))  # <--- df_comb
-
-
 
 # should possibly be applied before/outside this script
 if(rm_polar_and_sea == T){
@@ -55,20 +71,15 @@ if(rm_polar_and_sea == T){
 df_comb <- df_comb %>% filter(!is.na(obs)) 
 
 
-
-
 df_comb <- df_comb %>% 
   mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
   mutate(monthS = ifelse(monthS == 0, 12, monthS))  %>% 
   mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-'))) %>%
-  left_join(df_cz, by = c('x', 'y'))
-
-#LAI_obs_mu LAI_obs_sd LAI_rea_mu LAI_rea_sd  LAI_dif_mu LAI_dif_sd
+  left_join(df_climspace_bin, by = c('x', 'y'))
 
 
-
-temp_agr_det <- df_comb %>%
-  group_by(cz_name, time) %>%
+temp_agr_con <- df_comb  %>%
+  group_by(t2.clim.bin, sm.clim.bin, time) %>%
   summarise(N = sum(!is.na(obs)),
             agre = get.Agr.Metrics(obs, sim),
             obs_mu = mean(obs, na.rm = T),
@@ -78,19 +89,8 @@ temp_agr_det <- df_comb %>%
             dif_mu = mean(sim - obs, na.rm = T),
             dif_sd = sd(sim - obs, na.rm = T))
 
-temp_agr_gen <- df_comb %>%
-  group_by(cz_major_zone, time) %>%
-  summarise(N = sum(!is.na(obs)),
-            agre = get.Agr.Metrics(obs, sim),
-            obs_mu = mean(obs, na.rm = T),
-            obs_sd = sd(obs, na.rm = T),
-            sim_mu = mean(sim, na.rm = T),
-            sim_sd = sd(sim, na.rm = T),
-            dif_mu = mean(sim - obs, na.rm = T),
-            dif_sd = sd(sim - obs, na.rm = T)) 
-
-save('agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det',
-     file = paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_',varname,'.RData'))
+save('temp_agr_con',
+     file = paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_tmp_',varname,'.RData'))
 
 print(paste0('<| all done for ', varname, '!'))
 }
