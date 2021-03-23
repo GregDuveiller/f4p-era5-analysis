@@ -15,10 +15,22 @@ source('../../tools/agreement-index/calculate-agr-metrics.R')
 
 dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, showWarnings = F)
 
+
+
+# agreement in time (per climzone)
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
+df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
+  select(-cz_ID, -cz_colours)
+
+
 # varname = 'LAI'
 varname_list <- c('SM', 'LAI', 'LST', 'albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
 varname_list <- c('LAI', 'SM', 'LST', 'albedo_wsa_vis')
-varname_list <- c('albedo_wsa_nir', 'albedo_bsa_nir', 'albedo_bsa_vis')
+varname_list <- c('albedo_wsa_nir', 'albedo_wsa_vis', 'albedo_bsa_nir', 'albedo_bsa_vis')
+
+
+# Flag to remove polar areas and sea ice (useful for albedo with MODIS)
+rm_polar_and_sea <- T
 
 
 for( varname in varname_list){
@@ -27,7 +39,20 @@ print(paste0('|> working on ', varname, '...'))
 
 load(paste0('data/inter_data/df_comb_obs_vs_sim/df_comb___', varname,'.RData'))  # <--- df_comb
 
+
+
+# should possibly be applied before/outside this script
+if(rm_polar_and_sea == T){
+  df_comb <- df_comb %>% 
+    right_join(y = df_cz %>% filter(cz_major_zone %in% LETTERS[1:4]), 
+               by = c('x', 'y')) %>%
+    select(-cz_name, -cz_major_zone)
+  varname <- paste0(varname,'_cleaner')  # <-- could name it more approapriately
+}
+
 df_comb <- df_comb %>% filter(!is.na(obs)) 
+
+
 # get overall agreement
 agr <- get.Agr.Metrics(df_comb$obs, df_comb$sim)
 
@@ -61,13 +86,6 @@ sp_agr <- df_comb %>%
             bias = mean(obs - sim))
 
 
-
-
-
-# agreement in time (per climzone)
-load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
-df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
-  select(-cz_ID, -cz_colours)
 
 df_comb <- df_comb %>% 
   mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%

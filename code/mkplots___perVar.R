@@ -19,7 +19,7 @@ fig.path <- 'results/single_var_agreement'
 dir.create(fig.path, showWarnings = F, recursive = T)
 
 
-varname <- 'albedo_bsa_vis'
+varname <- 'albedo_wsa_vis'
 
 load( paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_', varname,'.RData'))
 # 'agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det'
@@ -91,7 +91,9 @@ g_map <- ggplot(sp_agr, aes(x = x, y = y)) +
                        limits = metric_lims_s, oob = squish) +
   scale_x_continuous('Longitude') + 
   scale_y_continuous('Latitude') +
-  coord_cartesian(expand = F) +
+  coord_cartesian(expand = F, 
+                  xlim = c(-179.875, 179.875), 
+                  ylim = c(-89.875, 83.875)) +
   theme(legend.position = "right",
         legend.key.height = unit(1.8, 'cm'),
         panel.background = element_rect(fill = 'grey30'),
