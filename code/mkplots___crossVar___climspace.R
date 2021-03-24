@@ -105,11 +105,11 @@ mk_plot_allBins <- function(varname){
                       filter(y_var == varname) %>%
                       filter(!is.na(t2.clim.bin) & t2.clim.bin != 34) %>%
                       filter(!is.na(sm.clim.bin) & sm.clim.bin != 0)) +
-    geom_hline(yintercept = 0, colour = 'grey50') +
-    geom_vline(xintercept = 0, colour = 'grey50') +
+    geom_hline(yintercept = 0, colour = 'grey60') +
+    geom_vline(xintercept = 0, colour = 'grey60') +
     geom_point(aes(x = dif_mu_LAI, y = y_mu, fill = monthS),
-               colour = 'grey35', shape = 21) +
-    facet_grid(t2.clim.bin~sm.clim.bin, labeller = climbin_labeller) +
+               colour = 'grey45', stroke = 0.1, shape = 21, size = 1) +
+  facet_grid(t2.clim.bin~sm.clim.bin, labeller = climbin_labeller) +
     scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
     scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
     scale_x_continuous('Bias in LAI (ERA - obs)') +
