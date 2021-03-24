@@ -16,6 +16,13 @@ source('../../tools/agreement-index/calculate-agr-metrics.R')
 dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, showWarnings = F)
 
 
+# load clim zones 
+# (just needed for the spatial filtering)
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
+df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
+  select(-cz_ID, -cz_colours)
+
+
 
 load('data/inter_data/ancillary_info/df_climspace_t2xsm.RData')
 #df_climspace <- df_climspace %>% select(x, y, clim.x, clim.y) %>% rename(clim.t2 = clim.x, clim.sm = clim.y)
@@ -61,6 +68,7 @@ load(paste0('data/inter_data/df_comb_obs_vs_sim/df_comb___', varname,'.RData')) 
 
 # should possibly be applied before/outside this script
 if(rm_polar_and_sea == T){
+
   df_comb <- df_comb %>% 
     right_join(y = df_cz %>% filter(cz_major_zone %in% LETTERS[1:4]), 
                by = c('x', 'y')) %>%

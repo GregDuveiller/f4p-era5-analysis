@@ -19,7 +19,7 @@ fig.path <- 'results/single_var_agreement'
 dir.create(fig.path, showWarnings = F, recursive = T)
 
 
-varname <- 'SM'
+varname <- 'albedo_wsa_vis'
 
 load( paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_', varname,'.RData'))
 # 'agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det'

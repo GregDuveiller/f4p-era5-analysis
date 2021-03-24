@@ -17,7 +17,7 @@ dir.create(path = 'data/inter_data/df_single_var_agreement', recursive = T, show
 
 
 
-# agreement in time (per climzone)
+# load clim zones 
 load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
 df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
   select(-cz_ID, -cz_colours)
