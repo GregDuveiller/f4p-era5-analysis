@@ -19,10 +19,12 @@ fig.path <- 'results/single_var_agreement'
 dir.create(fig.path, showWarnings = F, recursive = T)
 
 
-varname <- 'SM'
+varname <- 'LAI'
 
 load( paste0('data/inter_data/df_single_var_agreement/df_single_var_agr_', varname,'.RData'))
 # 'agr', 'freq', 'sp_agr', 'temp_agr_gen', 'temp_agr_det'
+temp_agr_gen <- temp_agr_gen %>% filter(cz_major_zone != 'O')
+
 
 colnames(agr) <- paste0("agre$", colnames(agr))
 
@@ -100,7 +102,7 @@ g_map <- ggplot(sp_agr, aes(x = x, y = y)) +
         panel.grid = element_line(colour = 'grey40')) +
   ggtitle('Temporal agreement represented in space')
 
-g_tmp <- ggplot(temp_agr_gen %>% filter(cz_major_zone != 'O'),
+g_tmp <- ggplot(temp_agr_gen,
                 aes(x = time, colour = cz_major_zone)) + 
   geom_line(aes_string(y = metric_code)) +
   scale_colour_manual('Koppen-Geiger general climate zones: ', 
