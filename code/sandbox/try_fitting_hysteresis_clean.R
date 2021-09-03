@@ -29,8 +29,8 @@ df_all <- left_join(by = by_vctr, suffix = c("_LAI", "_LST"),
 
 # filter here for a section of the climspace
 df <- df_all %>%
-  filter(t2.clim.bin == 22) %>%
-  filter(sm.clim.bin == 0.44)
+  filter(t2.clim.bin == -2) %>%  # <-  need to change these accordingly ///
+  filter(sm.clim.bin == 0.52)    # <-  need to change these accordingly /// 
 
 # calculate monthly averages
 df_m <- df %>%
@@ -47,16 +47,30 @@ x <- rep(df$x, times = 3)
 t <- c(df$monthS - 12, df$monthS, df$monthS + 12)
 per <- 12
   
-yfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
-xfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+# second harmonic fits
+tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
 
-# yfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
-# xfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+lmfit <- lm(y ~ x)
+
+# more complicated fits... 
+tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
 
 df_s <- data.frame(t = seq(0,12,0.1))
-df_s$y <- predict.lm(yfit, df_s)
-df_s$x <- predict.lm(xfit, df_s)
+df_s$y <- predict.lm(tyfit, df_s)
+df_s$x <- predict.lm(txfit, df_s)
 df_s$monthS <- df_s$t
+
+
+#### get metrics 
+df_p <- data.frame(
+  yIntercept = lmfit$coefficients[1],
+  slope = lmfit$coefficients[2],
+  area = 0.5 * sum(diff(df_s$y, lag = 2) * df_s$x[2:(length(df_s$x)-1)]),
+  loopDir = sign(area)
+)
+
 
 
 
@@ -74,6 +88,8 @@ ggplot(df) +
   geom_vline(xintercept = 0, colour = gry1) +
   geom_point(aes(x = x, y = y, fill = monthS),
              colour = gry2, stroke = 0.4, shape = 21, size = 2) +
+  geom_abline(slope = lmfit$coefficients[2], intercept = lmfit$coefficients[1],
+              colour = gry3, linetype = 'dashed') +
   geom_path(data = df_s, aes(x = x, y = y), colour = gry3, size = 2) +
   geom_errorbar(data = df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
                 colour = gry2,  width = 0.02) +
@@ -81,10 +97,12 @@ ggplot(df) +
                  colour = gry2,  height = 0.2) +
   geom_point(data = df_m, aes(x = x_mu, y = y_mu, fill = monthS),
              colour = gry2, stroke = 0.3, shape = 21, size = 4) +
-   scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
+  scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
   scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
   scale_x_continuous('Bias in LAI (ERA - obs)') +
-  ggtitle(label = paste0('Hysteresis pattern between bias in LAI and bias in ', varname)) + 
+  ggtitle(label = paste0('Hysteresis pattern between bias in LAI and bias in ', varname),
+          subtitle = paste0('Slope = ', format(df_p$slope, digits = 4), ' | ',
+                            'Area = ', format(df_p$area, digits = 4))) + 
   lgd
 
 
