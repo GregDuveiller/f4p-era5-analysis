@@ -3,6 +3,8 @@
 .Rproj.user
 .Rhistory
 /results
-/data
+/data/input_data
+/data/inter_data
 /xtra
-!/data/inter_data/ancillary_info
+
+
