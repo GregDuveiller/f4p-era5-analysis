@@ -41,17 +41,22 @@ names(sm.clim.bin.values) <- sprintf('SMbin%02d', 1:length(sm.clim.bin.labels))
 
 
 # define bin selection
-t2.bin.centre <- 6
+t2.bin.centre <- 10
 sm.bin.centre <- 0.4
+
+for(t2.bin.centre in t2.clim.bin.values){
+  for(sm.bin.centre in sm.clim.bin.values){
+
 
 t2.bin.id <- names(which(t2.clim.bin.values == t2.bin.centre))
 sm.bin.id <- names(which(sm.clim.bin.values == sm.bin.centre))
 
 df4ts <- df_all %>%
   filter(t2.clim.bin == factor(t2.bin.centre, levels(df_all$t2.clim.bin))) %>%  
-  filter(sm.clim.bin == factor(sm.bin.centre, levels(df_all$sm.clim.bin)))
+  filter(sm.clim.bin == factor(sm.bin.centre, levels(df_all$sm.clim.bin))) %>%
+  mutate(year = as.numeric(format(time,'%Y')))
 
-
+if(dim(df4ts)[1] == 0){next}
 
 df4hyst <-  df_all %>%
   select(by_vctr, dif_mu_LAI, dif_mu_LST, N_LAI, N_LST) %>%   # 
@@ -64,8 +69,17 @@ df4hyst <-  df_all %>%
 
 out <- fit_hyst(df4hyst)
 
+
+
+# and now the filtering of winter months if needed
+if(t2.bin.centre < 8){monthS2keep <- c(4:10)} 
+if(t2.bin.centre >= 8 & t2.bin.centre < 12){monthS2keep <- c(3:11)}
+if(t2.bin.centre >= 12){monthS2keep <- c(1:12)}
+
+df4ts$obs2mask <- ifelse((df4ts$monthS %in% monthS2keep) == T, NA, 1)
+
 df4hyst_filter <- df4hyst %>%
-  filter(monthS %in% c(4:10))
+  filter(monthS %in% monthS2keep)
   
 out_f <- fit_hyst(df4hyst_filter)
 
@@ -75,7 +89,7 @@ out_f <- fit_hyst(df4hyst_filter)
 # for graphs... 
 fig.format <- 'png'
 fig.path <- 'results/czbinDiagnostics_LAIvsLST'
-dir.create(fig.path)
+dir.create(fig.path, showWarnings = F)
 
 
 # some graphic param...
@@ -90,7 +104,8 @@ cols <- c(viridis(n = 6), magma(n = 6)[6:1])
 gry1 <- 'grey60'  # <-- the axes
 gry2 <- 'grey30'  # <-- the edges of the points
 gry3 <- 'grey45'  # <-- the smoothed path
-
+gry4 <- 'grey70'  # <-- lighter points
+gry5 <- 'grey80'  # <-- ligther paths
 
 ebarwidth <- 0.02
 ebarheight <- 0.2
@@ -105,32 +120,28 @@ gLAI <- ggplot(df4ts) +
 gLST <- ggplot(df4ts) +
   geom_line(aes(x = time, y = sim_mu_LST), colour = 'grey25') + 
   geom_line(aes(x = time, y = obs_mu_LST), colour = 'orangered') +
+  geom_path(aes(x = time, y = obs_mu_LST*obs2mask), colour = gry5,) +
   scale_y_continuous('LST') +
   scale_x_date('', expand = c(0, 0)) +
   ggtitle('Mean LST of the max LST days')
 
-gCross <- ggplot(df4hyst) +
-  geom_hline(yintercept = 0, colour = gry1) +
-  geom_vline(xintercept = 0, colour = gry1) +
-  geom_point(aes(x = x, y = y, fill = monthS),
-             colour = gry2, stroke = 0.3, shape = 21, size = 2) +
-  geom_path(data = out$df_s, aes(x = x, y = y), colour = gry3, size = 2) +
-  geom_errorbar(data = out$df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
-                colour = gry2,  width = ebarwidth) +
-  geom_errorbarh(data = out$df_m, aes(y = y_mu, xmin = x_mu - x_sd, xmax = x_mu + x_sd),
-                 colour = gry2,  height = ebarheight) +
-  geom_point(data = out$df_m, aes(x = x_mu, y = y_mu, fill = monthS),
-             colour = gry2, stroke = 0.3, shape = 21, size = 4) +
-  scale_y_continuous(paste('Bias in LST', '(ERA - obs)')) +
-  scale_x_continuous('Bias in LAI (ERA - obs)') +
-  scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) + 
-  ggtitle('Hysteresis patterns between LAI and LST biases') +
-  lgd
 
-gCross_f<- ggplot(df4hyst_filter) +
+
+gCross <- ggplot() +
   geom_hline(yintercept = 0, colour = gry1) +
   geom_vline(xintercept = 0, colour = gry1) +
-  geom_point(aes(x = x, y = y, fill = monthS),
+  # this first part is the faded background
+  geom_path(data = out$df_s, aes(x = x, y = y), colour = gry5, size = 2) +
+  geom_point(data = df4hyst, aes(x = x, y = y),
+             colour = gry3, fill = gry5, stroke = 0.3, shape = 21, size = 2) +
+  geom_errorbar(data = out$df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
+                colour = gry3,  width = ebarwidth) +
+  geom_errorbarh(data = out$df_m, aes(y = y_mu, xmin = x_mu - x_sd, xmax = x_mu + x_sd),
+                 colour = gry3,  height = ebarheight) +
+  geom_point(data = out$df_m, aes(x = x_mu, y = y_mu),
+             colour = gry3, fill = gry5, stroke = 0.3, shape = 21, size = 4) +
+  # now the colourful part comes above
+  geom_point(data = df4hyst_filter, aes(x = x, y = y, fill = monthS),
              colour = gry2, stroke = 0.3, shape = 21, size = 2) +
   geom_path(data = out_f$df_s, aes(x = x, y = y), colour = gry3, size = 2) +
   geom_errorbar(data = out_f$df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
@@ -145,8 +156,29 @@ gCross_f<- ggplot(df4hyst_filter) +
   ggtitle('Hysteresis patterns between LAI and LST biases') +
   lgd
 
+
 g <- (gLAI / gLST) | gCross
 
 ggsave(filename = paste0('csbinDiagnostic_', 'LST', 'vsLAI_', 
                          t2.bin.id, '_', sm.bin.id, '.', fig.format),
        path = fig.path, width = 16, height = 9)
+
+
+}}
+# gCross <- ggplot(df4hyst) +
+#   geom_hline(yintercept = 0, colour = gry1) +
+#   geom_vline(xintercept = 0, colour = gry1) +
+#   geom_point(aes(x = x, y = y, fill = monthS),
+#              colour = gry2, stroke = 0.3, shape = 21, size = 2) +
+#   geom_path(data = out$df_s, aes(x = x, y = y), colour = gry3, size = 2) +
+#   geom_errorbar(data = out$df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
+#                 colour = gry2,  width = ebarwidth) +
+#   geom_errorbarh(data = out$df_m, aes(y = y_mu, xmin = x_mu - x_sd, xmax = x_mu + x_sd),
+#                  colour = gry2,  height = ebarheight) +
+#   geom_point(data = out$df_m, aes(x = x_mu, y = y_mu, fill = monthS),
+#              colour = gry2, stroke = 0.3, shape = 21, size = 4) +
+#   scale_y_continuous(paste('Bias in LST', '(ERA - obs)')) +
+#   scale_x_continuous('Bias in LAI (ERA - obs)') +
+#   scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) + 
+#   ggtitle('Hysteresis patterns between LAI and LST biases') +
+#   lgd
