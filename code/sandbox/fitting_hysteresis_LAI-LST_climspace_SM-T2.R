@@ -80,8 +80,6 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
   df_s$sm.clim.bin <- unique(df$sm.clim.bin)
   
 
-
-  
   #### get metrics and make an output dataframe
   
   beta_y <- tyfit$coefficients; names(beta_y) <- paste0('b', 'y', 0:(length(tyfit$coefficients)-1))
