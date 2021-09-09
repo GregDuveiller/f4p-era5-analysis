@@ -51,6 +51,8 @@ df4ts <- df_all %>%
   filter(t2.clim.bin == factor(t2.bin.centre, levels(df_all$t2.clim.bin))) %>%  
   filter(sm.clim.bin == factor(sm.bin.centre, levels(df_all$sm.clim.bin)))
 
+
+
 df4hyst <-  df_all %>%
   select(by_vctr, dif_mu_LAI, dif_mu_LST, N_LAI, N_LST) %>%   # 
   rename(y = dif_mu_LST, x = dif_mu_LAI, ny = N_LST, nx = N_LAI) %>%
@@ -62,7 +64,10 @@ df4hyst <-  df_all %>%
 
 out <- fit_hyst(df4hyst)
 
-
+df4hyst_filter <- df4hyst %>%
+  filter(monthS %in% c(4:10))
+  
+out_f <- fit_hyst(df4hyst_filter)
 
 
 
@@ -122,7 +127,23 @@ gCross <- ggplot(df4hyst) +
   ggtitle('Hysteresis patterns between LAI and LST biases') +
   lgd
 
-
+gCross_f<- ggplot(df4hyst_filter) +
+  geom_hline(yintercept = 0, colour = gry1) +
+  geom_vline(xintercept = 0, colour = gry1) +
+  geom_point(aes(x = x, y = y, fill = monthS),
+             colour = gry2, stroke = 0.3, shape = 21, size = 2) +
+  geom_path(data = out_f$df_s, aes(x = x, y = y), colour = gry3, size = 2) +
+  geom_errorbar(data = out_f$df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
+                colour = gry2,  width = ebarwidth) +
+  geom_errorbarh(data = out_f$df_m, aes(y = y_mu, xmin = x_mu - x_sd, xmax = x_mu + x_sd),
+                 colour = gry2,  height = ebarheight) +
+  geom_point(data = out_f$df_m, aes(x = x_mu, y = y_mu, fill = monthS),
+             colour = gry2, stroke = 0.3, shape = 21, size = 4) +
+  scale_y_continuous(paste('Bias in LST', '(ERA - obs)')) +
+  scale_x_continuous('Bias in LAI (ERA - obs)') +
+  scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb, limits = c(0.5, 12.5)) + 
+  ggtitle('Hysteresis patterns between LAI and LST biases') +
+  lgd
 
 g <- (gLAI / gLST) | gCross
 

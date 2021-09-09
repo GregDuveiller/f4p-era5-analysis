@@ -20,22 +20,32 @@ fit_hyst <- function(df){
   # fit the hysteresis curve decomposing x and y 
   # (we do it on the raw data instead of the means, but result is identical)
   
-  per <- length(unique(df$monthS))
+  set_monthS_orig <- unique(df$monthS)
+  
+  # get period from total number of monthS available
+  per <- length(set_monthS_orig)
+  
+  # repeat the x and y time series to increase easiness to fit
   y <- rep(df$y, times = 3)
   x <- rep(df$x, times = 3)
   
   #t <- c(df$monthS - 12, df$monthS, df$monthS + 12)
-  
-  t <- c(df$monthS - per, df$monthS, df$monthS + per)
+  new_monthS <- (df$monthS - min(df$monthS) + 1)
+  t <- c(new_monthS - per, new_monthS, new_monthS + per)
 
   lmfit <- lm(y ~ x)
   
   tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
   txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
   
-  df_s <- data.frame(t = seq(0.5,12.5,0.1))
+  # df_s <- data.frame(t = seq(0.5,12.5,0.1))
+  df_s <- data.frame(t = seq(0.5, (per + 0.5), 0.1))
   df_s$y <- predict.lm(tyfit, df_s)
   df_s$x <- predict.lm(txfit, df_s)
+  
+  # make sure we change the 't' back to the right "monthS" scale
+  df_s$t <- seq(0.5, (per + 0.5), 0.1) + (min(df$monthS) - 1)
+  
   # df_s$t2.clim.bin <- unique(df$t2.clim.bin)
   # df_s$sm.clim.bin <- unique(df$sm.clim.bin)
   
