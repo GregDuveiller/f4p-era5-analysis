@@ -25,6 +25,7 @@ df_all <- left_join(by = by_vctr, suffix = c("_LAI", "_LST"),
   rename(y = dif_mu_LST, x = dif_mu_LAI, ny = N_LST, nx = N_LAI) %>%
   filter(!is.na(y) & !is.na(x)) %>% 
   filter(nx > 30 & ny > 30) %>%
+  filter(sm.clim.bin != 0) %>%
   mutate(year = as.numeric(format(time,'%Y'))) %>%
   mutate(monthS = as.numeric(format(time, '%m')))
 
@@ -58,21 +59,21 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
   t <- c(df$monthS - 12, df$monthS, df$monthS + 12)
   per <- 12
   
-  # # second harmonic fits
-  # tyfit2 <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
-  # txfit2 <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
-  
   lmfit <- lm(y ~ x)
-  
-  # more complicated fits... 
-  tyfit3 <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
-  txfit3 <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+
+  # # more complicated fits...
+  # tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t))
+  # txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t)) 
+  # third order harmonics ? ...
+  tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+  txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+  # # second harmonic fits
+  # tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+  # txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
   
   df_s <- data.frame(t = seq(0.5,12.5,0.1))
-  df_s$y3 <- predict.lm(tyfit3, df_s)
-  df_s$x3 <- predict.lm(txfit3, df_s)
-  # df_s$y2 <- predict.lm(tyfit2, df_s)
-  # df_s$x2 <- predict.lm(txfit2, df_s)
+  df_s$y <- predict.lm(tyfit, df_s)
+  df_s$x <- predict.lm(txfit, df_s)
   df_s$t2.clim.bin <- unique(df$t2.clim.bin)
   df_s$sm.clim.bin <- unique(df$sm.clim.bin)
   
@@ -81,18 +82,18 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
   
   #### get metrics and make an output dataframe
   
-  beta_y <- tyfit3$coefficients; names(beta_y) <- paste0('b', 'y', 0:6)
-  beta_x <- txfit3$coefficients; names(beta_x) <- paste0('b', 'x', 0:6)
+  beta_y <- tyfit$coefficients; names(beta_y) <- paste0('b', 'y', 0:(length(tyfit$coefficients)-1))
+  beta_x <- txfit$coefficients; names(beta_x) <- paste0('b', 'x', 0:(length(txfit$coefficients)-1))
   
   df_p <- data.frame(
     t2.clim.bin = levels(df_all$t2.clim.bin)[t2.bin.num],
     sm.clim.bin = levels(df_all$sm.clim.bin)[sm.bin.num],
     slope = lmfit$coefficients[2],
     y_int = lmfit$coefficients[1],
-    areaL = 0.5 * sum(diff(df_s$y3, lag = 2) * df_s$x3[2:(length(df_s$x3)-1)]),
+    areaL = 0.5 * sum(diff(df_s$y, lag = 2) * df_s$x[2:(length(df_s$x)-1)]),
     t(beta_y), t(beta_x),
-    xrange_s = abs(diff(range(df_s$x3))),
-    yrange_s = abs(diff(range(df_s$y3)))
+    xrange_s = abs(diff(range(df_s$x))),
+    yrange_s = abs(diff(range(df_s$y)))
   )
   
   
@@ -128,8 +129,7 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
                  colour = gry2, stroke = 0.4, shape = 21, size = 2) +
       geom_abline(slope = lmfit$coefficients[2], intercept = lmfit$coefficients[1],
                   colour = gry3, linetype = 'dashed') +
-      # geom_path(data = df_s, aes(x = x2, y = y2), colour = gry1, size = 1.5) +
-      geom_path(data = df_s, aes(x = x3, y = y3), colour = gry3, size = 2) +
+      geom_path(data = df_s, aes(x = x, y = y), colour = gry3, size = 2) +
       geom_errorbar(data = df_m, aes(x = x_mu, ymin = y_mu - y_sd, ymax = y_mu + y_sd),
                     colour = gry2,  width = 0.02) +
       geom_errorbarh(data = df_m, aes(y = y_mu, xmin = x_mu - x_sd, xmax = x_mu + x_sd),
@@ -152,13 +152,12 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
     
     gx <- ggplot(df, aes(x = monthS)) + 
       geom_hline(yintercept = 0, colour = gry1) +
-      # geom_line(data = df_s, aes(y = x2), colour = gry1, size = 1.5) +
-      geom_line(data = df_s, aes(x = t, y = x3), colour = gry3, size = 2) +
+      geom_line(data = df_s, aes(x = t, y = x), colour = gry3, size = 2) +
       geom_point(aes(y = x, fill = monthS), 
                  colour = gry2, stroke = 0.3, shape = 21, size = 2) +
       geom_errorbar(data = df_m, aes(ymin = x_mu - x_sd, ymax = x_mu + x_sd),
                     colour = gry2,  width = 0.2) +
-      geom_point(data = df_m, aes(y = x_mu), 
+      geom_point(data = df_m, aes(y = x_mu, fill = monthS), 
                  colour = gry2, stroke = 0.5, shape = 21, size = 4) +
       scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb, guide = "none") +
       scale_y_continuous(paste('Bias in', 'LAI', '(ERA - obs)')) +
@@ -169,13 +168,12 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
     
     gy <- ggplot(df, aes(x = monthS)) + 
       geom_hline(yintercept = 0, colour = gry1) +
-      # geom_line(data = df_s, aes(y = y2), colour = gry1, size = 1.5) +
-      geom_line(data = df_s, aes(x = t, y = y3), colour = gry3, size = 2) +
+      geom_line(data = df_s, aes(x = t, y = y), colour = gry3, size = 2) +
       geom_point(aes(y = y, fill = monthS), 
                  colour = gry2, stroke = 0.3, shape = 21, size = 2) +
       geom_errorbar(data = df_m, aes(ymin = y_mu - y_sd, ymax = y_mu + y_sd),
                     colour = gry2,  width = 0.2) +
-      geom_point(data = df_m, aes(y = y_mu), 
+      geom_point(data = df_m, aes(y = y_mu, fill = monthS), 
                  colour = gry2, stroke = 0.5, shape = 21, size = 4) +
       scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb, guide = "none") +
       scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
@@ -187,8 +185,8 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, plotting = NULL){
     require(patchwork)
     
     g <- gxy + gx / gy
-    ggsave(filename = paste0('hyst_LSTvsLAI_', sprintf('SMbin%02d',sm.bin.num), '_', 
-                             sprintf('TMbin%02d',t2.bin.num),
+    ggsave(filename = paste0('hyst_LSTvsLAI_', sprintf('T2bin%02d',t2.bin.num), '_', 
+                             sprintf('SMbin%02d',sm.bin.num),
                              '.', fig.format),
            path = fig.path, width = 16, height = 9)
   }
@@ -202,7 +200,7 @@ df_s_all <- data.frame(NULL)
 
 for(i in 1:length(levels(df_all$t2.clim.bin))){
   for(j in 1:length(levels(df_all$sm.clim.bin))){
-    out <- fit.hyst(i, j)
+    out <- fit.hyst(i, j, plotting = T)
     
     df_p_all <- bind_rows(df_p_all, out$df_p)
     df_s_all <- bind_rows(df_s_all, out$df_s)
@@ -231,6 +229,8 @@ names(t2.clim.bin.labels) <- levels(df_all_comb$t2.clim.bin)
 
 # reverse t2m bins order
 df_all$t2.clim.bin <- factor(df_all$t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin)))
+# reverse t2m bins order
+df_s_all$t2.clim.bin <- factor(df_s_all$t2.clim.bin, levels = rev(levels(df_s_all$t2.clim.bin)))
 
 
 # rev(t2.clim.bin.labels)
@@ -255,9 +255,10 @@ g_all_base <- ggplot(df_all) +
   geom_point(aes(x = x, y = y, fill = monthS),
              colour = 'grey45', stroke = 0.1, shape = 21, size = 1) +
   facet_grid(t2.clim.bin~sm.clim.bin, labeller = climbin_labeller) +
-  scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
+  scale_fill_gradientn('', colours = cols, breaks = 1:12, limits = c(0.5, 12.5), labels = month.abb) +
   scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
-  scale_x_continuous('Bias in LAI (ERA - obs)') +
+  scale_x_continuous('Bias in LAI (ERA - obs)', breaks = c(-1, 0, 1)) +
+  coord_cartesian(xlim = c(-1, 1.5), ylim = c(-20, 15)) + 
   ggtitle(label = paste0('Hysteresis patterns of bias between RS observation and ECMWF HTESSEL model'),
           subtitle = 'Analysized per bins in a climate space of mean annual 2m Temperature vs. Soil Moisture') + 
   theme(legend.position = 'left',
@@ -273,12 +274,13 @@ ggsave(filename = paste0('climspace_plot_raw__', varname, '.', fig.format),
 g_all_smooth <- ggplot(df_s_all) +
   geom_hline(yintercept = 0, colour = 'grey60') +
   geom_vline(xintercept = 0, colour = 'grey60') +
-  geom_point(aes(x = x3, y = y3, fill = t),
-             colour = 'grey45', stroke = 0.1, shape = 21, size = 1) +
+  geom_point(aes(x = x, y = y, colour = t),
+             shape = 20, size = 0.5) +
   facet_grid(t2.clim.bin~sm.clim.bin, labeller = climbin_labeller) +
-  scale_fill_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
+  scale_colour_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
   scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
-  scale_x_continuous('Bias in LAI (ERA - obs)') +
+  scale_x_continuous('Bias in LAI (ERA - obs)', breaks = c(-1, 0, 1)) +
+  coord_cartesian(xlim = c(-1, 1.5), ylim = c(-20, 15)) + 
   ggtitle(label = paste0('Hysteresis patterns of bias between RS observation and ECMWF HTESSEL model'),
           subtitle = 'Analysized per bins in a climate space of mean annual 2m Temperature vs. Soil Moisture') + 
   theme(legend.position = 'left',
@@ -291,91 +293,100 @@ ggsave(filename = paste0('climspace_plot_smo__', varname, '.', fig.format),
 
 
 
-
 lgd2 <- theme(legend.position = 'right',
              legend.key.height = unit(1, units = 'cm'),
              panel.grid = element_blank(),
              strip.text = element_text(size = 6))
 
+nb <- 6
 
-metricOrder <- c(paste0('b', 'y', 0:6), paste0('b', 'x', 0:6), 
+metricOrder <- c(paste0('b', 'y', 0:nb), paste0('b', 'x', 0:nb), 
                  'areaL', 'slope', 'y_int', 'xrange_s', 'yrange_s')
 
 rownames(df_p_all) <- 1:nrow(df_p_all)
 
 # post-process the parameter df 
-df <- df_p_all %>%
+df_simpleM <- df_p_all %>%
   mutate(t2.clim.bin = factor(t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin))),
          sm.clim.bin = factor(sm.clim.bin, levels = levels(df_all$sm.clim.bin))) %>%
-  pivot_longer(cols = 3:21) 
+  mutate(areaB = xrange_s * yrange_s,
+         fracA = areaL/areaB) %>%
+  select(!c(paste0('b', 'x', 0:nb), paste0('b', 'y', 0:nb))) 
 
-g1 <- ggplot(df %>% filter(name == 'y_int')) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
+
+
+
+g1 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = y_int)) +
   scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-50,50), oob = squish  ) +
   ggtitle('Y-intercept of the linear fit') + lgd2
 
-g2 <- ggplot(df %>% filter(name == 'slope')) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
+g2 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = slope)) +
   scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-20,20), oob = squish) +
   ggtitle('Slope of the linear fit') + lgd2
 
-g3 <- ggplot(df %>% filter(name == 'areaL')) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
-  scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-4,4), oob = squish  ) +
+g3 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = sign(areaL))) +
+  scale_fill_gradientn(colours = brewer.pal(9,name = 'PiYG'), limits = c(-1,1), oob = squish  ) +
+  ggtitle('Direction of the loop') + lgd2
+
+g4 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = areaL)) +
+  scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-2,2), oob = squish  ) +
   ggtitle('Area of the loop') + lgd2
 
-g4 <- ggplot(df %>% filter(name == 'xrange_s')) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
-  scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-2,2), oob = squish  ) +
-  ggtitle('x range of the loop') + lgd2
+g5 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = areaB)) +
+  scale_fill_viridis_c(option = 'D', limits = c(0,25), oob = squish  ) +
+  ggtitle('Area of the box') + lgd2
 
-g5 <- ggplot(df %>% filter(name == 'yrange_s')) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
-  scale_fill_gradientn(colours = brewer.pal(9,name = 'RdBu'), limits = c(-25,25), oob = squish  ) +
-  ggtitle('y range of the loop') + lgd2
+g6 <- ggplot(df_simpleM) + 
+  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = fracA)) +
+  scale_fill_viridis_c(option = 'D', limits = c(0,0.25), oob = squish  ) +
+  ggtitle('Fraction of box area by the loop') + lgd2
 
-
-g_met <- g1 + g2 + g3 + g4 + g5
+g_met <- g1 + g2 + g3 + g4 + g5 + g6
 ggsave(filename = paste0('climspace_plot_basemetr__', varname, '.', fig.format), 
        path = fig.path, plot = g_met, width = 16, height = 9)
 
 
 
 
-
-dat <- df_p_all[,3:21]
-
-mu <- apply(dat, 2, mean)
-sd <- apply(dat, 2, sd)
-
-mu_mat <- matrix(mu, nrow = dim(dat)[1], ncol = dim(dat)[2], byrow = T)
-sd_mat <- matrix(sd, nrow = dim(dat)[1], ncol = dim(dat)[2], byrow = T)
-
-dat_std <- (dat - mu_mat)/sd_mat
-  
-df_p_all_std <- df_p_all
-df_p_all_std[,3:21] <- dat_std
-
-df_std <- df_p_all_std %>%
-  mutate(t2.clim.bin = factor(t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin))),
-         sm.clim.bin = factor(sm.clim.bin, levels = levels(df_all$sm.clim.bin))) %>%
-  pivot_longer(cols = 3:21) 
-
-
-
-g_std <- ggplot(df_std %>% 
-                  filter(name %in% c(paste0('b', 'x', 0:6), paste0('b', 'y', 0:6)))) + 
-  geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
-  scale_fill_viridis(option = "A", limits = c(-3,3)) +
-  facet_wrap(~factor(name, levels = metricOrder), ncol = 7) 
-
-ggsave(filename = paste0('climspace_plot_stdHarm__', varname, '.', fig.format), 
-       path = fig.path, plot = g_std, width = 16, height = 9)
-
+# 
+# dat <- df_p_all[,3:23]
+# 
+# mu <- apply(dat, 2, mean)
+# sd <- apply(dat, 2, sd)
+# 
+# mu_mat <- matrix(mu, nrow = dim(dat)[1], ncol = dim(dat)[2], byrow = T)
+# sd_mat <- matrix(sd, nrow = dim(dat)[1], ncol = dim(dat)[2], byrow = T)
+# 
+# dat_std <- (dat - mu_mat)/sd_mat
+#   
+# df_p_all_std <- df_p_all
+# df_p_all_std[,3:21] <- dat_std
+# 
+# df_std <- df_p_all_std %>%
+#   mutate(t2.clim.bin = factor(t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin))),
+#          sm.clim.bin = factor(sm.clim.bin, levels = levels(df_all$sm.clim.bin))) %>%
+#   pivot_longer(cols = 3:21) 
+# 
+# 
+# 
+# g_std <- ggplot(df_std %>% 
+#                   filter(name %in% c(paste0('b', 'x', 0:nb), paste0('b', 'y', 0:nb)))) + 
+#   geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
+#   scale_fill_viridis(option = "A", limits = c(-3,3)) +
+#   facet_wrap(~factor(name, levels = metricOrder), ncol = 7) 
+# 
+# ggsave(filename = paste0('climspace_plot_stdHarm__', varname, '.', fig.format), 
+#        path = fig.path, plot = g_std, width = 16, height = 9)
+# 
 
 
  # Try a PCA on harmonic coefficients
-dat_pca <- prcomp(df_p_all %>% select(c(paste0('b', 'y', 0:6), paste0('b', 'x', 0:6))),
+dat_pca <- prcomp(df_p_all %>% select(c(paste0('b', 'y', 0:nb), paste0('b', 'x', 0:nb))),
                 center = TRUE, scale = TRUE)
 dat_pca.var <- dat_pca$sdev^2
 dat_pca.ve <- dat_pca.var/sum(dat_pca.var)
@@ -389,7 +400,7 @@ df_pca <- df_p_all %>%
 df_pca <- cbind(df_p_all[,1:2], dat_pca$x) %>%
   mutate(t2.clim.bin = factor(t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin))),
          sm.clim.bin = factor(sm.clim.bin, levels = levels(df_all$sm.clim.bin))) %>%
-  pivot_longer(cols = 3:16) 
+  pivot_longer(cols = 3:(2*(nb + 1) + 2)) 
 
 g_pca <- ggplot(df_pca %>% filter(name %in% paste0('PC',1:6))) + 
   geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = value)) +
@@ -403,26 +414,34 @@ ggsave(filename = paste0('climspace_plot_PCA__', varname, '.', fig.format),
 
 
 # make kmeans clustering
-n_clusters <- 5; max_iter <- 150
+n_clusters <- 3; max_iter <- 150
 
-dat_simpleM <- df_p_all %>% 
-  select(c('slope', 'y_int', 'areaL', 'xrange_s', 'yrange_s'))
+dat_simpleM <- df_simpleM %>% select(c('areaL', 'areaB', 'fracA'))
 km_out_simpleM <- kmeans(dat_simpleM, centers = n_clusters, iter.max = max_iter)
 
 
 km_out_pca4 <- kmeans(dat_pca$x[,1:4], centers = n_clusters, iter.max = max_iter)
+km_out_pca3 <- kmeans(dat_pca$x[,1:3], centers = n_clusters, iter.max = max_iter)
+km_out_pca2 <- kmeans(dat_pca$x[,1:2], centers = n_clusters, iter.max = max_iter)
 
 dat_bcoeff <- df_p_all_std %>% 
   select(c(paste0('b', 'x', 0:6), paste0('b', 'y', 0:6)))
 km_out_b <- kmeans(dat_bcoeff, centers = n_clusters, iter.max = max_iter)
 
 
-df_km <- cbind(df_p_all[,1:2],km_out_simpleM$cluster, km_out_pca4$cluster, km_out_b$cluster) %>%
+km_out_xcombo <- kmeans(cbind(dat_simpleM  %>% select(c('areaL', 'areaB', 'fracA')), dat_pca$x[,1:3]),
+                      centers = n_clusters, iter.max = max_iter)
+
+
+df_km <- cbind(df_p_all[,1:2], 
+               km_out_simpleM$cluster, km_out_xcombo$cluster, 
+               km_out_pca2$cluster, km_out_pca3$cluster, 
+               km_out_pca4$cluster, km_out_b$cluster) %>%
   mutate(t2.clim.bin = factor(t2.clim.bin, levels = rev(levels(df_all$t2.clim.bin))),
          sm.clim.bin = factor(sm.clim.bin, levels = levels(df_all$sm.clim.bin))) %>% 
-  pivot_longer(cols = 3:5)
+  pivot_longer(cols = 3:8)
 
 ggplot(df_km) +
   geom_raster(aes(y = t2.clim.bin, x = sm.clim.bin, fill = factor(value))) +
-  facet_wrap(~name)
+  facet_wrap(~name, nc = 3)
 
