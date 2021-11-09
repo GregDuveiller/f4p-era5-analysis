@@ -1,0 +1,1 @@
+This folder contains the data needed to make the figures of the paper.
