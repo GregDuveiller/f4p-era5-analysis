@@ -298,7 +298,7 @@ if(! dir.exists(output_path)) {dir.create(paste0(output_path),recursive=T)}
 ######     LOAD PREVIOUS SAVED DATA           #####
 ###################################################
 # here we join together the dataframes for separate variables (or load single variables to look specifically at only them - avoid this)
-
+  
 # list of variables to run over
 var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM'
 
