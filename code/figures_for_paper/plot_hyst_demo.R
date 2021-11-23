@@ -27,7 +27,6 @@ case_list <- list(
   B = list(t2.bin.val =  "6", sm.bin.val = "0.44",
            case_longname = "T2M between 4 and 8 | SM between 0.42 and 0.46"))
 
-
 # filter out
 df_r <- bind_rows(
   df_r_all %>% 
@@ -62,7 +61,9 @@ df_m <- df_r %>%
 
 plot.case <- function(caseID, varname){
   
-  ebarheight <- 0.05
+  if(varname == 'LST'){ ebarheight <- 0.05 }
+  if(varname == 'Albedo'){ ebarheight <- 0.0005 }
+  
   ebarwidth <- 0.02
 
 # some graphic param...
@@ -108,6 +109,7 @@ g <- ggplot(df_r %>% filter(case == caseID)) +
 
 g1 <- plot.case(caseID = 'A', varname = 'LST')
 g2 <- plot.case(caseID = 'B', varname = 'LST')
+
 
 #### Export the figure ####
 
