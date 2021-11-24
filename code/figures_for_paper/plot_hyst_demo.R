@@ -115,8 +115,8 @@ g2 <- plot.case(caseID = 'B', varname = 'LST')
 
 
 # plotting details, in case not inherited... 
-if(exists(fig.path) != T){ fig.path <- 'paper/figures/'}
-if(exists(fig.fmt) != T){ fig.fmt <- 'png'}
+if(exists('fig.path') != T){ fig.path <- 'paper/figures/'}
+if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
 
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 
