@@ -80,8 +80,8 @@ df_hw = data.frame(row.names=c("hw2003","hw2010","hw2018") , year=c(2003, 2010, 
 
 
 # loop over the case studies
-# create a single dataframe of all variables binded 
-df <- data.frame()
+# create a single dataframe of all heatwaves and all variables binded 
+df_all <- data.frame()
 
 for( i in 1:dim(df_hw)[1] ){
   case_study <- row.names(df_hw)[i]
@@ -98,6 +98,8 @@ for( i in 1:dim(df_hw)[1] ){
 # Get statistics of average conditions in df 
 # Get statistics of heatwave relative to average conditions in df
 
+df_vars <- data.frame()
+  
 for (i in 1:length(var_list)){
   variable_i <- var_list[i] ; print(variable_i)
   input_file <- paste0('df_comb___',variable_i,'.RData')
@@ -106,6 +108,7 @@ for (i in 1:length(var_list)){
   ###################################################
   ######     APPLY DF CLEANING REDUCTIONS       #####
 
+  if( grepl('albedo', input_file)  && case_study == 'hw2018'){ print('No 2018 albedo; skip ') ; next}
   df <- df_comb %>% filter(year >= start_year & year <= end_year & month == v_month) %>%
     filter(x >= v_lon_min  & x <= v_lon_max) %>%
     filter( y >= v_lat_min & y <= v_lat_max ) 
@@ -146,18 +149,23 @@ for (i in 1:length(var_list)){
     mutate(diff_simSobsSmean   = (diff_simSobs - diff_simSobs_mean) ) %>%                        # difference between (ERA5-sat) and (sat-ERA5 LT mean)
     mutate(z_score_simSobs     = diff_simSobsSmean/sd_diff_simSobs )                             # z-score of (ERA5-sat) in heatwave  - is this month an especially large ERA5-satellite variation
   
+  df_year$variable <- variable_i
+  if (0 %in% dim(df_vars)){ df_vars <- df_year }
+  else{ df_vars <- rbind(df_vars, df_year ) }
+  
      
 } # END LOOP OVER VARIABLES
 
-if (0 %in% dim(df)){ df <- df_year }
-else{ df <- rbind(df, df_year ) }
-  
-print(paste0('saving: ') )
-save(df, file = paste0(output_path, case_study, '_', variable_i, '_stats', '.RData') ) 
-  
+df_vars$hw <- case_study
+if (0 %in% dim(df_all)){ df_all <- df_vars }
+else{ df_all <- rbind(df_all, df_vars ) }
+df_all$variable <- factor(df_all$variable)
+df_all$hw <- factor(df_all$hw)
 
 } # END LOOP OVER HEATWAVES
 
+print(paste0('saving: ', output_path) )
+save(df_all, file = paste0(output_path, 'hwAll_varAll_stats', '.RData') ) 
 
 ###################################################
 ######     FINALISE                           #####
