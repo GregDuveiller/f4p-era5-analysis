@@ -36,10 +36,9 @@ full_date <- as.character(Sys.time()) ; full_date <- strsplit(full_date, " ") ; 
 
 ######     GLOBAL VARS                        #####
 
-# update to rproject or here()
+# update to rproject or here() - place the local data directory here:
 dir_path <- paste0('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/') # replace with git data directory
-# shape files from https://www.naturalearthdata.com/downloads/50m-physical-vectors/
-shape_path <-      '/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/shape_files/'
+
 
 ######     SET LIBRARIES                      #####
 library(chron) # useful for converting time values
@@ -61,8 +60,6 @@ library(sp)
 library(rgdal)
 library(sf)         # (Greg maps) for adding maps to ggplot
 library(RColorBrewer)
-library(nlme)      # for lmList
-require(ggpubr)     # for multiple ggplots on one plot and adding lm to plots with stat_regline_equation
 
 ###################################################
 ######       I/O                                ###
@@ -221,8 +218,7 @@ axis_text_size = 30;
 agg_fact <- 1 # no aggregation
 map_legend_size <- 0.75
 
-
-# # histogram/scatter settings
+# # histogram/scatter settings - if we chose to add
 # #wid <- 15 ; hei <- 24 # readjusted for paper
 # wid <- 16 ; hei <- 10 #original
 # n_bins <- 50
@@ -304,7 +300,7 @@ grid.arrange(m_LST_anom_2003 , m_LST_biasDiff_2003 ,m_LAI_biasDiff_2003 , m_E_bi
              m_LST_anom_2018 , m_LST_biasDiff_2018 ,m_LAI_biasDiff_2018 , m_E_biasDiff_2018, 
              nrow=3, ncol=5  ) # bottom = 'Longitude', left = 'Latitude' # padding = unit(5, "cm")
 dev.off()
-
+  
 
 
 ###################################################
@@ -315,3 +311,4 @@ end_time <- Sys.time()
 print(end_time - start_time)
 
 
+  
