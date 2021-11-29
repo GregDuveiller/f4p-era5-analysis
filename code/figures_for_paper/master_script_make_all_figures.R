@@ -26,6 +26,7 @@ source('code/figures_for_paper/plot_hyst_demo.R')
 
 
 #### Figure for the full hysteresis climate space ####
+source('code/figures_for_paper/plot_hyst_climspace.R')
 
 
 #### Figure for the interannual correlation maps ####
