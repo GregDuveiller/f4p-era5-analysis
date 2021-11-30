@@ -36,6 +36,7 @@ source('code/figures_for_paper/plot_hyst_climspace.R')
 
 
 #### Figure for heat wave maps ####
+source('code/figures_for_paper/plot_heatwaves.R')
 
 
 

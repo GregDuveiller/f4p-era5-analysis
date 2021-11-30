@@ -9,8 +9,7 @@
 
 #### Initialization ####
 
-require(dplyr)
-require(tidyr)
+require(rgdal)
 
 
 #### Load map shapefiles ####
@@ -40,5 +39,5 @@ unproj_proj4string <- proj4string(coast_lines)
 
 #### Export the data ####
 
-save('coast_lines', 'grat30_lines', 'bb_lines', file = 'data/figures_for_paper/hwAll_gislayers.RData')
+save('coast_lines', 'grat30_lines', 'bb_lines', 'unproj_proj4string', file = 'data/figures_for_paper/hwAll_gislayers.RData')
 
