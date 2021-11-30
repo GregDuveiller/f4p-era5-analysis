@@ -34,6 +34,7 @@ load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- ...
 # some graphic param...
 lgd <- theme(legend.position = 'top',
              legend.key.width = unit(1.2, units = 'cm'),
+             panel.background = element_rect(fill = 'grey50'),
              panel.grid = element_blank(),
              axis.title = element_blank(),
              strip.text = element_text(size = 12)) 
@@ -41,11 +42,17 @@ gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5,
                                     frame.colour = 'black', ticks.colour = 'black'))
 
 
-# LS T anomaly
+xlims <- c(-12, 58); ylims <- c(36, 71)
+
+hw_labeller <- labeller(
+  hw = c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018'))
+
+# LST anomaly
 gGEN <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_obsSmean)) +
-  facet_grid(hw~.) + 
-  coord_cartesian(expand = F) +
+  geom_sf(data = coastlines_europe) +
+  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+  facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LST anomaly [K]', 
                        colours = rev(brewer.pal(11, "RdYlBu")), 
                        limits = c(-15, 15), 
@@ -56,8 +63,9 @@ gGEN <- ggplot(df_all %>% filter(variable == 'LST')) +
 # LST shift
 gLST <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  facet_grid(hw~.) + 
-  coord_cartesian(expand = F) +
+  geom_sf(data = coastlines_europe) +
+  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+  facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LST bias shift [K]', 
                        colours = rev(brewer.pal(11, "RdBu")), 
                        limits = c(-4.5, 4.5), 
@@ -68,8 +76,9 @@ gLST <- ggplot(df_all %>% filter(variable == 'LST')) +
 # LAI shift
 gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  facet_grid(hw~.) + 
-  coord_cartesian(expand = F) +
+  geom_sf(data = coastlines_europe) +
+  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+  facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LAI bias shift [m2/m2]', 
                        colours = rev(brewer.pal(11, "BrBG")), 
                        limits = c(-1.5, 1.5),
@@ -80,8 +89,9 @@ gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) +
 # E shift
 gEVA <- ggplot(df_all %>% filter(variable == 'E')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  facet_grid(hw~.) + 
-  coord_cartesian(expand = F) +
+  geom_sf(data = coastlines_europe) +
+  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+  facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Evaporation bias shift [mm]', 
                        colours = rev(brewer.pal(11, "PRGn")), 
                        limits = c(-50, 50), 
@@ -91,8 +101,9 @@ gEVA <- ggplot(df_all %>% filter(variable == 'E')) +
 # Albedo shift
 gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  facet_grid(hw~.) + 
-  coord_cartesian(expand = F) +
+  geom_sf(data = coastlines_europe) +
+  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+  facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Albedo bias shift [.]', 
                        colours = rev(brewer.pal(11, "PuOr")), 
                        limits = c(-0.05, 0.05), oob = squish) +
@@ -115,7 +126,7 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.name <- 'heatwaves'
 
 ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g,
-       path = fig.path, width = 14, height = 8)
+       path = fig.path, width = 16, height = 8)
 
 
 
