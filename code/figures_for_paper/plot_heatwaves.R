@@ -49,10 +49,13 @@ xlims <- c(-12, 58); ylims <- c(36, 71)
 hw_labeller <- labeller(
   hw = c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018'))
 
+
+
 # LST anomaly
 gGEN <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_obsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) +
   scale_fill_gradientn('LST anomaly [K]', 
@@ -66,6 +69,7 @@ gGEN <- ggplot(df_all %>% filter(variable == 'LST')) +
 gLST <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LST bias shift [K]', 
@@ -79,6 +83,7 @@ gLST <- ggplot(df_all %>% filter(variable == 'LST')) +
 gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LAI bias shift [m2/m2]', 
@@ -92,6 +97,7 @@ gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) +
 gEVA <- ggplot(df_all %>% filter(variable == 'E')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Evaporation bias shift [mm]', 
@@ -104,6 +110,7 @@ gEVA <- ggplot(df_all %>% filter(variable == 'E')) +
 gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Albedo bias shift [.]', 
