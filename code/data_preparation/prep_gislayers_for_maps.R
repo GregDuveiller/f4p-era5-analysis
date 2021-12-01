@@ -9,7 +9,6 @@
 
 #### Initialization ####
 
-require(rgdal)
 require(sf)
 
 #### Load map shapefiles ####
@@ -19,62 +18,29 @@ require(sf)
 coast_shapefile <- "data/input_data/vector_layers/ne_50m_coastline.shp"
 coast <- sf::st_read(coast_shapefile, quiet = TRUE)
 
-
-#### Arrange the data ####
-
-xmin <- -12; xmax <- 58; ymin <- 26; ymax <- 71
-bbox <- c(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
-
-coastlines_europe <- sf::st_crop(coast, y = bbox) 
-plot(coastlines_europe)
-
-
-#### Export the data ####
-
-save('coastlines_europe', file = 'data/figures_for_paper/hwAll_gislayers.RData')
-
-
-
-
-
-
-# Trying to get a cropped ocean vector 
-land_shapefile <- "data/input_data/vector_layers/ne_50m_land.shp"
-land <- sf::st_read(land_shapefile, quiet = TRUE)
-
 ocean_shapefile <- "data/input_data/vector_layers/ne_50m_ocean.shp"
 ocean <- sf::st_read(ocean_shapefile, quiet = TRUE)
 
+
+#### Arrange the data ####
+
+# define a bounding box
 xmin <- -12; xmax <- 58; ymin <- 26; ymax <- 71
 bbox <- c(xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
 
+# specify that spherical geometry should NOT be used
+sf_use_s2(FALSE)
+
+# crop vectors with the bounding boxes
+coast_europe <- sf::st_crop(coast, y = bbox) 
 ocean_europe <- sf::st_crop(ocean, y = bbox) 
-plot(ocean)
-plot(ocean_europe)
 
-plot(st_crop(ocean, st_bbox(bbox)))
+#### Export the data ####
 
-
-require(raster)
-ocean_europe <- sf::st_intersection(ocean, st_set_crs(
-  st_as_sf(as(raster::extent(-12, 58, 36, 71), "SpatialPolygons")), st_crs(ocean))) 
-plot(ocean_europe)
-
-
-# bbox <- matrix(c(xmin,ymin,xmax,ymin,xmax,ymax,xmin,ymax,xmin,ymin), ncol = 2, byrow = TRUE)
-# bbox_sf <- st_sfc(st_polygon(x = list(bbox))) %>% st_set_crs(st_crs(ocean))
- 
+save('ocean_europe', 'coast_europe', file = 'data/figures_for_paper/hwAll_gislayers.RData')
 
 
 
-
-
-world <- sf::st_read(coast_shapefile, quiet = TRUE)
-world <- sf::st_read(land_shapefile, quiet = TRUE)
-laes_prj <- "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +units=m +no_defs"
-europe_laea <- sf::st_intersection(world, st_set_crs(
-  st_as_sf(as(raster::extent(-10, 55, 26, 72), "SpatialPolygons")), st_crs(world))) %>%
-  st_transform(laes_prj)
 
 
 

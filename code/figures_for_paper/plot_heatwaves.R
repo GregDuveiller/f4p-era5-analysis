@@ -42,6 +42,8 @@ gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5,
                                     frame.colour = 'black', ticks.colour = 'black'))
 
 
+
+
 xlims <- c(-12, 58); ylims <- c(36, 71)
 
 hw_labeller <- labeller(
@@ -50,9 +52,9 @@ hw_labeller <- labeller(
 # LST anomaly
 gGEN <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_obsSmean)) +
-  geom_sf(data = coastlines_europe) +
+  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hw~., labeller = hw_labeller) +
   scale_fill_gradientn('LST anomaly [K]', 
                        colours = rev(brewer.pal(11, "RdYlBu")), 
                        limits = c(-15, 15), 
@@ -63,7 +65,7 @@ gGEN <- ggplot(df_all %>% filter(variable == 'LST')) +
 # LST shift
 gLST <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = coastlines_europe) +
+  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LST bias shift [K]', 
@@ -76,7 +78,7 @@ gLST <- ggplot(df_all %>% filter(variable == 'LST')) +
 # LAI shift
 gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = coastlines_europe) +
+  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('LAI bias shift [m2/m2]', 
@@ -89,7 +91,7 @@ gLAI <- ggplot(df_all %>% filter(variable == 'LAI')) +
 # E shift
 gEVA <- ggplot(df_all %>% filter(variable == 'E')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = coastlines_europe) +
+  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Evaporation bias shift [mm]', 
@@ -101,7 +103,7 @@ gEVA <- ggplot(df_all %>% filter(variable == 'E')) +
 # Albedo shift
 gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = coastlines_europe) +
+  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
   scale_fill_gradientn('Albedo bias shift [.]', 
