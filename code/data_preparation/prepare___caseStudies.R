@@ -71,8 +71,9 @@ v_lon_min <- -12 ; v_lon_max <- 58  ; v_lat_min <- 36 ; v_lat_max <- 71 # limits
 # create a df key containing the name, year and month of each heatwave at maximum
 # # Russian heatwave https://earthobservatory.nasa.gov/images/45069/heatwave-in-russia  
 # https://en.wikipedia.org/wiki/2018_European_heat_wave - no specific month, generally May-July. But July is hottest and prob most out of kilter with LAI map (through browning)
-df_hw = data.frame(row.names=c("hw2003","hw2010","hw2018") , year=c(2003, 2010, 2018), month=c(8,7,7))
-
+df_hw <- data.frame(row.names = c("hw2003", "hw2010", "hw2018"),
+                    year = c(2003, 2010, 2018),
+                    month = c(8, 7, 7))
 
 # loop over the case studies
 # create a single dataframe of all heatwaves and all variables binded 
