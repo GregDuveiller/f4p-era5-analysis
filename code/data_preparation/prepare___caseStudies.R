@@ -35,13 +35,10 @@ full_date <- as.character(Sys.time()) ; full_date <- strsplit(full_date, " ")
 full_time <- full_date[[1]][2] ; full_date <- full_date[[1]][1]
 
 ######     GLOBAL VARS  TO CHECK AND CHANGE   #####
-# select base directory for changing between GIT locations - this should be all a user has to change
 
 # input files are the 'df_comb___var.RData' produced by Greg's script
-input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/' # GREG - if you want to run this script - you need to set this to your df_comb___var.RData. I tried to build the scripts around your files
-output_dir   <- '/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/' # '/media/mark/HD/Mark/Mark_COPERNICUS/figures/COPERNICUSII_V3/'
-### basic information for naming I/O
-script_info <-'COP_caseStudies'       # 
+input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
+
 # list of variables to run over
 var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM',
 
@@ -54,11 +51,9 @@ require(tidyr)
 ######       I/O                                ###
 ###################################################
 
-
-# output_path <- paste0(output_dir, full_date, '_', script_info,'/')
-output_path <- paste0(output_dir, script_info,'/data/')
+output_path <- 'data/figures_for_paper/'
 print(paste0('output_path is : ', output_path ))
-if(! dir.exists(output_path)) {dir.create(paste0(output_path),recursive=T)}
+if(!dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
 ###################################################
 ######     CASE STUDY parameters              #####
