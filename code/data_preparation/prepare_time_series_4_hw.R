@@ -1,5 +1,6 @@
-
-
+library(dplyr)
+library(tidyr)
+library(sf)
 
 load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons
 
@@ -21,6 +22,7 @@ df_hw <- data.frame(row.names = c("hw2003", "hw2010", "hw2018"),
                     year = c(2003, 2010, 2018),
                     month = c(8, 7, 7))
 
+hw_bbox <- hw_polygons %>% filter(hw == 'hw2003') %>% st_bbox()
 
 i <- 1
 
@@ -29,15 +31,22 @@ variable_i <- var_list[i] ; print(variable_i)
 input_file <- paste0('df_comb___',variable_i,'.RData')
 load(paste0(input_dir, input_file))
 
-hw_polygons
+
+df_subsetHW <- df_comb %>%
+  filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%
+  filter(y >= hw_bbox$ymin & y <= hw_bbox$ymax)
+
+rm(df_comb)
 
 
+mutate(time = as.Date(paste(year, month, '15', sep = '-'), '%Y-%M-%d')) %>%
+  #filter(x == -125.125, y == 72.375) %>%  #  <---- need to replace this... 
 
-ts <- df_comb %>%
-  filter(x == -125.125, y == 72.375) %>%  #  <---- need to replace this... 
-  mutate(time = as.Date(paste(year, month, '15', sep = '-'), '%Y-%M-%d'))
+%>%
+    group_by(time) %>%
+    summarise(obs = mean(obs, na.rm = T), sim = mean(sim, na.rm = T))
 
-
+    
 ts_all <- ts %>% 
   group_by(month) %>%
   summarise(clim_obs = mean(obs),
