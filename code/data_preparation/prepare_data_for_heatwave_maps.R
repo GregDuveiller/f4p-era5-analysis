@@ -1,3 +1,14 @@
+#!/usr/local/bin/Rscript
+# ---------------------------------------------------------------------------- #
+# #### prepare_data_for_heatwave_maps.R ####
+# ---------------------------------------------------------------------------- #
+# Purpose: prepare the data to generate maps of heatwaves and effect on biases
+# Project: f4p-era5-analysis
+# Authors: G.Duveiller
+# ---------------------------------------------------------------------------- #
+
+
+
 # original name : prepare_caseStudies.R
 #
 # ########################################################
@@ -40,7 +51,7 @@ full_time <- full_date[[1]][2] ; full_date <- full_date[[1]][1]
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
 
 # list of variables to run over
-var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM',
+var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis_MCD43C3') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM',
 
 ######     SET LIBRARIES                      #####
 library(chron) # useful for converting time values
@@ -104,7 +115,7 @@ for (i in 1:length(var_list)){
   ###################################################
   ######     APPLY DF CLEANING REDUCTIONS       #####
 
-  if( grepl('albedo', input_file)  && case_study == 'hw2018'){ print('No 2018 albedo; skip ') ; next}
+  #if( grepl('albedo', input_file)  && case_study == 'hw2018'){ print('No 2018 albedo; skip ') ; next}
   df <- df_comb %>% filter(year >= start_year & year <= end_year & month == v_month) %>%
     filter(x >= v_lon_min  & x <= v_lon_max) %>%
     filter( y >= v_lat_min & y <= v_lat_max ) 

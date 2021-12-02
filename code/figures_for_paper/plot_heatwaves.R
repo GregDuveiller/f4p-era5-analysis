@@ -107,7 +107,7 @@ gEVA <- ggplot(df_all %>% filter(variable == 'E')) +
   gds + lgd
 
 # Albedo shift
-gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis')) + 
+gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis_MCD43C3')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
