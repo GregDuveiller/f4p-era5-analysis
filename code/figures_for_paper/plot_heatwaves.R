@@ -18,10 +18,6 @@ require(dplyr)
 require(RColorBrewer)
 require(patchwork)
 
-# require(rasterVis)
-# require(raster)
-# require(gridExtra)
-
 #### Load the data ####
 
 load('data/figures_for_paper/hwAll_varAll_stats.RData')   # <---- "df_all" 
@@ -40,8 +36,6 @@ lgd <- theme(legend.position = 'top',
              strip.text = element_text(size = 12)) 
 gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
                                     frame.colour = 'black', ticks.colour = 'black'))
-
-
 
 
 xlims <- c(-12, 58); ylims <- c(36, 71)
@@ -107,7 +101,7 @@ gEVA <- ggplot(df_all %>% filter(variable == 'E')) +
   gds + lgd
 
 # Albedo shift
-gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis_MCD43C3')) + 
+gALB <- ggplot(df_all %>% filter(variable == 'albedo')) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
@@ -118,9 +112,38 @@ gALB <- ggplot(df_all %>% filter(variable == 'albedo_wsa_vis_MCD43C3')) +
                        limits = c(-0.05, 0.05), oob = squish) +
   gds + lgd
 
+
+
+# bar plots below... 
+
+df_bars <- df_barsHW_all %>% 
+  filter(metric %in% c('bias_hw_mu', 'bias_cl_mu'))
+
+ggplot(df_bars %>% filter(variable == 'LST')) + 
+  geom_col(aes(x = hw, fill = metric, y = value), 
+           colour = 'grey50', position = 'dodge') + 
+  geom_hline(yintercept = 0, colour = 'grey20') +
+  scale_y_continuous('Bias in LAI (ERA - obs)') +
+  scale_fill_manual('', 
+                    values = c('white', 'grey80'),
+                    labels = c('bias_hw_mu' = 'Year of heatwave',
+                               'bias_cl_mu' = 'Mean over 2003 to 2018')) +
+  theme(legend.position = 'bottom',
+        axis.title.x = element_blank())
+
+
+bLAI <- ggplot(df_barsHW_all %>% 
+                 filter(metric %in% c('bias_hw_mu', 'bias_cl_mu')) %>%
+                 filter(variable == 'LAI')) + 
+  geom_col(aes(x = hw, fill = metric, y = value), position = 'dodge')
+
+
+
+
 # assemble together
 
 g <- gGEN + gLST + gLAI + gEVA + gALB + plot_layout(ncol = 5)
+
 
 
 #### Export the figure ####
