@@ -46,7 +46,7 @@ col_pal_df <- data.frame(
   LST = rev(brewer.pal(11, "RdBu")),
   LAI = rev(brewer.pal(11, "BrBG")),
   E = rev(brewer.pal(11, "PRGn")),
-  albedo = rev(brewer.pal(11, "PuOr")),
+  Albedo = rev(brewer.pal(11, "PuOr")),
   stringsAsFactors = F)
 
 
@@ -117,7 +117,7 @@ gEVA <- ggplot(df_all %>% filter(variable == varname)) +
   gds + lgd
 
 # Albedo shift
-varname <- 'albedo'
+varname <- 'Albedo'
 gALB <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
@@ -163,18 +163,20 @@ mk_gbar_plot <- function(varname){
 gbarLST <- mk_gbar_plot('LST')
 gbarLAI <- mk_gbar_plot('LAI')
 gbarEVA <- mk_gbar_plot('E')
-gbarALB <- mk_gbar_plot('albedo')
+gbarALB <- mk_gbar_plot('Albedo')
 
 
 
 
 gText <- ggplot() + 
+  ### We could play around to pur an arrow ... but this would need a box
+  # geom_segment(aes(x = 1.05, y = 1, xend = 1.02, yend = 1),
+  #              arrow = arrow(length = unit(0.2, "cm"))) +
   annotate("text", 
            x = 1, y = 1,
-           size = 3, lineheight = 0.9, 
+           size = 3, lineheight = 1, 
            vjust = "inward", hjust = "inward",
            label = "These bars on the left represent\nthe mean spatial biases for each\nvariable and heatwave. The lighter\nbar represents the climatological\nbias while the darker one represent\nthe one for the year of the heatwave") + 
-  coord_cartesian(expand =F)  +
   theme_void()
 
 
@@ -184,10 +186,6 @@ gText <- ggplot() +
 
 g <- gGEN + gLST + gLAI + gEVA + gALB + gText + gbarLST + gbarLAI + gbarEVA + gbarALB +
   plot_layout(ncol = 5, heights = c(5,1))
-
-# g <- plot_spacer() + gbarLST + gbarLAI + gbarEVA + gbarALB +
-#   gGEN + gLST + gLAI + gEVA + gALB + 
-#   plot_layout(ncol = 5, heights = c(1,5))
 
 
 #### Export the figure ####

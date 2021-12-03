@@ -22,7 +22,7 @@ require(tidyr)
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
 
 # list of variables to run over
-var_list <- c('LAI', 'LST',  'E', 'albedo')  # "albedo" is "albedo_wsa_vis_MCD43C3"
+var_list <- c('LAI', 'LST',  'E', 'Albedo')  # "Albedo" is "albedo_wsa_vis_MCD43C3"
 
 # here select the year, month, spatial extent of heatwave in question.
 # select also time period to compare it to (e.g. 2003-2018).
