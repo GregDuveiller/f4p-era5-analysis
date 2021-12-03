@@ -119,31 +119,30 @@ gALB <- ggplot(df_all %>% filter(variable == 'albedo')) +
 df_bars <- df_barsHW_all %>% 
   filter(metric %in% c('bias_hw_mu', 'bias_cl_mu'))
 
-ggplot(df_bars %>% filter(variable == 'LST')) + 
-  geom_col(aes(x = hw, fill = metric, y = value), 
-           colour = 'grey50', position = 'dodge') + 
-  geom_hline(yintercept = 0, colour = 'grey20') +
-  scale_y_continuous('Bias in LAI (ERA - obs)') +
-  scale_fill_manual('', 
-                    values = c('white', 'grey80'),
-                    labels = c('bias_hw_mu' = 'Year of heatwave',
-                               'bias_cl_mu' = 'Mean over 2003 to 2018')) +
-  theme(legend.position = 'bottom',
-        axis.title.x = element_blank())
+mk_gbar_plot <- function(varname){
+  gbars <- ggplot(df_bars %>% filter(variable == varname)) + 
+    geom_col(aes(x = hw, fill = metric, y = value), 
+             colour = 'grey20', position = 'dodge') + 
+    geom_hline(yintercept = 0, colour = 'grey20') +
+    scale_y_continuous(paste0('Bias in ', varname, ' (ERA - obs)')) +
+    scale_fill_manual('', 
+                      values = c('lightyellow', 'orangered'),
+                      labels = c('bias_hw_mu' = 'Year of heatwave',
+                                 'bias_cl_mu' = 'Mean over 2003 to 2018')) +
+    theme_classic() + 
+    theme(legend.position = 'none',
+          axis.title.x = element_blank())
+}
 
-
-bLAI <- ggplot(df_barsHW_all %>% 
-                 filter(metric %in% c('bias_hw_mu', 'bias_cl_mu')) %>%
-                 filter(variable == 'LAI')) + 
-  geom_col(aes(x = hw, fill = metric, y = value), position = 'dodge')
-
-
-
+gbarLST <- mk_gbar_plot('LST')
+gbarLAI <- mk_gbar_plot('LAI')
+gbarEVA <- mk_gbar_plot('E')
+gbarALB <- mk_gbar_plot('albedo')
 
 # assemble together
 
-g <- gGEN + gLST + gLAI + gEVA + gALB + plot_layout(ncol = 5)
-
+g <- gGEN + gLST + gLAI + gEVA + gALB + plot_spacer() + gbarLST + gbarLAI + gbarEVA + gbarALB +
+  plot_layout(ncol = 5, heights = c(5,1))
 
 
 #### Export the figure ####
@@ -156,9 +155,9 @@ if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 
 fig.name <- 'heatwaves'
-
+ 
 ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g,
-       path = fig.path, width = 16, height = 8)
+       path = fig.path, width = 16, height = 9)
 
 
 
