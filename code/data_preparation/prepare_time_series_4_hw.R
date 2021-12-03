@@ -23,56 +23,42 @@ df_hw <- data.frame(row.names = c("hw2003", "hw2010", "hw2018"),
                     month = c(8, 7, 7))
 
 
+varname <- 'LAI'
+load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
 
-get_hw_spatial_average <- function(hwname, varname){
-  
-  load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
+get_hw_spatial_average <- function(hwname, df_comb){
   
   hw_bbox <- hw_polygons %>% filter(hw == hwname) %>% st_bbox()
   
   df_subsetHW <- df_comb %>%
     filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%
     filter(y >= hw_bbox$ymin & y <= hw_bbox$ymax)
-  
-  rm(df_comb)
-  
+
   df_subset_ts <- df_subsetHW  %>%
     group_by(year, month) %>%
     summarise(obs = mean(obs, na.rm = T), sim = mean(sim, na.rm = T)) %>%
     mutate(time = as.Date(paste(year, month, '15', sep = '-'), '%Y-%M-%d'),
-           varname = varname,
            hwname = hwname)
   
   return(df_subset_ts)
 }
 
-df_subset_1 <- get_hw_spatial_average(hwname = 'hw2003', varname = 'LAI')
-df_subset_2 <- get_hw_spatial_average(hwname = 'hw2010', varname = 'LAI')
-df_subset_3 <- get_hw_spatial_average(hwname = 'hw2018', varname = 'LAI')
-
-df_subset_ts <- bind_rows(df_subset_1, df_subset_2, df_subset_3)
-
 df_subset_ts <- bind_rows(
-  get_hw_spatial_average(hwname = 'hw2003', varname = 'LST'),
-  get_hw_spatial_average(hwname = 'hw2010', varname = 'LST'),
-  get_hw_spatial_average(hwname = 'hw2018', varname = 'LST')
+  get_hw_spatial_average(hwname = 'hw2003', df_comb),
+  get_hw_spatial_average(hwname = 'hw2010', df_comb),
+  get_hw_spatial_average(hwname = 'hw2018', df_comb)
 )
 
-
-df_subset_ts <- bind_rows(
-  get_hw_spatial_average(hwname = 'hw2003', varname = 'E'),
-  get_hw_spatial_average(hwname = 'hw2010', varname = 'E'),
-  get_hw_spatial_average(hwname = 'hw2018', varname = 'E')
-)
+rm(df_comb)
 
 
+start_year <- 2003; end_year <- 2018
 
 hw_clim_ts <- df_subset_ts %>% 
+  filter(year >= start_year & year <= end_year ) %>%
   group_by(month, hwname) %>%
   summarise(clim_obs = mean(obs, na.rm = T),
             clim_sim = mean(sim, na.rm = T))
-
-
 
 ts_all <- df_subset_ts %>% 
   filter(hwname == paste0('hw', year)) %>%
@@ -96,44 +82,43 @@ ggplot(ts_all, aes(x = month)) +
 
 
 
-start_year <- 2003; end_year <- 2018
-
-dd_clim <- df_subsetHW %>% 
-  filter(year >= start_year & year <= end_year ) %>%
-  group_by(x, y, month) %>% 
-  summarise(obs_clim = mean(obs, na.rm = T),
-            sim_clim = mean(sim, na.rm = T))
-
-dd_hw <- df_subsetHW %>% filter(year == 2003, month == 8)
-
-ggplot(dd_clim %>% filter(month == 8)) + 
-  geom_raster(aes(x = x,  y = y,fill = sim_clim - obs_clim)) + 
-  scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
-                          limits = c(-3, 3)) + 
-  facet_wrap( ~ month) + 
-  ggtitle('Climatological bias') + 
-  theme(legend.position = 'bottom')
-
-ggplot(dd_hw) + 
-  geom_raster(aes(x = x, y = y, fill = sim - obs)) + 
-  scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
-                       limits = c(-3, 3)) + 
-  facet_wrap( ~ month) + ggtitle('HW2003 bias') + 
-  theme(legend.position = 'bottom')
-
-ggplot(dd_hw %>% left_join(dd_clim, by = c('month', 'x', 'y')) %>% filter(month == 8)) + 
-  geom_raster(aes(x = x, y = y, fill = (sim - sim_clim) - (obs - obs_clim))) + 
-  scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(7, 'BrBG')),
-                       limits = c(-1.5, 1.5)) + 
-  facet_wrap(~month) + 
-  ggtitle('difference in bias') + 
-  theme(legend.position = 'bottom')
-
-
-
-dum <- dd_hw %>% 
-  left_join(dd_clim, by = c('month', 'x', 'y')) %>% 
-  filter(month == 8) %>% 
-  mutate(bias = (sim - sim_clim) - (obs - obs_clim))
-
-#}
+# 
+# dd_clim <- df_subsetHW %>% 
+#   filter(year >= start_year & year <= end_year ) %>%
+#   group_by(x, y, month) %>% 
+#   summarise(obs_clim = mean(obs, na.rm = T),
+#             sim_clim = mean(sim, na.rm = T))
+# 
+# dd_hw <- df_subsetHW %>% filter(year == 2003, month == 8)
+# 
+# ggplot(dd_clim %>% filter(month == 8)) + 
+#   geom_raster(aes(x = x,  y = y,fill = sim_clim - obs_clim)) + 
+#   scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
+#                           limits = c(-3, 3)) + 
+#   facet_wrap( ~ month) + 
+#   ggtitle('Climatological bias') + 
+#   theme(legend.position = 'bottom')
+# 
+# ggplot(dd_hw) + 
+#   geom_raster(aes(x = x, y = y, fill = sim - obs)) + 
+#   scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
+#                        limits = c(-3, 3)) + 
+#   facet_wrap( ~ month) + ggtitle('HW2003 bias') + 
+#   theme(legend.position = 'bottom')
+# 
+# ggplot(dd_hw %>% left_join(dd_clim, by = c('month', 'x', 'y')) %>% filter(month == 8)) + 
+#   geom_raster(aes(x = x, y = y, fill = (sim - sim_clim) - (obs - obs_clim))) + 
+#   scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(7, 'BrBG')),
+#                        limits = c(-1.5, 1.5)) + 
+#   facet_wrap(~month) + 
+#   ggtitle('difference in bias') + 
+#   theme(legend.position = 'bottom')
+# 
+# 
+# 
+# dum <- dd_hw %>% 
+#   left_join(dd_clim, by = c('month', 'x', 'y')) %>% 
+#   filter(month == 8) %>% 
+#   mutate(bias = (sim - sim_clim) - (obs - obs_clim))
+# 
+# #}
