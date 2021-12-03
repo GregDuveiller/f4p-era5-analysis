@@ -42,7 +42,7 @@ ocean_europe <- sf::st_crop(ocean, y = bbox)
 
 df_hw2003 <- data.frame(lon = c(-5, 10), lat = c(43, 52))
 df_hw2010 <- data.frame(lon = c(35, 57), lat = c(48, 58))
-df_hw2018 <- data.frame(lon = c( 4, 16), lat = c(50, 62))
+df_hw2018 <- data.frame(lon = c(-2, 16), lat = c(48, 60))
 
 # arrange all in a list of lists 
 # (there might be a better way to do this)
