@@ -9,6 +9,7 @@
 
 require(dplyr)
 require(tidyr)
+require(sf)
 
 
 #### Get the necessary data ####
@@ -55,23 +56,30 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, harmonic_n = 3){
               x_sd = sd(x))
   
   # fit the hysteresis curve decomposing x and y 
-  # (we do it on the raw data instead of the means, but resuylt is identical)
+  # (we do it on the raw data instead of the means, but result is identical)
   y <- rep(df$y, times = 3)
   x <- rep(df$x, times = 3)
   t <- c(df$monthS - 12, df$monthS, df$monthS + 12)
   per <- 12
   
+  # simple linear fit (as general indicator... not clear if useful)
   lmfit <- lm(y ~ x)
+  
+  # Harmonic fit on both x and y... 
+  if(harmonic_n == 3){   # third order harmonic fit ...
+    tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+    txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
+  }
+  if(harmonic_n == 2){   # second harmonic fit ...
+    tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+    txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+  }   
   
   # # more complicated fits...
   # tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t))
   # txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t)) 
-  # third order harmonics ? ...
-  tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
-  txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t))
-  # # second harmonic fits
-  # tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
-  # txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
+
+  
   
   df_s <- data.frame(t = seq(0.5,12.5,0.1))
   df_s$y <- predict.lm(tyfit, df_s)
