@@ -25,37 +25,54 @@ require(patchwork)
 load('data/figures_for_paper/hysteresis_map_ready4fig.RData')   # <----- df_hyst_map
 
 
-#### Make the data ####
+#### Make the plots ####
+
+lgd <- theme(legend.position = 'right',
+             legend.key.height = unit(1.2, units = 'cm'),
+             panel.background = element_rect(fill = 'grey90'),
+             panel.grid = element_blank()) 
+gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
+                                    frame.colour = 'black', ticks.colour = 'black'))
+
+
+lgd_map <-   theme(legend.position = 'none',
+                   panel.background = element_rect(fill = 'grey90'),
+                   panel.grid = element_blank(),
+                   axis.title = element_blank())
 
 gmapBiasI <- ggplot(df_hyst_map) + 
   geom_tile(aes(x = x, y = y, fill = biasI)) +
   scale_fill_gradientn(colours = brewer.pal(9, 'RdYlGn')) + 
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
-  theme(legend.position = 'right',
-        legend.key.height = unit(1.4, units = 'cm'),
-        axis.title = element_blank())
+  lgd_map
 
 gcspBiasI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = t2.clim, y = sm.clim, fill = biasI)) +
-  scale_fill_gradientn(colours = brewer.pal(9, 'RdYlGn')) + 
+  scale_fill_gradientn('', colours = brewer.pal(9, 'RdYlGn')) + 
+  scale_x_continuous('Mean annual temperature') +
+  scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +
-  theme(legend.position = 'none')
+  ggtitle('Which is the dominating bias?', subtitle = '(green for LAI, red for LST)') +
+  lgd + gds
+  # theme(legend.position = 'bottom',
+  #       legend.key.width = unit(1.4, units = 'cm'),
+  #       axis.title = element_blank())
 
 
 gmapHystI <- ggplot(df_hyst_map) + 
   geom_tile(aes(x = x, y = y, fill = hystI)) +
   scale_fill_viridis_c(option = 'F') +
-  coord_cartesian(expand = F) +
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
-  theme(legend.position = 'right',
-        legend.key.height = unit(1.4, units = 'cm'),
-        axis.title = element_blank())
+  lgd_map
 
 gcspHystI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = t2.clim, y = sm.clim, fill = hystI)) +
-  scale_fill_viridis_c(option = 'F') +
+  scale_fill_viridis_c('', option = 'F') +
+  scale_x_continuous('Mean annual temperature') +
+  scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +
-  theme(legend.position = 'none')
+  ggtitle('Is hysteresis relatively important?', subtitle = '(Light mean YES, dark means NO)') +
+  lgd + gds
 
 
 
