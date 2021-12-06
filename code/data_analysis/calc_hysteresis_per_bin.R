@@ -74,35 +74,49 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, harmonic_n = 3){
     tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
     txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t))
   }   
-  
   # # more complicated fits...
   # tyfit <- lm(y ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t))
   # txfit <- lm(x ~ sin(2*pi/per*t)+cos(2*pi/per*t)+sin(4*pi/per*t)+cos(4*pi/per*t)+sin(6*pi/per*t)+cos(6*pi/per*t)+sin(8*pi/per*t)+cos(8*pi/per*t)) 
-
   
+  # make vectors with the fitted coefficients of the harmonic fits
+  beta_y <- tyfit$coefficients; names(beta_y) <- paste0('b', 'y', 0:(length(tyfit$coefficients)-1))
+  beta_x <- txfit$coefficients; names(beta_x) <- paste0('b', 'x', 0:(length(txfit$coefficients)-1))
   
+  #assemble smoothed time series in a dedicated dataframe
   df_s <- data.frame(t = seq(0.5,12.5,0.1))
   df_s$y <- predict.lm(tyfit, df_s)
   df_s$x <- predict.lm(txfit, df_s)
   df_s$t2.clim.bin <- unique(df$t2.clim.bin)
-  df_s$sm.clim.bin <- unique(df$sm.clim.bin)
+  df_s$sm.clim.bin <- unique(df$sm.clim.bin)  
+
+  # make new matrix for polygon, and ensure closure
+  mat_coords <- matrix(data = c(df_s$x, df_s$x[1], df_s$y, df_s$y[1]),
+                       byrow = F, ncol = 2)
   
+  # transform loop to sf object
+  poly_loop <- st_polygon(x = list(mat_coords), dim = 'XY')
   
-  # get metrics and make an output dataframe
+  # ensure geometry is valid (needed for abs calculation of the area)
+  if(st_is_valid(poly_loop) != T) poly_loop <- st_make_valid(poly_loop)
   
-  beta_y <- tyfit$coefficients; names(beta_y) <- paste0('b', 'y', 0:(length(tyfit$coefficients)-1))
-  beta_x <- txfit$coefficients; names(beta_x) <- paste0('b', 'x', 0:(length(txfit$coefficients)-1))
+  # calculate the area of each loop
+  loop_area <- st_area(poly_loop)
+
   
+  # prepare dataframe with metrics describing the curves
   df_p <- data.frame(
     t2.clim.bin = levels(df_r_all$t2.clim.bin)[t2.bin.num],
     sm.clim.bin = levels(df_r_all$sm.clim.bin)[sm.bin.num],
+    xrange_s = abs(diff(range(df_s$x))),
+    yrange_s = abs(diff(range(df_s$y))),
+    x_sd_s = sd(df_s$x, na.rm = T),
+    y_sd_s = sd(df_s$y, na.rm = T),
+    areaL = loop_area,
+    areaE = 0.5 * sum(diff(df_s$y, lag = 2) * df_s$x[2:(length(df_s$x)-1)]),
+    t(beta_y), t(beta_x),
     slope = lmfit$coefficients[2],
     y_int = lmfit$coefficients[1],
-    lmRMS = sqrt(mean((lmfit$residuals)^2)),
-    areaL = 0.5 * sum(diff(df_s$y, lag = 2) * df_s$x[2:(length(df_s$x)-1)]),
-    t(beta_y), t(beta_x),
-    xrange_s = abs(diff(range(df_s$x))),
-    yrange_s = abs(diff(range(df_s$y)))
+    lmRMS = sqrt(mean((lmfit$residuals)^2))
   )
   
   return(list(df_p = df_p, df_s = df_s))
