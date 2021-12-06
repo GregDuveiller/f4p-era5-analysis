@@ -184,7 +184,7 @@ gText <- ggplot() +
 
 # assemble together
 
-g <- gGEN + gLAI + gLST +  gEVA + gALB + gText + gbarLAI + gbarLST +  gbarEVA + gbarALB +
+g <- gGEN + gLAI + gLST + gALB + gEVA + gText + gbarLAI + gbarLST + gbarALB + gbarEVA +
   plot_layout(ncol = 5, heights = c(5,1))
 
 
