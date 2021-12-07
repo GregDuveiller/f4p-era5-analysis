@@ -42,7 +42,7 @@ library(dplyr)
 # chose variable names. LAI should be first and comparison variable second
 varname_1 <- 'LAI' # 'albedo_wsa_vis' # 'E' # 'SM'  # 'LST' #'albedo_wsa_nir' albedo_wsa_vis albedo_bsa_nir albedo_bsa_vis #LAI
 varname_2 <- 'LST'
-base_dir <- '/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_perVar_global/'
+base_dir <- '/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_variables_global/'
 
 ###################################################
 ######     I/O                                #####
