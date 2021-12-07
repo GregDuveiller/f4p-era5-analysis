@@ -57,68 +57,66 @@ start_year <- 2003; end_year <- 2018
 hw_clim_ts <- df_subset_ts %>% 
   filter(year >= start_year & year <= end_year ) %>%
   group_by(month, hwname) %>%
-  summarise(clim_obs = mean(obs, na.rm = T),
-            clim_sim = mean(sim, na.rm = T))
+  summarise(obs = mean(obs, na.rm = T),
+            sim = mean(sim, na.rm = T)) %>%
+  pivot_longer(cols = c('obs', 'sim'), 
+               names_to = 'source', values_to = paste0(varname,'_clim'))
+
 
 ts_all <- df_subset_ts %>% 
   filter(hwname == paste0('hw', year)) %>%
-  left_join(hw_clim_ts, by = c('month', 'hwname')) %>%
+  pivot_longer(cols = c('obs', 'sim'), 
+               names_to = 'source', values_to = paste0(varname,'_year')) %>% 
+  left_join(hw_clim_ts, by = c('month', 'hwname', 'source')) %>%
   rename(year_of_hw = year) %>%
   left_join(data.frame(year_of_hw = c(2003, 2010, 2018), 
-                       month_of_hw = c(8, 7, 7)), by = "year_of_hw")
-
-
-
-ggplot(ts_all, aes(x = month)) +
-  geom_vline(aes(xintercept = month_of_hw), size = 2) +
-  geom_line(aes(y = clim_obs)) +
-  geom_line(aes(y = clim_sim), linetype = 'dashed') +
-  geom_line(aes(y = obs, colour = factor(year_of_hw)), show.legend = F) +
-  geom_line(aes(y = sim, colour = factor(year_of_hw)), show.legend = F, linetype = 'dashed') +
-  facet_grid(year_of_hw~.) +
-  scale_x_continuous(expand = c(0,0)) 
+                       month_of_hw = c(8, 7, 7)), by = "year_of_hw") %>%
+  pivot_longer(cols = c(paste0(varname,'_year'), paste0(varname,'_clim')),
+               names_to = 'type', values_to = varname)
 
 
 
 
 
-# 
-# dd_clim <- df_subsetHW %>% 
-#   filter(year >= start_year & year <= end_year ) %>%
-#   group_by(x, y, month) %>% 
-#   summarise(obs_clim = mean(obs, na.rm = T),
-#             sim_clim = mean(sim, na.rm = T))
-# 
-# dd_hw <- df_subsetHW %>% filter(year == 2003, month == 8)
-# 
-# ggplot(dd_clim %>% filter(month == 8)) + 
-#   geom_raster(aes(x = x,  y = y,fill = sim_clim - obs_clim)) + 
-#   scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
-#                           limits = c(-3, 3)) + 
-#   facet_wrap( ~ month) + 
-#   ggtitle('Climatological bias') + 
-#   theme(legend.position = 'bottom')
-# 
-# ggplot(dd_hw) + 
-#   geom_raster(aes(x = x, y = y, fill = sim - obs)) + 
-#   scale_fill_gradientn(colours = RColorBrewer::brewer.pal(7, 'RdBu'),
-#                        limits = c(-3, 3)) + 
-#   facet_wrap( ~ month) + ggtitle('HW2003 bias') + 
-#   theme(legend.position = 'bottom')
-# 
-# ggplot(dd_hw %>% left_join(dd_clim, by = c('month', 'x', 'y')) %>% filter(month == 8)) + 
-#   geom_raster(aes(x = x, y = y, fill = (sim - sim_clim) - (obs - obs_clim))) + 
-#   scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(7, 'BrBG')),
-#                        limits = c(-1.5, 1.5)) + 
-#   facet_wrap(~month) + 
-#   ggtitle('difference in bias') + 
-#   theme(legend.position = 'bottom')
-# 
-# 
-# 
-# dum <- dd_hw %>% 
-#   left_join(dd_clim, by = c('month', 'x', 'y')) %>% 
-#   filter(month == 8) %>% 
-#   mutate(bias = (sim - sim_clim) - (obs - obs_clim))
-# 
-# #}
+lgd <- theme(legend.position = 'bottom',
+             #legend.key.width = unit(1.2, units = 'cm'),
+             #panel.grid = element_blank(),
+             strip.text = element_text(size = 12)) 
+# gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
+#                                     frame.colour = 'black', ticks.colour = 'black'))
+
+hw_labeller <- labeller(
+  hwname = c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018'))
+
+
+g <- ggplot(ts_all, aes(x = month)) +
+  geom_vline(aes(xintercept = month_of_hw), size = 14, colour = 'grey80') +
+  geom_line(aes(y = LAI, colour = type, linetype = source)) +
+  facet_grid(hwname~., labeller = hw_labeller) +
+  #scale_colour_manual(values = c('LAI_clim'='grey20','LAI_year'= 'cornflowerblue')) +
+  scale_colour_manual(values = c('LAI_year'= 'cornflowerblue','LAI_clim'='grey20')) +
+  scale_y_continuous('LAI [m2/m2]') + 
+  scale_x_continuous('', expand = c(0,0), 
+                     breaks = c(3,6,9,12),
+                     labels = c('3'='Mar', '6'='Jun', '9'='Sep', '12'='Dec')) +
+  #theme_bw() + 
+  lgd
+
+
+
+#### Export the figure ####
+
+
+# plotting details, in case not inherited... 
+if(exists('fig.path') != T){ fig.path <- 'paper/figures/'}
+if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
+
+dir.create(path = fig.path, recursive = T, showWarnings = F)
+
+fig.name <- 'LAI_timeseries'
+
+ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g,
+       path = fig.path, width = 10, height = 8)
+
+
+
