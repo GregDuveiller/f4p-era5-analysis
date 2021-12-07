@@ -37,7 +37,7 @@ full_date <- as.character(Sys.time()) ; full_date <- strsplit(full_date, " ") ; 
 ######     GLOBAL VARS                        #####
 
 # update to rproject or here() - place the local data directory here:
-dir_path <- paste0('data/') # replace with git data directory
+dir_path <- paste0('data/') # replace with git data directory 
 #dir_path <- paste0('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/') # replace with git data directory
 
 
