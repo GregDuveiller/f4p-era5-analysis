@@ -42,7 +42,7 @@ library(dplyr)
 # chose variable names. LAI should be first and comparison variable second
 varname_1 <- 'LAI' # 'albedo_wsa_vis' # 'E' # 'SM'  # 'LST' #'albedo_wsa_nir' albedo_wsa_vis albedo_bsa_nir albedo_bsa_vis #LAI
 varname_2 <- 'LST'
-base_dir <- '/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_variables_global/'
+base_dir <- 'data/inter_data/df_single_var_summaries/'
 
 ###################################################
 ######     I/O                                #####
@@ -55,7 +55,7 @@ dir.create(fig.path, showWarnings = F, recursive = T)
 
 
 # load the agreement metrics from prepare___variables.R
-dpath <- paste0(base_dir, 'data/V4/') 
+dpath <- base_dir
 load( paste0(dpath, 'df_single_var_agr__sp_agr_overall__', varname_1,'.RData'))  ; sp_agr_overall_var1 <- sp_agr_overall       # temporal agreement metrics for each pixel across all months/years
 load( paste0(dpath, 'df_single_var_agr__sp_agr_monthS__', varname_1,'.RData'))   ; sp_agr_monthS_var1  <- sp_agr_monthS         # temporal agreement metrics for each month (i.e. temporal agreement of a given month across years)
 load( paste0(dpath, 'df_single_var_agr__temp_agr_gen__', varname_1,'.RData'))    ; temp_agr_gen_var1   <- temp_agr_gen          # spatial agreeement at a given moneth (for each climatezone)
@@ -75,8 +75,8 @@ temp_agr_gen_var1 <- temp_agr_gen_var1 %>% filter(cz_major_zone != 'O')
 temp_agr_gen_var1 <- temp_agr_gen_var1 %>% filter(time > as.Date(x = start_date ) & time < as.Date(x = end_date ) )
 temp_agr_gen_var2 <- temp_agr_gen_var2 %>% filter(cz_major_zone != 'O')
 temp_agr_gen_var2 <- temp_agr_gen_var2 %>% filter(time > as.Date(x = start_date ) & time < as.Date(x = end_date ) )
-colnames(agr_var1) <- paste0("agre$", colnames(agr_var1))
-colnames(agr_var2) <- paste0("agre$", colnames(agr_var2))
+# colnames(agr_var1) <- paste0("agre$", colnames(agr_var1))   # <--- these seem not used
+# colnames(agr_var2) <- paste0("agre$", colnames(agr_var2))   # <--- these seem not used
 
 ###################################################
 ######     FUNCTIONS                          #####
