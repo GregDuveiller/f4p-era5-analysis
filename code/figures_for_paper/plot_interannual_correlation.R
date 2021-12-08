@@ -20,17 +20,8 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/data_for_summary_maps.RData')   # <---- ...  for now, there is a lot in here... needs to be trimmed
+load('data/figures_for_paper/data_for_corr_summary_maps.RData')   
 
-df_dum <- data.frame(
-  x = sp_agr_monthS_var2$x,
-  y = sp_agr_monthS_var2$y,
-  monthS = sp_agr_monthS_var2$monthS,
-  r = sp_agr_monthS_var2$agre_bVARvsbLAI$r)
-
-df_LSTb_LAIb_corr <- df_dum %>% 
-  filter(monthS %in% c(1,7)) %>%
-  select(x, y, monthS, r)
 
 #### Make the plots ####
 

@@ -19,6 +19,7 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.fmt <- 'png'
 
 #### Figure for the initial bias maps ####
+source('code/figures_for_paper/plot_bias_summaries.R')
 
 
 #### Figure with the hysteresis demo plots ####
@@ -29,7 +30,12 @@ source('code/figures_for_paper/plot_hyst_demo.R')
 source('code/figures_for_paper/plot_hyst_climspace.R')
 
 
+#### Figure for the hysteresis maps ####
+source('code/figures_for_paper/plot_hyst_summary_map.R')
+
+
 #### Figure for the interannual correlation maps ####
+source('code/figures_for_paper/plot_interannual_correlation.R')
 
 
 #### Figure for the distributions of the biases for selected climate zones ####

@@ -20,7 +20,7 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/data_for_summary_maps.RData')   # <---- ...  for now, there is a lot in here... needs to be trimmed
+load('data/figures_for_paper/data_for_bias_summary_maps.RData')   # <---- ...  for now, there is a lot in here... needs to be trimmed
 
 df_LAI_bias <- sp_agr_monthS_var1 %>%  # <---- this and the one below should be integraded in the input above... 
   filter(monthS %in% c(1,7)) %>%
