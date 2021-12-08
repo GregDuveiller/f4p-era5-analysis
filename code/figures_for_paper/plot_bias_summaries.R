@@ -31,6 +31,11 @@ df_LST_bias <- sp_agr_monthS_var2 %>%
   select(x, y, monthS, diff_simSobs)
 
 
+land_shapefile <- "data/input_data/vector_layers/ne_50m_land.shp"
+land <- sf::st_read(land_shapefile, quiet = TRUE)
+
+
+
 #### Make the plots ####
 
 # some background details
@@ -45,38 +50,38 @@ season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
 # LAI maps 
 LAI_bias_colpal <- RColorBrewer::brewer.pal(n = 9, name = 'BrBG')
 
-gLAImaps <- ggplot(df_LAI_bias, aes(x = x, y = y)) + 
-  geom_tile(aes(fill = diff_simSobs)) +  
+gLAImaps <- ggplot(df_LAI_bias) + 
+  geom_sf(data = land, fill = 'grey20', colour = NA) +
+  geom_tile(aes(x = x, y = y, fill = diff_simSobs)) +  
   scale_fill_gradientn('LAI bias', 
                        colours = LAI_bias_colpal,
                        limits = c(-2,2), oob = squish) +
   scale_x_continuous('Longitude') + 
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
-  coord_cartesian(expand = F,  
-                  #xlim = c(-179.875, 179.875), 
-                  ylim = c(-54.875, 75.875)) +
+  coord_sf(expand = F) +
   theme(legend.position = "left") + bck_details +
-  ggtitle('Mean bias for a given month for LAI' )
+  ggtitle('Mean interannual bias for LAI', 
+          subtitle = '[Represented by a single seasonally-corrected month]')
 
 
 
 # LST maps... 
 LST_bias_colpal <- RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
 
-gLSTmaps <- ggplot(df_LST_bias, aes(x = x, y = y)) + 
-  geom_tile(aes(fill = diff_simSobs)) +  
+gLSTmaps <- ggplot(df_LST_bias) + 
+  geom_sf(data = land, fill = 'grey20', colour = NA) +
+  geom_tile(aes(x = x, y = y, fill = diff_simSobs)) +  
   scale_fill_gradientn('LST bias', 
                        colours = LST_bias_colpal,
                        limits = c(-20,20), oob = squish) +
   scale_x_continuous('Longitude') + 
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
-  coord_cartesian(expand = F, 
-                  #xlim = c(-179.875, 179.875), 
-                  ylim = c(-54.875, 75.875)) +
+  coord_sf(expand = F) +
   theme(legend.position = "right") + bck_details +
-  ggtitle('Mean bias for a given month for LST' )
+  ggtitle('Mean interannual bias for LST', 
+          subtitle = '[Represented by a single seasonally-corrected month]')
 
 
 
@@ -111,7 +116,7 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.name <- 'bias_summaries'
 
 ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g_all,
-       path = fig.path, width = 12, height = 7)
+       path = fig.path, width = 12, height = 6)
 
 
 
