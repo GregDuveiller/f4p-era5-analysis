@@ -351,10 +351,10 @@ df_all <- df_all %>%
 
 
 names(df_all)[1] <- 'LST_anomaly_quantile'
-names(df_all)[2] <- 'LST_anomaly'
-names(df_all)[3] <- 'CZ'
+names(df_all)[2] <- 'LST_anomaly_value'
+names(df_all)[3] <- 'cz_name'
 names(df_all)[4] <- 'y_var'
-names(df_all)[5] <- 'Bias'
+names(df_all)[5] <- 'bias'
 #df_all[6] <- NULL
 
 #load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
