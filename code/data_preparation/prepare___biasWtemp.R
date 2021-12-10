@@ -261,6 +261,7 @@ save(df, file =paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
 # input a data frame and make a divide columns q_col_name_x and q_col_name_y, into quantiles (0:quantile_max)/quantile_div in the column, q_col_name_quantile.
 # For each quantile of q_col_name_quantile, we will have the mean_x mean_y (and up/down ribbons), mean Q and xy correlation/slope/lm parameters
 # can also get ribbon column which shows an 'error bound' of where the data lies with e.g. ribbon_size = +/-0.25 for a bound containing 50% of data
+# here we group by quantile && climate zone
 f_summarise_byQuantile <- function(df_in, v_quantiles , q_col_name_x , q_col_name_y , q_col_name_quantile, ribbon_size = 0.0 ){
   
   # if only number 1 entered for quantiles then set v_quantiles such that there is only a single quantile (i.e an average of all data is taken)
@@ -309,8 +310,8 @@ for (cz_i in v_cz_in){ # cz_i <- v_cz_in[4]
   #loop over the climate variables (LST, SM etc)
   for (v_i in v_variables){ # v_i <- v_variables[1]
     print(v_i)
-    df_sum <- f_summarise_byQuantile(df, v_quantiles = v_quant, q_col_name_x = x_variable , q_col_name_y = v_i , q_col_name_quantile = variable_quantile, ribbon_size = 0.25 )  # get the 
-    df_avg <- f_summarise_byQuantile(df, v_quantiles = 1, q_col_name_x = x_variable , q_col_name_y = v_i , q_col_name_quantile = variable_quantile, ribbon_size = 0.25 )        # get the average of all data
+    df_sum <- f_summarise_byQuantile(df_temp, v_quantiles = v_quant, q_col_name_x = x_variable , q_col_name_y = v_i , q_col_name_quantile = variable_quantile, ribbon_size = 0.25 )  # get the 
+    df_avg <- f_summarise_byQuantile(df_temp, v_quantiles = 1, q_col_name_x = x_variable , q_col_name_y = v_i , q_col_name_quantile = variable_quantile, ribbon_size = 0.25 )        # get the average of all data
     df_sum$cz <- cz_i     ;    df_avg$cz <- cz_i
     df_sum$y_var <- v_i   ;    df_avg$y_var <- v_i
     df_all <- rbind(df_all, df_sum)
@@ -338,11 +339,17 @@ summary(df_all)
 # summary(df_all)
 
 #### final step - relabel the axes (these are pre-programmed and should fit the step above)
+df_all <- df_all %>%
+  reshape(idvar=c('quantile','cz'), varying = c('mean_value_X', 'mean_value_Y'), v.names=c("value"), timevar='y_var', times=c("LAI bias [m2/m2]","LST bias [C]"), new.row.names = 1:1000, direction="long") 
+
+
 names(df_all)[1] <- 'LST_anomaly_quantile'
-names(df_all)[2] <- 'LAI'
-names(df_all)[3] <- 'LST'
-names(df_all)[4] <- 'LST_anomaly'
-names(df_all)[4] <- 'CZ'
-df_all[6] <- NULL
+names(df_all)[2] <- 'LST_anomaly'
+names(df_all)[3] <- 'CZ'
+names(df_all)[4] <- 'y_var'
+names(df_all)[5] <- 'Bias'
+#df_all[6] <- NULL
+
+#load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
 
 save(df_all, file =paste0(output_path, 'df_LSTLAI_tempAnomalyQuantile_aug.RData') )
