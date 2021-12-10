@@ -20,16 +20,7 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/data_for_bias_summary_maps.RData')   # <---- ...  for now, there is a lot in here... needs to be trimmed
-
-df_LAI_bias <- sp_agr_monthS_var1 %>%  # <---- this and the one below should be integraded in the input above... 
-  filter(monthS %in% c(1,7)) %>%
-  select(x, y, monthS, diff_simSobs)
-
-df_LST_bias <- sp_agr_monthS_var2 %>% 
-  filter(monthS %in% c(1,7)) %>%
-  select(x, y, monthS, diff_simSobs)
-
+load('data/figures_for_paper/data_for_bias_summary_maps.RData')   
 
 land_shapefile <- "data/input_data/vector_layers/ne_50m_land.shp"
 land <- sf::st_read(land_shapefile, quiet = TRUE)
@@ -38,20 +29,28 @@ land <- sf::st_read(land_shapefile, quiet = TRUE)
 
 #### Make the plots ####
 
+# set-up gray colours for maps
+if(exists('gry_land') != T){ gry_land <- 'grey20'}
+if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+
+
 # some background details
 bck_details <- theme(legend.key.height = unit(1.5, 'cm'),
-                     panel.background = element_rect(fill = 'grey30'),
-                     panel.grid = element_line(colour = 'grey40'))
+                     panel.background = element_rect(fill = gry_meer),
+                     panel.grid = element_line(colour = gry_meer))
 
 
 season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
+
+
+
 
 
 # LAI maps 
 LAI_bias_colpal <- RColorBrewer::brewer.pal(n = 9, name = 'BrBG')
 
 gLAImaps <- ggplot(df_LAI_bias) + 
-  geom_sf(data = land, fill = 'grey20', colour = NA) +
+  geom_sf(data = land, fill = gry_land, colour = NA) +
   geom_tile(aes(x = x, y = y, fill = diff_simSobs)) +  
   scale_fill_gradientn('LAI bias', 
                        colours = LAI_bias_colpal,
@@ -70,7 +69,7 @@ gLAImaps <- ggplot(df_LAI_bias) +
 LST_bias_colpal <- RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
 
 gLSTmaps <- ggplot(df_LST_bias) + 
-  geom_sf(data = land, fill = 'grey20', colour = NA) +
+  geom_sf(data = land, fill = gry_land, colour = NA) +
   geom_tile(aes(x = x, y = y, fill = diff_simSobs)) +  
   scale_fill_gradientn('LST bias', 
                        colours = LST_bias_colpal,

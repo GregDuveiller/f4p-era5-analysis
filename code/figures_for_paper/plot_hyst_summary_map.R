@@ -27,21 +27,27 @@ load('data/figures_for_paper/hysteresis_map_ready4fig.RData')   # <----- df_hyst
 
 #### Make the plots ####
 
+# set-up gray colours for maps
+if(exists('gry_land') != T){ gry_land <- 'grey50'}
+if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+
+
+
 lgd <- theme(legend.position = 'right',
              legend.key.height = unit(1.2, units = 'cm'),
-             panel.background = element_rect(fill = 'grey90'),
+             panel.background = element_rect(fill = 'grey60'),
              panel.grid = element_blank()) 
 gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
                                     frame.colour = 'black', ticks.colour = 'black'))
 
 
 lgd_map <-   theme(legend.position = 'none',
-                   panel.background = element_rect(fill = 'grey90'),
+                   panel.background = element_rect(fill = gry_meer),
                    panel.grid = element_blank(),
                    axis.title = element_blank())
 
 gmapBiasI <- ggplot(df_hyst_map) + 
-  geom_tile(aes(x = x, y = y, fill = biasI)) +
+  geom_tile(aes(x = x, y = y, fill = biasI), na.value = gry_land) +
   scale_fill_gradientn(colours = brewer.pal(9, 'RdYlGn')) + 
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
   lgd_map
@@ -54,13 +60,10 @@ gcspBiasI <- ggplot(df_hyst_map) +
   coord_cartesian(expand = F) +
   ggtitle('Which is the dominating bias?', subtitle = '(green for LAI, red for LST)') +
   lgd + gds
-  # theme(legend.position = 'bottom',
-  #       legend.key.width = unit(1.4, units = 'cm'),
-  #       axis.title = element_blank())
 
 
 gmapHystI <- ggplot(df_hyst_map) + 
-  geom_tile(aes(x = x, y = y, fill = hystI)) +
+  geom_tile(aes(x = x, y = y, fill = hystI), na.value = gry_land) +
   scale_fill_viridis_c(option = 'F') +
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
   lgd_map
