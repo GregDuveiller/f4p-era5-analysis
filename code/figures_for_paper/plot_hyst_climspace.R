@@ -65,13 +65,13 @@ climbin_labeller <- labeller(
 #### Make the plot ####
 
 g_all_smooth <- ggplot(df_s_all) +
-  geom_hline(yintercept = 0, colour = 'grey60') +
-  geom_vline(xintercept = 0, colour = 'grey60') +
+  geom_hline(yintercept = 0, colour = 'grey50') +
+  geom_vline(xintercept = 0, colour = 'grey50') +
   geom_point(aes(x = x, y = y, colour = t),
              shape = 20, size = 0.5) +
   facet_grid(sm.clim.bin~t2.clim.bin, labeller = climbin_labeller) +
   scale_colour_gradientn('', colours = cols, breaks = 1:12, labels = month.abb) +
-  scale_y_continuous(paste('Bias in', varname, '(ERA - obs)')) +
+  scale_y_continuous('Bias in LST (ERA - obs)') +
   scale_x_continuous('Bias in LAI (ERA - obs)', breaks = c(-1, 0, 1)) +
   coord_cartesian(xlim = c(-1, 1.5), ylim = c(-20, 15)) + 
   ggtitle(label = paste0('Hysteresis patterns of biases between observational sources and variables in ERA5'),
@@ -79,8 +79,12 @@ g_all_smooth <- ggplot(df_s_all) +
   theme(legend.position = 'right',
         legend.key.height = unit(3, units = 'cm'),
         panel.grid = element_blank(),
+        panel.spacing = unit(0, "lines"),
+        panel.border = element_rect(colour = 'white', fill = NA),
         strip.text = element_text(size = 8, angle = 90),
         strip.text.y = element_text(size = 8, angle = 0))
+
+
 
 
 
@@ -95,6 +99,6 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 
 fig.name <- 'hystereris_climspace'
 
-ggsave(filename = paste0(fig.name, '.', fig.format), plot = g_all_smooth,
+ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g_all_smooth,
        path = fig.path, width = 9, height = 11)
  
