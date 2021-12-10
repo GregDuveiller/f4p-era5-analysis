@@ -343,7 +343,11 @@ summary(df_all)
 
 #### final step - relabel the axes (these are pre-programmed and should fit the step above)
 df_all <- df_all %>%
-  reshape(idvar=c('quantile','cz'), varying = c('mean_value_X', 'mean_value_Y'), v.names=c("value"), timevar='y_var', times=c("LAI bias [m2/m2]","LST bias [C]"), new.row.names = 1:1000, direction="long") 
+  reshape(idvar = c('quantile','cz'), varying = c('mean_value_X', 'mean_value_Y'), 
+          v.names = c("value"), timevar = 'y_var', 
+          times = c("LAI","LST"), 
+          # times=c("LAI bias [m2/m2]","LST bias [C]"), 
+          new.row.names = 1:1000, direction = "long") 
 
 
 names(df_all)[1] <- 'LST_anomaly_quantile'
