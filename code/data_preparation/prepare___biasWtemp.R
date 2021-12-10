@@ -71,17 +71,18 @@ require(tidyr)
 
 # load basic functions, e.g. maps
 # root_script <- '/home/mark/Documents/work_jrc/work_d1/work_SIF_V2_ancova/part_1_landcover_only/200901_v1_anova/scripts/'
-root_script <- '/home/mark/ownCloud/copernicus/scripts/git_mp_fork/f4p-era5-analysis/code/'  # <---- df_cz
+# root_script <- '/home/mark/ownCloud/copernicus/scripts/git_mp_fork/f4p-era5-analysis/code/'  # <---- df_cz
+root_script <- 'code/'  # <---- df_cz
 
 
 ###################################################
 ######       I/O                                ###
 ###################################################
 
-output_root  <- '/media/mark/HD/Mark/Mark_COPERNICUS/figures/COPERNICUSII_V3/'
-output_path <- paste0(output_root, full_date, '_', 'biasWtemp','/')
+# output_root  <- '/media/mark/HD/Mark/Mark_COPERNICUS/figures/COPERNICUSII_V3/'
+output_path <- 'data/figures_for_paper/'
 print(paste0('output_path is : ', output_path ))
-if(! dir.exists(output_path)) {dir.create(paste0(output_path),recursive=T)}
+if(! dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
 
 ###################################################
@@ -92,13 +93,15 @@ if(! dir.exists(output_path)) {dir.create(paste0(output_path),recursive=T)}
 v_cz_in <- c('Dfc', 'Dfb', 'Csa', 'Csb', 'Cfa', 'Cfb') # 'Dfc' 'Dfb' 'Csa' 'Csb' 'Cfa' 'Cfb'
 
 # load clim zones 
-load('/home/mark/ownCloud/copernicus/scripts/KG_class/Map_KG-Global/df_KG_climatezones.RData')  # <---- df_cz
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
+# load('/home/mark/ownCloud/copernicus/scripts/KG_class/Map_KG-Global/df_KG_climatezones.RData')  # <---- df_cz
 summary(df_cz,30)
 df_cz <- as.data.frame(df_cz)
 df_cz <- df_cz[,c(1,2,4)]
 # df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>% select(-cz_ID, -cz_colours)
 
-input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/'
+input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
+# input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/'
 input_file <- 'df_comb___LAI.RData'
 
 load(paste0(input_dir, input_file))
@@ -107,7 +110,7 @@ head(df_comb) ; dim(df_comb) ; summary(df_comb)
 
 df_comb <- df_comb %>% 
   filter(x >= v_lon_min  & x <= v_lon_max) %>%
-  filter( y >= v_lat_min & y <= v_lat_max ) 
+  filter(y >= v_lat_min & y <= v_lat_max) 
 
 df <- df_comb %>% mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month) ) %>%
   mutate(monthS = ifelse(monthS == 0, 12, monthS))
@@ -143,7 +146,7 @@ colnames(df_comb)[5:6] <- c('obs.E', 'sim.E')
 df <- left_join(df, df_comb, by = c('x','y','year',"month"))
 
 # Use the MCD43C3 version as covers 2018 and we are only looking at summer in any case
-input_file <- 'df_comb___albedo_wsa_vis_MCD43C3.RData'
+input_file <- 'df_comb___Albedo.RData'
 load(paste0(input_dir, input_file))
 colnames(df_comb)[5:6] <- c('obs.albedo_wsa_vis', 'sim.albedo_wsa_vis')
 df <- left_join(df, df_comb, by = c('x','y','year',"month"))

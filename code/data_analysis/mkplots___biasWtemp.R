@@ -42,7 +42,8 @@ print(paste0('output_path is : ', output_path ))
 if(! dir.exists(output_path)) {dir.create(paste0(output_path),recursive=T)}
 
 # load clim zone locations...  these are the climate zones that are mapped onto the maps (same dimensions as all paper figures)
-load('/home/mark/Documents/work_jrc/work_d1/work_COPERNICUS/work_COPERNICUSII_V3_2021/scripts/KG_class/Map_KG-Global/df_KG_climatezones.RData', verbose = T) # df_lgd
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData', verbose = T) # df_lgd
+#load('/home/mark/Documents/work_jrc/work_d1/work_COPERNICUS/work_COPERNICUSII_V3_2021/scripts/KG_class/Map_KG-Global/df_KG_climatezones.RData', verbose = T) # df_lgd
 v_cz_in <- c('Dfc', 'Dfb', 'Csa', 'Csb', 'Cfa', 'Cfb') # chose which to consider (or remove if too detailed)
 v_lon_min <- -12 ; v_lon_max <- 58  ; v_lat_min <- 36 ; v_lat_max <- 71 # reduce area of interest to Europe for the mapping (data is already Europe only)
 df_cz <- df_cz %>% 
@@ -50,14 +51,14 @@ df_cz <- df_cz %>%
   filter( y >= v_lat_min & y <= v_lat_max ) 
 
 # load vectors... (for coasts on figures) - Greg change this to europe (I was unsure where you got your vectors from and don't want to use similar but not exact versions - perhaps you can add them)
-# wmap_df_land <- st_read('data/input_data/world_vectors/ne_50m_land.shp', quiet = T)
-# wmap_df_ocean <- st_read('data/input_data/world_vectors/ne_50m_ocean.shp', quiet = T) 
-wmap_df_land <- st_read('/home/mark/ownCloud/copernicus/data/land_maps/ne_50m_land.shp', quiet = T)
-wmap_df_ocean <- st_read('/home/mark/ownCloud/copernicus/data/land_maps/ne_50m_ocean.shp', quiet = T)
+wmap_df_land <- st_read('data/input_data/vector_layers/ne_50m_land.shp', quiet = T)
+wmap_df_ocean <- st_read('data/input_data/vector_layers/ne_50m_ocean.shp', quiet = T)
+# wmap_df_land <- st_read('/home/mark/ownCloud/copernicus/data/land_maps/ne_50m_land.shp', quiet = T)
+# wmap_df_ocean <- st_read('/home/mark/ownCloud/copernicus/data/land_maps/ne_50m_ocean.shp', quiet = T)
 
 # input dataframe
-load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
-
+load('data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
+#load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
 
 ###################################################
 ######     UNIVERSAL MAP SETTINGS             #####
