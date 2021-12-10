@@ -1,3 +1,13 @@
+#!/usr/local/bin/Rscript
+# ---------------------------------------------------------------------------- #
+# #### prepare_bias_vs_temp_anomalies.R ####
+# ---------------------------------------------------------------------------- #
+# Purpose: prepare selected gis (vector) layers for maps over Europe
+# Project: f4p-era5-analysis
+# Authors: M.Pickering, G.Duveiller
+# ---------------------------------------------------------------------------- #
+
+
 # original name : prepare_biasWtemp.R
 #
 # ########################################################

@@ -1,6 +1,6 @@
 #!/usr/local/bin/Rscript
 # ---------------------------------------------------------------------------- #
-# #### prep_gislayers_for_maps.R ####
+# #### prepare_gislayers_for_maps.R ####
 # ---------------------------------------------------------------------------- #
 # Purpose: prepare selected gis (vector) layers for maps over Europe
 # Project: f4p-era5-analysis

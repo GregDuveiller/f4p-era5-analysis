@@ -15,8 +15,11 @@ library(patchwork)
 
 fig.path <- 'paper/figures/'
 dir.create(path = fig.path, recursive = T, showWarnings = F)
-
 fig.fmt <- 'png'
+
+
+
+
 
 #### Figure for the initial bias maps ####
 source('code/figures_for_paper/plot_bias_summaries.R')
@@ -34,11 +37,12 @@ source('code/figures_for_paper/plot_hyst_climspace.R')
 source('code/figures_for_paper/plot_hyst_summary_map.R')
 
 
-#### Figure for the interannual correlation maps ####
+#### Figure for the inter-annual correlation maps ####
 source('code/figures_for_paper/plot_interannual_correlation.R')
 
 
 #### Figure for the distributions of the biases for selected climate zones ####
+source('code/figures_for_paper/plot_bias_against_temp_anomalies.R')
 
 
 #### Figure for heat wave maps ####
