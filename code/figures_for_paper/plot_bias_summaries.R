@@ -23,6 +23,7 @@ require(patchwork)
 load('data/figures_for_paper/data_for_bias_summary_maps.RData')   
 
 land_shapefile <- "data/input_data/vector_layers/ne_50m_land.shp"
+# land_shapefile <- "/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/input_data/vector_layers/ne_50m_land.shp"
 land <- sf::st_read(land_shapefile, quiet = TRUE)
 
 
