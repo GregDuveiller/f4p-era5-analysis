@@ -63,6 +63,9 @@ gry1 <- 'grey60'  # <-- the axes
 cz_cols <- df_lgd$cz_colours
 names(cz_cols) <- df_lgd$cz_name
 
+# get the labels of facets a bit more sophisticated
+var_labeller = labeller(y_var = c('LAI' = 'Bias in LAI [m2/m2]', 'LST' = 'Bias in LST [K]'))
+
 # plot for the maps
 g_maps <- ggplot(df_cz_sub) + 
   geom_sf(data = land_europe, fill = gry_land, colour = gry_land, size = 0) + 
@@ -81,13 +84,13 @@ g_maps <- ggplot(df_cz_sub) +
 g_plot_quantile <- ggplot(df_qtls) + 
   geom_hline(yintercept = 0, colour = gry1) +
   geom_vline(xintercept = 0, colour = gry1) +
-  geom_line(aes(x = LST_anomaly_value, y = bias_rescaled, colour = y_var), 
+  geom_line(aes(x = LST_anomaly_value, y = bias, colour = y_var), 
             size = 1, show.legend = F) +
-  geom_point(aes(x = LST_anomaly_value, y = bias_rescaled, colour = y_var,
+  geom_point(aes(x = LST_anomaly_value, y = bias, colour = y_var,
                  fill = LST_anomaly_quantile), 
              size = 3, shape = 21, show.legend = F) +
-  facet_grid(y_var~cz_name,  scales = 'free_y') +
-  scale_y_continuous( 'Bias (ERA - obs) in LAI [m2/m2] or in LST [dK]' ) + # , limits = y_scale
+  facet_grid(y_var~cz_name,  scales = 'free_y', labeller = var_labeller) +
+  scale_y_continuous( 'Bias (ERA - obs)' ) + # , limits = y_scale
   scale_x_continuous( 'Land surface temperature anomaly [K]' ) + # , limits = x_scale
   scale_colour_manual('', values = c('LAI' = gry3, 'LST' = gry3)) + # , limits = x_scale
   scale_fill_gradientn('Quantile', colours = rev(RColorBrewer::brewer.pal(10, 'RdBu'))) + # , limits = y_scale
