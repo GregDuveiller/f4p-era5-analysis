@@ -52,10 +52,12 @@ df_qtls <- df_all %>%
 
 #### Make the plots ####
 
+# set-up gray colours for maps
+if(exists('gry_land') != T){ gry_land <- 'grey50'}
+if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+
 # Set-up some colour parameters
 gry1 <- 'grey60'  # <-- the axes
-gry2 <- 'Grey50'  # <-- the land
-gry3 <- 'Grey20'  # <-- the ocean
 
 # Colours for the legend
 cz_cols <- df_lgd$cz_colours
@@ -63,9 +65,9 @@ names(cz_cols) <- df_lgd$cz_name
 
 # plot for the maps
 g_maps <- ggplot(df_cz_sub) + 
-  geom_sf(data = land_europe, fill = gry2, colour = gry2, size = 0) + 
+  geom_sf(data = land_europe, fill = gry_land, colour = gry_land, size = 0) + 
   geom_tile(aes(x = x, y = y, fill = cz_name)) + 
-  geom_sf(data = ocean_europe, fill = gry3, colour = gry3, size = 0) +
+  geom_sf(data = ocean_europe, fill = gry_meer, colour = gry_meer, size = 0) +
   facet_grid(.~cz_name) +
   coord_sf(ylim = c(v_lat_min, v_lat_max)) + 
   scale_fill_manual('Koppen-Geiger climate zones', values = cz_cols) + 

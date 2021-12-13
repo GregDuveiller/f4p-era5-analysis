@@ -25,10 +25,15 @@ load('data/figures_for_paper/data_for_corr_summary_maps.RData')
 
 #### Make the plots ####
 
+# set-up gray colours for maps
+if(exists('gry_land') != T){ gry_land <- 'grey50'}
+if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+
+
 # some background details
 bck_details <- theme(legend.key.height = unit(1.5, 'cm'),
-                     panel.background = element_rect(fill = 'grey30'),
-                     panel.grid = element_line(colour = 'grey40'))
+                     panel.background = element_rect(fill = gry_meer),
+                     panel.grid = element_blank())
 
 
 season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
@@ -39,10 +44,10 @@ season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
 corr_colpal <- c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE090", "#F7F7F7", "#E0F3F8", "#ABD9E9", "#74ADD1", "#4575B4", "#313695")
 
 gmaps <- ggplot(df_LSTb_LAIb_corr) + 
-  geom_sf(data = land, fill = 'grey20', colour = NA) +
+  geom_sf(data = land, fill = gry_land, colour = NA) +
   geom_tile(aes(x = x, y = y, fill = r)) +  
   scale_fill_gradientn('Correlation', 
-                       colours = corr_colpal,
+                       colours = corr_colpal, na.value = gry_land,
                        limits = c(-1,1), oob = squish) +
   scale_x_continuous('Longitude') + 
   scale_y_continuous('Latitude') +

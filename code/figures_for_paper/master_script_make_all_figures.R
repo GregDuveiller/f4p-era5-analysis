@@ -17,7 +17,7 @@ fig.path <- 'paper/figures/'
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.fmt <- 'png'
 
-gry_land <- 'grey20'
+gry_land <- 'grey50'
 gry_meer <- 'grey30'
 
 

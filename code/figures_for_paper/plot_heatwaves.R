@@ -27,12 +27,17 @@ load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- ...
 
 
 
-#### MAke the plotsand sf ####
+#### Make the plotsand sf ####
+
+# set-up gray colours for maps
+if(exists('gry_land') != T){ gry_land <- 'grey50'}
+if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+
 
 # some graphic param...
 lgd <- theme(legend.position = 'top',
              legend.key.width = unit(1.2, units = 'cm'),
-             panel.background = element_rect(fill = 'grey50'),
+             panel.background = element_rect(fill = gry_land),
              panel.grid = element_blank(),
              axis.title = element_blank(),
              strip.text = element_text(size = 12)) 
@@ -61,7 +66,7 @@ hw_labeller <- labeller(
 # LST anomaly
 gGEN <- ggplot(df_all %>% filter(variable == 'LST')) + 
   geom_raster(aes(x = x, y = y, fill = diff_obsSmean)) +
-  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) +
@@ -76,7 +81,7 @@ gGEN <- ggplot(df_all %>% filter(variable == 'LST')) +
 varname <- 'LST'
 gLST <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
@@ -91,7 +96,7 @@ gLST <- ggplot(df_all %>% filter(variable == varname)) +
 varname <- 'LAI'
 gLAI <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
@@ -106,7 +111,7 @@ gLAI <- ggplot(df_all %>% filter(variable == varname)) +
 varname <- 'E'
 gEVA <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
@@ -120,7 +125,7 @@ gEVA <- ggplot(df_all %>% filter(variable == varname)) +
 varname <- 'Albedo'
 gALB <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = ocean_europe, fill = 'grey40', size = .2, colour = 'grey10') +
+  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
   facet_grid(hw~., labeller = hw_labeller) + 
