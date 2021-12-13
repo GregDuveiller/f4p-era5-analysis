@@ -52,5 +52,5 @@ df_LSTb_LAIb_corr <- df_dum %>%
 output_path <- 'data/figures_for_paper/'
 if(!dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
-save('df_LAI_bias', 'df_LST_bias', file = paste0(output_path, 'data_for_corr_summary_maps', '.RData') ) 
+save('df_LSTb_LAIb_corr', file = paste0(output_path, 'data_for_corr_summary_maps', '.RData') ) 
 
