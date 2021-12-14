@@ -23,31 +23,25 @@ gry_meer <- 'grey30'
 
 
 #### Figure for the initial bias maps ####
-source('code/figures_for_paper/plot_bias_summaries.R')
-
+source('code/making_figures_for_paper/plot_bias_summaries.R')
 
 #### Figure with the hysteresis demo plots ####
-source('code/figures_for_paper/plot_hyst_demo.R')
-
+source('code/making_figures_for_paper/plot_hyst_demo.R')
 
 #### Figure for the full hysteresis climate space ####
-source('code/figures_for_paper/plot_hyst_climspace.R')
-
+source('code/making_figures_for_paper/plot_hyst_climspace.R')
 
 #### Figure for the hysteresis maps ####
-source('code/figures_for_paper/plot_hyst_summary_map.R')
-
+source('code/making_figures_for_paper/plot_hyst_summary_map.R')
 
 #### Figure for the inter-annual correlation maps ####
-source('code/figures_for_paper/plot_interannual_correlation.R')
-
+source('code/making_figures_for_paper/plot_interannual_correlation.R')
 
 #### Figure for the distributions of the biases for selected climate zones ####
-source('code/figures_for_paper/plot_bias_against_temp_anomalies.R')
-
+source('code/making_figures_for_paper/plot_bias_against_temp_anomalies.R')
 
 #### Figure for heat wave maps ####
-source('code/figures_for_paper/plot_heatwaves.R')
+source('code/making_figures_for_paper/plot_heatwaves.R')
 
 
 

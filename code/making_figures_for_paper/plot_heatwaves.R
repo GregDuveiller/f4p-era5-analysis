@@ -20,14 +20,12 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/hwAll_varAll_stats.RData')   # <---- "df_all" 
-load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- ... 
+load('data/final_data/figures_for_paper/hwAll_varAll_stats.RData')   # <---- "df_all" 
+load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- ... 
 
 
 
-
-
-#### Make the plotsand sf ####
+#### Make the plots and sf ####
 
 # set-up gray colours for maps
 if(exists('gry_land') != T){ gry_land <- 'grey50'}

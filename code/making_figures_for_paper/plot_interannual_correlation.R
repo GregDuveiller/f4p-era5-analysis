@@ -20,7 +20,7 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/data_for_corr_summary_maps.RData')   
+load('data/final_data/figures_for_paper/data_for_corr_summary_maps.RData')   
 
 
 #### Make the plots ####

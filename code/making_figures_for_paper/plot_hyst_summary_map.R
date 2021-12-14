@@ -22,7 +22,7 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/hysteresis_map_ready4fig.RData')   # <----- df_hyst_map
+load('data/final_data/figures_for_paper/hysteresis_map_ready4fig.RData')   # <----- df_hyst_map
 
 
 #### Make the plots ####

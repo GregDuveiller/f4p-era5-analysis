@@ -21,9 +21,9 @@ require(patchwork)
 
 #### Load and prepare the data ####
 
-load('data/figures_for_paper/df_LSTLAI_tempAnomalyQuantile_aug.RData')
-load('data/figures_for_paper/hwAll_gislayers.RData')
-load('data/inter_data/ancillary_info/df_KG_climatezones.RData') # df_lgd & df_cz
+load('data/final_data/figures_for_paper/df_LSTLAI_tempAnomalyQuantile_aug.RData')
+load('data/final_data/figures_for_paper/hwAll_gislayers.RData')
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData') # df_lgd & df_cz   # <---- should probably be in "final_data"
 
 # set-up climate zones to show
 v_cz_in <- c('Dfc', 'Dfb', 'Cfb', 'Csa')

@@ -16,7 +16,7 @@
 dpath_vectors <- '/Users/gduveiller/work/data/external_datasets/natural_earth_data/'
 
 # Preprocessed R dataframes with ERA5 data
-dpath_r_dataframes <- '/Users/gduveiller/work/data/internal_datasets/f4p-era5-analysis/'
+dpath_r_dataframes <- '/Users/gduveiller/work/data/internal_datasets/f4p-era5-analysis/r_data_frames/'
 
 # Koppen-Geiger climate zones
 dpath_climate_zones <- '/Users/gduveiller/work/data/external_datasets/climate_zones/KG/'

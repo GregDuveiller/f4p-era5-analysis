@@ -19,7 +19,7 @@ require(tidyr)
 
 #### Load the data ####
 
-load('data/figures_for_paper/hysteresis_data_ready4fig.RData')   # <---- "df_r_all" "df_p_all" "df_s_all"
+load('data/final_data/figures_for_paper/hysteresis_data_ready4fig.RData')   # <---- "df_r_all" "df_p_all" "df_s_all"
 
 
 

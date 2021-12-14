@@ -18,7 +18,7 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/figures_for_paper/hysteresis_data_ready4fig.RData')
+load('data/final_data/figures_for_paper/hysteresis_data_ready4fig.RData')
 
 # define different cases to showcase
 case_list <- list(
