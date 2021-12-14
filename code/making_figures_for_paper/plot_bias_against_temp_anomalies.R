@@ -58,6 +58,7 @@ if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
 
 # Set-up some colour parameters
 gry1 <- 'grey60'  # <-- the axes
+gry2 <- 'grey20'  # <-- the borders of the shapes/circles
 
 # Colours for the legend
 cz_cols <- df_lgd$cz_colours
@@ -92,7 +93,7 @@ g_plot_quantile <- ggplot(df_qtls) +
   facet_grid(y_var~cz_name,  scales = 'free_y', labeller = var_labeller) +
   scale_y_continuous( 'Bias (ERA - obs)' ) + # , limits = y_scale
   scale_x_continuous( 'Land surface temperature anomaly [K]' ) + # , limits = x_scale
-  scale_colour_manual('', values = c('LAI' = gry3, 'LST' = gry3)) + # , limits = x_scale
+  scale_colour_manual('', values = c('LAI' = gry2, 'LST' = gry2)) + # , limits = x_scale
   scale_fill_gradientn('Quantile', colours = rev(RColorBrewer::brewer.pal(10, 'RdBu'))) + # , limits = y_scale
   theme(legend.position = 'bottom')
 
