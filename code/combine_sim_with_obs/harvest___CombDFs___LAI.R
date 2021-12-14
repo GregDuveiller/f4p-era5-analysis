@@ -13,9 +13,10 @@ library(tidyr)
 # input data
 dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
 #output data
-out_path <- 'data/combine_sim-obs'
+#output data
+out_path <- 'data/inter_data/df_comb_obs_vs_sim'
 dir.create(path = out_path, recursive = T, showWarnings = F) # MP
-source('code/data_combine_sim-obs/function___get_df_comb_lai.R')
+source('code/combine_sim_with_obs/function___get_df_comb_lai.R')
 
 spres <- '025'
 

@@ -5,7 +5,7 @@ library(tidyr)
 
 dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
 out_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace'
-source('code/combine_sim-obs/function___get_df_comb_std.R')
+source('code/combine_sim_with_obs/function___get_df_comb_std.R')
 
 spres <- '025'
 
