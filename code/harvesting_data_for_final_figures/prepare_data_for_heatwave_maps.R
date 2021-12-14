@@ -38,7 +38,7 @@ df_hw <- data.frame(row.names = c("hw2003", "hw2010", "hw2018"),
 # But July is hottest and prob most out of kilter with LAI map (through browning)
 
 # load shapefiles of heatwaves
-load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons 
+load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons 
 
 
 
@@ -154,7 +154,7 @@ df_barsHW_all <- bind_rows(
 
 #### Export the data ####
 
-output_path <- 'data/figures_for_paper/'
+output_path <- 'data/final_data/figures_for_paper/'
 if(!dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
 save('df_all', 'df_barsHW_all', file = paste0(output_path, 'hwAll_varAll_stats', '.RData') ) 

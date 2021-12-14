@@ -17,13 +17,13 @@ require(dplyr)
 
 # download here: https://www.naturalearthdata.com/downloads/50m-physical-vectors/
 
-coast_shapefile <- "data/input_data/vector_layers/ne_50m_coastline.shp"
+coast_shapefile <- "data/input_data/world_vectors/ne_50m_coastline.shp"
 coast <- sf::st_read(coast_shapefile, quiet = TRUE)
 
-ocean_shapefile <- "data/input_data/vector_layers/ne_50m_ocean.shp"
+ocean_shapefile <- "data/input_data/world_vectors/ne_50m_ocean.shp"
 ocean <- sf::st_read(ocean_shapefile, quiet = TRUE)
 
-land_shapefile <- "data/input_data/vector_layers/ne_50m_land.shp"
+land_shapefile <- "data/input_data/world_vectors/ne_50m_land.shp"
 land <- sf::st_read(land_shapefile, quiet = TRUE)
 
 #### Crop the target area (Europe) ####
@@ -69,7 +69,7 @@ hw_polygons <- st_sf(cbind(labels, polys))
 #### Export the data ####
 
 save('ocean_europe', 'coast_europe', 'land_europe', 'hw_polygons',
-     file = 'data/figures_for_paper/hwAll_gislayers.RData')
+     file = 'data/final_data/figures_for_paper/hwAll_gislayers.RData')
 
 
 

@@ -2,7 +2,7 @@ library(dplyr)
 library(tidyr)
 library(sf)
 
-load('data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons
+load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons
 
 
 
@@ -13,7 +13,7 @@ input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
 var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM',
 
 
-output_path <- 'data/figures_for_paper/'
+output_path <- 'data/final_data/figures_for_paper/'
 print(paste0('output_path is : ', output_path ))
 if(!dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
