@@ -1,12 +1,22 @@
-### prototype for a matching script (between RS and ReAnalysis)
+#!/usr/local/bin/Rscript
+# ---------------------------------------------------------------------------- #
+# #### harvest___CombDFs___ET.R ####
+# ---------------------------------------------------------------------------- #
+# Purpose: match the RS and ERA5 reanalysis data sources in single dataframe
+# Project: f4p-era5-analysis
+# Authors: G.Duveiller, M.Pickering
+# ---------------------------------------------------------------------------- #
 
 library(dplyr)
 library(tidyr)
 
-dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
-out_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace'
-source('code/combine_sim-obs/function___get_df_comb_std.R')
 
+# input data
+dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
+#output data
+out_path <- 'data/combine_sim-obs'
+dir.create(path = out_path, recursive = T, showWarnings = F) # MP
+source('code/data_combine_sim-obs/function___get_df_comb_std.R')
 
 spres <- '025'
 

@@ -17,8 +17,7 @@ get_df_comb_lai <- function(target_var,
   # # in case the name of the target variable is different in either sim or obs
   # if(is.null(target_var_obs)){target_var_obs <- target_var}
   # if(is.null(target_var_sim)){target_var_sim <- target_var}
-  exists()
-  
+
   # get list of files
   files_obs <- list.files(path = path_obs, pattern = paste0(target_var_obs, '_', src_obs, '_', spres, xtrLbl_obs_full), full.names = T)
   files_sim <- list.files(path = path_sim, pattern = paste0(target_var_sim, '_', src_sim, '_', spres, xtrLbl_sim_full), full.names = T)
