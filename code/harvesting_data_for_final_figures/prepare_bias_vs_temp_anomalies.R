@@ -90,7 +90,7 @@ root_script <- 'code/'  # <---- df_cz
 ###################################################
 
 # output_root  <- '/media/mark/HD/Mark/Mark_COPERNICUS/figures/COPERNICUSII_V3/'
-output_path <- 'data/figures_for_paper/'
+output_path <- 'data/final_data/figures_for_paper/'
 print(paste0('output_path is : ', output_path ))
 if(! dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
@@ -263,7 +263,7 @@ df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                   
 
 summary(df) ; dim(df)
 
-save(df, file =paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
+save(df, file = paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
 
 
 ###################################################
@@ -369,4 +369,4 @@ names(df_all)[5] <- 'bias'
 
 #load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/COP_tempAnomaly/data/df_LSTLAI_tempAnomalyQuantile_aug.RData')
 
-save(df_all, file =paste0(output_path, 'df_LSTLAI_tempAnomalyQuantile_aug.RData') )
+save(df_all, file = paste0(output_path, 'df_LSTLAI_tempAnomalyQuantile_aug.RData') )

@@ -35,12 +35,12 @@ v_monthS <- c(1,7) # months of interest
 ###################################################
 
 
-input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/' # where df_comb___var.RData are located
-
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
-output_path <- 'data/figures_for_paper/'
-#output_path <- paste0('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/figures_for_paper/')
-#output_path <- paste0('/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_',full_date ,'/')
+output_path <- 'data/final_data/figures_for_paper/'
+
+# input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/' # where df_comb___var.RData are located
+# output_path <- paste0('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/figures_for_paper/')
+# output_path <- paste0('/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_',full_date ,'/')
 dir.create(path = output_path, recursive = T, showWarnings = F) # MP
 
 # load clim zones 
