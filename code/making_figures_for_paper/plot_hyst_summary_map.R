@@ -33,9 +33,11 @@ if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
 
 
 
+col_pal_BD <- c('#4B90FE', '#9BB4FA',  '#C9D2F6', '#EBECF0', '#E7DFC9', '#CEBB7B', '#AA9419' )
+
 lgd <- theme(legend.position = 'right',
              legend.key.height = unit(1.2, units = 'cm'),
-             # panel.background = element_rect(fill = 'grey60'),
+             panel.background = element_rect(fill = gry_land),
              panel.grid = element_blank()) 
 gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
                                     frame.colour = 'black', ticks.colour = 'black'))
@@ -48,13 +50,13 @@ lgd_map <-   theme(legend.position = 'none',
 
 gmapBiasI <- ggplot(df_hyst_map) + 
   geom_tile(aes(x = x, y = y, fill = biasI)) +
-  scale_fill_gradientn(colours = brewer.pal(9, 'RdYlGn'), na.value = gry_land) + 
+  scale_fill_gradientn(colours = col_pal_BD, na.value = gry_land) + 
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
   lgd_map
 
 gcspBiasI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = t2.clim, y = sm.clim, fill = biasI)) +
-  scale_fill_gradientn('', colours = brewer.pal(9, 'RdYlGn')) +    
+  scale_fill_gradientn('BD', colours = col_pal_BD) +    
   scale_x_continuous('Mean annual temperature') +
   scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +
@@ -70,7 +72,7 @@ gmapHystI <- ggplot(df_hyst_map) +
 
 gcspHystI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = t2.clim, y = sm.clim, fill = hystI)) +
-  scale_fill_viridis_c('', option = 'F') +
+  scale_fill_viridis_c('HI', option = 'F') +
   scale_x_continuous('Mean annual temperature') +
   scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +
@@ -83,7 +85,7 @@ gcspHystI <- ggplot(df_hyst_map) +
 
 # assemble the figure
 
-gAll <- gcspBiasI +  gmapBiasI + gcspHystI +  gmapHystI + 
+gAll <- gcspHystI +  gmapHystI +gcspBiasI +  gmapBiasI + 
   plot_layout(ncol = 2, widths = c(1,3))
 
 
