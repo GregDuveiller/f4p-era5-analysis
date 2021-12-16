@@ -36,7 +36,9 @@ df_lgd <- data.frame(cz_ID = cz_IDs, cz_name = factor(cz_lbls), cz_colours = cz_
 # get the final data.frame for the climate zones
 df_cz <- as.data.frame(r_LR, xy = T, long = T) %>% 
   rename(cz_ID = value) %>% dplyr::select(-layer) %>%
-  left_join(df_lgd, by = "cz_ID")
+  left_join(df_lgd, by = "cz_ID") %>% 
+  mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
+  tibble()
 
 dir.create(path = 'data/inter_data/ancillary_info', recursive = T, showWarnings = F)
 save('df_cz', 'df_lgd', file = 'data/inter_data/ancillary_info/df_KG_climatezones.RData')

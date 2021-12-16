@@ -1,6 +1,6 @@
 #!/usr/local/bin/Rscript
 # ---------------------------------------------------------------------------- #
-# #### calc_hysteresis_dimensions.R ####
+# #### prepare_hysteresis_dimensions.R ####
 # ---------------------------------------------------------------------------- #
 # Purpose: process data to make figures of hysteresis plots
 # Project: f4p-era5-analysis
@@ -13,7 +13,7 @@ require(tidyr)
 #### Get the data ####
 
 load('data/inter_data/ancillary_info/df_climspace_t2xsm.RData', verbose = T)  # <----- df_climspace
-load('data/figures_for_paper/hysteresis_data_ready4fig.RData', verbose = T)
+load('data/final_data/figures_for_paper/hysteresis_data_ready4fig.RData', verbose = T)
 
 df_2dim <- df_p_all %>%
   transmute(t2.clim.bin = t2.clim.bin,
@@ -65,7 +65,7 @@ df_hyst_map <- df_climspace_bin %>%
 
 #### Export the data ####
 
-save('df_hyst_map', file = 'data/figures_for_paper/hysteresis_map_ready4fig.RData')
+save('df_hyst_map', file = 'data/final_data/figures_for_paper/hysteresis_map_ready4fig.RData')
 
 
 

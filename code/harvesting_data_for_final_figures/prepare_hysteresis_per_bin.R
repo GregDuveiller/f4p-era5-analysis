@@ -1,6 +1,6 @@
 #!/usr/local/bin/Rscript
 # ---------------------------------------------------------------------------- #
-# #### calc_hysteresis_per_bin.R ####
+# #### prepare_hysteresis_per_bin.R ####
 # ---------------------------------------------------------------------------- #
 # Purpose: process data to make figures of hysteresis plots
 # Project: f4p-era5-analysis
@@ -15,15 +15,17 @@ require(sf)
 #### Get the necessary data ####
 
 # load/prepare dataframe with data...
-load('data/inter_data/df_single_var_agreement/df_single_var_agr_tmp_LAI_cleaner.RData')
-df_LAI_comb <- temp_agr_con 
-load('data/inter_data/df_single_var_agreement/df_single_var_agr_tmp_LST_cleaner.RData')
-df_LST_comb <- temp_agr_con ; varname <- 'LST'
+load('data/inter_data/df_per_clim_bin/df_LAI_per_clim_bin.RData') # <---- df_LAI_comb
+load('data/inter_data/df_per_clim_bin/df_LST_per_clim_bin.RData') # <---- df_LST_comb
+
+
+#### Get the data averaged by bins ####
+
 
 by_vctr <- c("time", "t2.clim.bin", "sm.clim.bin")
 
 df_r_all <- left_join(by = all_of(by_vctr), suffix = c("_LAI", "_LST"),
-                    x = df_LAI_comb, y = df_LST_comb) %>%
+                      x = df_LAI_comb, y = df_LST_comb) %>%
   select(by_vctr, dif_mu_LAI, dif_mu_LST, N_LAI, N_LST) %>%   # 
   rename(y = dif_mu_LST, x = dif_mu_LAI, ny = N_LST, nx = N_LAI) %>%
   filter(!is.na(y) & !is.na(x)) %>% 
@@ -88,7 +90,7 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, harmonic_n = 3){
   df_s$x <- predict.lm(txfit, df_s)
   df_s$t2.clim.bin <- unique(df$t2.clim.bin)
   df_s$sm.clim.bin <- unique(df$sm.clim.bin)  
-
+  
   # make new matrix for polygon, and ensure closure
   mat_coords <- matrix(data = c(df_s$x, df_s$x[1], df_s$y, df_s$y[1]),
                        byrow = F, ncol = 2)
@@ -101,7 +103,7 @@ fit.hyst <- function(t2.bin.num, sm.bin.num, harmonic_n = 3){
   
   # calculate the area of each loop
   loop_area <- st_area(poly_loop)
-
+  
   
   # prepare dataframe with metrics describing the curves
   df_p <- data.frame(
