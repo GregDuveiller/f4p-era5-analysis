@@ -54,34 +54,10 @@ v_lon_min <- -12 ; v_lon_max <- 58  ; v_lat_min <- 36 ; v_lat_max <- 71 # reduce
 library(chron) # useful for converting time values
 library(dplyr) # use %>%
 
-# library(raster) # package for raster manipulation
-# library(lattice)    # enables levelplots
-# library(rasterVis)  # enables levelplots
-# #library(lubridate)   # enables date manipulation
-
-# require(ggplot2)
-# require(magrittr)
 require(here)
 require(tidyr)
 
-# require(scales)
-# library(viridis)
-# library(RColorBrewer)
 
-# # for the maps
-# library(sp)
-# library(rgdal)
-# library(sf)         # (Greg maps) for adding maps to ggplot
-
-# library(maptools)
-# library(rgeos)
-# library(classInt)
-# library(RColorBrewer)
-# library(nlme)      # for lmList
-
-# load basic functions, e.g. maps
-# root_script <- '/home/mark/Documents/work_jrc/work_d1/work_SIF_V2_ancova/part_1_landcover_only/200901_v1_anova/scripts/'
-# root_script <- '/home/mark/ownCloud/copernicus/scripts/git_mp_fork/f4p-era5-analysis/code/'  # <---- df_cz
 root_script <- 'code/'  # <---- df_cz
 
 
@@ -145,11 +121,6 @@ if(input_file == 'df_comb___LST.RData' ){
 df <- left_join(df, df_comb, by = c('x','y','year',"month"), suffix = c('.LAI', '.LST'))
 # df <- df %>% filter(!is.na(obs.LST))
 
-# input_file <- 'df_comb___SM.RData'
-# load(paste0(input_dir, input_file))
-# colnames(df_comb)[5:6] <- c('obs.SM', 'sim.SM')
-# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
-
 input_file <- 'df_comb___E.RData'
 load(paste0(input_dir, input_file))
 colnames(df_comb)[5:6] <- c('obs.E', 'sim.E')
@@ -161,21 +132,6 @@ load(paste0(input_dir, input_file))
 colnames(df_comb)[5:6] <- c('obs.albedo_wsa_vis', 'sim.albedo_wsa_vis')
 df <- left_join(df, df_comb, by = c('x','y','year',"month"))
 
-# input_file <- 'df_comb___albedo_bsa_nir.RData'
-# load(paste0(input_dir, input_file))
-# colnames(df_comb)[5:6] <- c('obs.albedo_bsa_nir', 'sim.albedo_bsa_nir')
-# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
-# 
-# input_file <- 'df_comb___albedo_bsa_vis.RData'
-# load(paste0(input_dir, input_file))
-# colnames(df_comb)[5:6] <- c('obs.albedo_bsa_vis', 'sim.albedo_bsa_vis')
-# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
-# 
-# input_file <- 'df_comb___albedo_wsa_nir.RData'
-# load(paste0(input_dir, input_file))
-# colnames(df_comb)[5:6] <- c('obs.albedo_wsa_nir', 'sim.albedo_wsa_nir')
-# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
-
 
 head(df)
 summary(df)
@@ -185,16 +141,6 @@ rm(df_comb)
 ######     PREPARE DATAFRAME                  #####
 ###################################################
 
-# we want to shift southern hemisphere by 6 months to make sure we are looking at summers - done above
-# we take one month/one season
-# for LAI and LST we get the columns: ERA5-sat difference, ERA5-sat diff as a percentage of sat, the multiyear average, obs/sim - multiyear average, obs/sim - multiyear average as perc, 
-# we make the suggested plots: 
-#     x = LST - LT_avg                ; y = LST(ERA5-sat diff)              ; z = frequency                   # This shows whether LST ERA5-sat difference increases in anomalous warm periods
-#     x = (LST - LT_avg) as perc      ; y = LST(ERA5-sat diff) as perc      ; z = frequency                   # This shows whether LST ERA5-sat difference increases in anomalous warm periods (standardised)
-#     x = LST - LT_avg                ; y = LAI(ERA5-sat diff)              ; z = frequency                   # This shows whether LAI ERA5-sat difference increases in anomalous warm periods
-#     x = (LST - LT_avg) as perc      ; y = LAI(ERA5-sat diff) as perc      ; z = frequency                   # This shows whether LAI ERA5-sat difference increases in anomalous warm periods (standardised)
-#     x = LST - LT_avg                ; y = LST(ERA5-sat diff)              ; z = LAI(ERA5-sat diff)          # This shows whether LST ERA5-sat difference increases in anomalous warm periods, and whether average LAI difference is a function
-#     x = (LST - LT_avg) as perc      ; y = LST(ERA5-sat diff) as perc      ; z = LAI(ERA5-sat diff) as perc  # This shows whether LST ERA5-sat difference increases in anomalous warm periods, and whether average LAI difference is a function (standardised)
 
 # get multiyear average for each pixel per month
 df_avg <- df %>% group_by(x,y, monthS) %>%
@@ -202,16 +148,8 @@ df_avg <- df %>% group_by(x,y, monthS) %>%
              sim_mean.LAI = mean(sim.LAI, na.rm = T),
              obs_mean.LST = mean(obs.LST, na.rm = T),
              sim_mean.LST = mean(sim.LST, na.rm = T),
-             # obs_mean.SM  = mean(obs.SM , na.rm = T),
-             # sim_mean.SM  = mean(sim.SM , na.rm = T),
              obs_mean.E   = mean(obs.E  , na.rm = T),
              sim_mean.E   = mean(sim.E  , na.rm = T),
-             # obs_mean.albedo_bsa_nir = mean(obs.albedo_bsa_nir, na.rm = T),
-             # sim_mean.albedo_bsa_nir = mean(sim.albedo_bsa_nir, na.rm = T),
-             # obs_mean.albedo_wsa_nir = mean(obs.albedo_wsa_nir, na.rm = T),
-             # sim_mean.albedo_wsa_nir = mean(sim.albedo_wsa_nir, na.rm = T),
-             # obs_mean.albedo_bsa_vis = mean(obs.albedo_bsa_vis, na.rm = T),
-             # sim_mean.albedo_bsa_vis = mean(sim.albedo_bsa_vis, na.rm = T),
              obs_mean.albedo_wsa_vis = mean(obs.albedo_wsa_vis, na.rm = T),
              sim_mean.albedo_wsa_vis = mean(sim.albedo_wsa_vis, na.rm = T)
   )
@@ -228,10 +166,6 @@ df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                   
                     diff_obs_mean.LST =  (obs.LST - obs_mean.LST),                 # raw difference obs - LT mean LST
                     diff_sim_mean.LST =  (sim.LST - sim_mean.LST),                 # raw difference sim - LT mean LST
                     
-                    # diff_sim_obs.SM  =  (sim.SM - obs.SM),                      # raw difference ERA5-sat SM
-                    # diff_obs_mean.SM =  (obs.SM - obs_mean.SM),                 # raw difference obs - LT mean SM
-                    # diff_sim_mean.SM =  (sim.SM - sim_mean.SM),                 # raw difference sim - LT mean SM
-                    
                     diff_sim_obs.E  =  (sim.E - obs.E),                      # raw difference ERA5-sat E
                     diff_obs_mean.E =  (obs.E - obs_mean.E),                 # raw difference obs - LT mean E
                     diff_sim_mean.E =  (sim.E - sim_mean.E),                 # raw difference sim - LT mean E
@@ -240,30 +174,12 @@ df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                   
                     diff_obs_mean.albedo_wsa_vis =  (obs.albedo_wsa_vis - obs_mean.albedo_wsa_vis),                 # raw difference obs - LT mean albedo_wsa_vis
                     diff_sim_mean.albedo_wsa_vis =  (sim.albedo_wsa_vis - sim_mean.albedo_wsa_vis),                 # raw difference sim - LT mean albedo_wsa_vis
                     
-                    
-                    # diff_sim_obs.albedo_bsa_nir  =  (sim.albedo_bsa_nir - obs.albedo_bsa_nir),                      # raw difference ERA5-sat albedo_bsa_nir
-                    # diff_obs_mean.albedo_bsa_nir =  (obs.albedo_bsa_nir - obs_mean.albedo_bsa_nir),                 # raw difference obs - LT mean albedo_bsa_nir
-                    # diff_sim_mean.albedo_bsa_nir =  (sim.albedo_bsa_nir - sim_mean.albedo_bsa_nir),                 # raw difference sim - LT mean albedo_bsa_nir
-                    # 
-                    # diff_sim_obs.albedo_bsa_vis  =  (sim.albedo_bsa_vis - obs.albedo_bsa_vis),                      # raw difference ERA5-sat albedo_bsa_vis
-                    # diff_obs_mean.albedo_bsa_vis =  (obs.albedo_bsa_vis - obs_mean.albedo_bsa_vis),                 # raw difference obs - LT mean albedo_bsa_vis
-                    # diff_sim_mean.albedo_bsa_vis =  (sim.albedo_bsa_vis - sim_mean.albedo_bsa_vis),                 # raw difference sim - LT mean albedo_bsa_vis
-                    # 
-                    # diff_sim_obs.albedo_wsa_nir  =  (sim.albedo_wsa_nir - obs.albedo_wsa_nir),                      # raw difference ERA5-sat albedo_wsa_nir
-                    # diff_obs_mean.albedo_wsa_nir =  (obs.albedo_wsa_nir - obs_mean.albedo_wsa_nir),                 # raw difference obs - LT mean albedo_wsa_nir
-                    # diff_sim_mean.albedo_wsa_nir =  (sim.albedo_wsa_nir - sim_mean.albedo_wsa_nir),                 # raw difference sim - LT mean albedo_wsa_nir
-                    
-                    # diffP_sim_obs.LAI =  ifelse(obs.LAI <= 0, NA, (sim.LAI - obs.LAI)/obs.LAI ),              # perc difference ERA5-sat LAI
-                    # diffP_sim_obs.LST =  ifelse(obs.LST <= 0, NA, (sim.LST - obs.LST)/obs.LST ),              # perc difference ERA5-sat LST
-                    # diffP_obs_mean.LAI = ifelse(obs_mean.LAI ==0, NA, (obs.LAI - obs_mean.LAI)/obs_mean.LAI),   # perc difference obs - LT mean LAI
-                    # diffP_sim_mean.LAI = ifelse(sim_mean.LAI ==0, NA, (sim.LAI - sim_mean.LAI)/sim_mean.LAI),   # perc difference sim - LT mean LAI
-                    # diffP_obs_mean.LST = ifelse(obs_mean.LST ==0, NA, (obs.LST - obs_mean.LST)/obs_mean.LST),   # perc difference obs - LT mean LST
-                    # diffP_sim_mean.LST = ifelse(sim_mean.LST ==0, NA, (sim.LST - sim_mean.LST)/sim_mean.LST)    # perc difference sim - LT mean LST
 )
 
 summary(df) ; dim(df)
 
-save(df, file = paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
+# save intermediary dataframe
+# save(df, file = paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
 
 
 ###################################################
@@ -297,9 +213,6 @@ f_summarise_byQuantile <- function(df_in, v_quantiles , q_col_name_x , q_col_nam
       # ribbon_value_Y_up  = quantile( !!as.symbol(q_col_name_y) , probs = (0.5+ribbon_size) , na.rm= T ), # upper quantile of ribbon_size around the mean_x
       # ribbon_value_Y_down  = quantile( !!as.symbol(q_col_name_y) , probs = (0.5-ribbon_size) , na.rm= T ), # upper quantile of ribbon_size around the mean_x
       mean_value_Q  = mean( !!as.symbol(q_col_name_quantile), na.rm= T),
-      # cor_XY = cor(!!as.symbol(q_col_name_x) ,!!as.symbol(q_col_name_y) ),
-      # lm_c   = lm( formula = !!as.symbol(q_col_name_y) ~ !!as.symbol(q_col_name_x) )$coefficients[1],
-      # lm_m   = lm( formula = !!as.symbol(q_col_name_y) ~ !!as.symbol(q_col_name_x) )$coefficients[2]
     )
   
   return(df_quantile)
