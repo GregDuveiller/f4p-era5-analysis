@@ -56,8 +56,8 @@ col_pal_df <- data.frame(
 
 xlims <- c(-12, 58); ylims <- c(36, 71)
 
-hw_labeller <- labeller(
-  hw = c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018'))
+hw_lbls <- c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018')
+hw_labeller <- labeller(hw = hw_lbls)
 
 
 
@@ -156,6 +156,7 @@ mk_gbar_plot <- function(varname){
     geom_col(aes(x = hw, fill = colorCodedBias, y = value), 
              colour = 'grey20', position = 'dodge') + 
     geom_hline(yintercept = 0, colour = 'grey20') +
+    scale_x_discrete('', labels = hw_lbls) + 
     scale_y_continuous(paste0(varname, ' bias (ERA - obs)')) +
     scale_fill_manual('', values = cols ) +
     theme_classic() + 
