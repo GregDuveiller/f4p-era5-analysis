@@ -26,7 +26,7 @@ by_vctr <- c("time", "t2.clim.bin", "sm.clim.bin")
 
 df_r_all <- left_join(by = all_of(by_vctr), suffix = c("_LAI", "_LST"),
                       x = df_LAI_comb, y = df_LST_comb) %>%
-  select(by_vctr, dif_mu_LAI, dif_mu_LST, N_LAI, N_LST) %>%   # 
+  dplyr::select(by_vctr, dif_mu_LAI, dif_mu_LST, N_LAI, N_LST) %>%   # 
   rename(y = dif_mu_LST, x = dif_mu_LAI, ny = N_LST, nx = N_LAI) %>%
   filter(!is.na(y) & !is.na(x)) %>% 
   filter(nx > 30 & ny > 30) %>%
@@ -140,6 +140,6 @@ for(i in 1:length(levels(df_r_all$t2.clim.bin))){
 
 #### Export the data ####
 
-save('df_r_all', 'df_p_all','df_s_all', file = 'data/figures_for_paper/hysteresis_data_ready4fig.RData')
+save('df_r_all', 'df_p_all','df_s_all', file = 'data/final_data/figures_for_paper/hysteresis_data_ready4fig.RData')
 
 
