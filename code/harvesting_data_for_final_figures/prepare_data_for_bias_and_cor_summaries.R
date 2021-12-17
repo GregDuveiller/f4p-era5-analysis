@@ -11,10 +11,6 @@
 ######     INITIALISE                         #####
 ###################################################
 
-rm(list = ls())
-start_time <- Sys.time() ; print(start_time)
-full_date <- as.character(Sys.time()) ; full_date <- strsplit(full_date, " ") ; full_time <- full_date[[1]][2] ; full_date <- full_date[[1]][1]
-
 library(dplyr)
 library(tidyr)
 library(here)
@@ -29,7 +25,6 @@ varname <- 'LST' ## varname_list <- c( 'LAI', 'LST', 'E',  'albedo_wsa_vis')
 v_monthS <- c(1,7) # months of interest
 
 
-
 ###################################################
 ######     I/O                                #####
 ###################################################
@@ -38,14 +33,10 @@ v_monthS <- c(1,7) # months of interest
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
 output_path <- 'data/final_data/figures_for_paper/'
 
-# input_dir <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_workspace/' # where df_comb___var.RData are located
-# output_path <- paste0('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/figures_for_paper/')
-# output_path <- paste0('/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3/greg_workspace/MP_',full_date ,'/')
 dir.create(path = output_path, recursive = T, showWarnings = F) # MP
 
-# load clim zones 
-load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
-#load('/home/mark/ownCloud/copernicus/scripts/git_paper_version/f4p-era5-analysis/data/input_data/CZ/df_KG_climatezones.RData')  # <---- df_cz
+# load clim zones - x,y, KG climatezone data 
+load('data/input_data/climate_zones/df_KG_climatezones.RData')  # <---- df_cz
 
 df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
   select(-cz_ID, -cz_colours)
@@ -68,7 +59,6 @@ df_comb <- df_comb %>% filter(!is.na(obs))
 df_comb <- df_comb %>% filter(!is.na(obs))  %>%
   mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
   mutate(monthS = ifelse(monthS == 0, 12, monthS))  %>% 
-  # mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-'))) %>%
   left_join(df_cz, by = c('x', 'y'))
 
 # remove polar and ice CZ
@@ -83,13 +73,7 @@ df_comb <- df_comb %>%
 ######   get temp agreement (in space) - monthS  #####
 df_LAI_bias <- df_comb %>%
   group_by(y, x, monthS) %>%
-  summarise(# agre = get.Agr.Metrics(obs, sim),
-            # rmsd = mean(sqrt((obs - sim)^2)),
-            # diff_simSobs = mean(sim - obs, na.rm = T)
-              diff_simSobs = mean(bias, na.rm = T)) 
-
-# save('df_LAI_bias',
-#      file = paste0(output_path, 'df_single_var_agr__sp_agr_monthS_LAI.RData'))  
+  summarise(  diff_simSobs = mean(bias, na.rm = T)) 
 
 df_comb_LAI <- df_comb
 rm(df_comb)
@@ -102,7 +86,6 @@ load(paste0(input_dir, 'df_comb___', varname,'.RData'))  # <--- df_comb
 df_comb <- df_comb %>% filter(!is.na(obs))  %>%
   mutate(monthS = ifelse(sign(y) < 0, (month + 6) %% 12, month))  %>%
   mutate(monthS = ifelse(monthS == 0, 12, monthS))  %>% 
-  # mutate(time = as.Date(x = paste(year, monthS, '15', sep = '-'))) %>%
   left_join(df_cz, by = c('x', 'y'))
 
 # remove polar and ice CZ
@@ -117,10 +100,7 @@ df_comb <- df_comb %>%
 ######   get temp agreement (in space) - monthS  #####
 df_LST_bias <- df_comb %>%
   group_by(y, x, monthS) %>%
-  summarise(# agre = get.Agr.Metrics(obs, sim),
-            # rmsd = mean(sqrt((obs - sim)^2)),
-            # diff_simSobs = mean(sim - obs, na.rm = T)
-              diff_simSobs = mean(bias, na.rm = T)) 
+  summarise( diff_simSobs = mean(bias, na.rm = T) ) 
 
 save('df_LST_bias', 'df_LAI_bias',
      file = paste0(output_path, 'data_for_bias_summary_maps.RData'))  
@@ -143,8 +123,6 @@ df_comb_cor <- df_comb_cor %>% filter(year >= 2003 & year <= 2018)
 df_LSTb_LAIb_corr <- df_comb_cor %>%
   group_by(y, x, monthS) %>%
   summarise(r = cor(bias, bias.LAI)
-    #agre = get.Agr.Metrics(diff_simSobs.LAI, diff_simSobs),
-    #agre_bias = get.Agr.Metrics(bias, bias.LAI) # now get the agreement metrics of bias(sat-obs) in VAR vs LAI (i.e. temporal correlation in the bais etc)
   )
 df_LSTb_LAIb_corr <- df_LSTb_LAIb_corr %>% filter(!is.na(r))
 
