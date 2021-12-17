@@ -30,15 +30,12 @@ start_year <- 2003; end_year <- 2018  # select the range of years to average ove
 v_lon_min <- -12; v_lon_max <- 58; v_lat_min <- 36 ;v_lat_max <- 71 # limits to contain all 3 hws
 
 # create a df key containing the name, year and month of each heatwave at maximum
-df_hw <- data.frame(row.names = c("hw2003", "hw2010", "hw2018"),
+df_hw <- data.frame(row.names = c("HW03", "HW10", "HW18"),
                     year = c(2003, 2010, 2018),
                     month = c(8, 7, 7))
 # Russian heatwave https://earthobservatory.nasa.gov/images/45069/heatwave-in-russia  
 # https://en.wikipedia.org/wiki/2018_European_heat_wave - no specific month, generally May-July.
 # But July is hottest and prob most out of kilter with LAI map (through browning)
-
-# load shapefiles of heatwaves
-load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons 
 
 
 
@@ -112,43 +109,13 @@ for( i in 1:dim(df_hw)[1] ){
     
   } # END LOOP OVER VARIABLES
   
-  df_vars$hw <- case_study
+  df_vars$hwyear <- df_hw[case_study, 'year'] 
   if (0 %in% dim(df_all)){ df_all <- df_vars }
   else{ df_all <- rbind(df_all, df_vars ) }
   df_all$variable <- factor(df_all$variable)
-  df_all$hw <- factor(df_all$hw)
+  #df_all$hwyear <- factor(df_all$hwyear)
   
 } # END LOOP OVER HEATWAVES
-
-
-
-#### Summarise spatially per heatwave ####
-
-
-get_HW_spvals <- function(hwname){
-  hw_bbox <- hw_polygons %>% filter(hw == hwname) %>% st_bbox()
-  
-  df_barsHW <- df_all %>%
-    filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%
-    filter(y >= hw_bbox$ymin & y <= hw_bbox$ymax) %>%
-    filter(hw == hwname) %>%
-    group_by(variable) %>%
-    summarise(obs_hw_mu = mean(obs, na.rm = T),
-              sim_hw_mu = mean(sim, na.rm = T),
-              obs_cl_mu = mean(obs_mean, na.rm = T),
-              sim_cl_mu = mean(sim_mean, na.rm = T),
-              bias_hw_mu = mean(diff_simSobs, na.rm = T), 
-              bias_cl_mu = mean(diff_simSobs_mean, na.rm = T),
-              bias_shift_mu = mean(diff_simSobsSmean, na.rm = T)) %>%
-    mutate(hw = hwname)
-}
-
-df_barsHW_all <- bind_rows(
-  get_HW_spvals('hw2003'),
-  get_HW_spvals('hw2010'), 
-  get_HW_spvals('hw2018')) %>%
-  pivot_longer(!variable & !hw, names_to = 'metric')
-
 
 
 
@@ -157,5 +124,5 @@ df_barsHW_all <- bind_rows(
 output_path <- 'data/final_data/figures_for_paper/'
 if(!dir.exists(output_path)) {dir.create(paste0(output_path), recursive = T)}
 
-save('df_all', 'df_barsHW_all', file = paste0(output_path, 'hwAll_varAll_stats', '.RData') ) 
+save('df_all', file = paste0(output_path, 'hw_maps', '.RData') ) 
 

@@ -20,8 +20,9 @@ require(patchwork)
 
 #### Load the data ####
 
-load('data/final_data/figures_for_paper/hwAll_varAll_stats.RData')   # <---- "df_all" 
-load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- ... 
+load('data/final_data/figures_for_paper/hw_maps.RData')   # <---- "df_all" 
+load('data/final_data/figures_for_paper/hw_gislayers.RData')   # <---- ... 
+load('data/final_data/figures_for_paper/hw_stats.RData')   # <---- "df_barsHW_all" 
 
 
 
@@ -57,8 +58,15 @@ col_pal_df <- data.frame(
 
 xlims <- c(-12, 58); ylims <- c(36, 71)
 
-hw_lbls <- c('hw2003' = 'Aug. 2003', 'hw2010' = 'Jul. 2010', 'hw2018' = 'Jul. 2018')
-hw_labeller <- labeller(hw = hw_lbls)
+hw_lbls <- c('HW03' = 'HW03 (Aug. 2003)', 
+             'HW10' = 'HW10 (Jul. 2010)', 
+             'HW18' = 'HW18 (Jul. 2018)')
+
+hw_lbls <- c('2003' = 'HW03 (Aug. 2003)', 
+             '2010' = 'HW10 (Jul. 2010)', 
+             '2018' = 'HW18 (Jul. 2018)')
+
+hw_labeller <- labeller(hwyear = hw_lbls)
 
 
 
@@ -68,7 +76,7 @@ gGEN <- ggplot(df_all %>% filter(variable == 'LST')) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) +
+  facet_grid(hwyear~., labeller = hw_labeller) +
   scale_fill_gradientn('LST anomaly [K]', 
                        colours = rev(brewer.pal(11, "RdYlBu")), 
                        limits = c(-15, 15), 
@@ -83,7 +91,7 @@ gLST <- ggplot(df_all %>% filter(variable == varname)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hwyear~., labeller = hw_labeller) + 
   scale_fill_gradientn('LST bias shift [K]', 
                        colours = col_pal_df[,varname], 
                        limits = c(-4.5, 4.5), 
@@ -98,7 +106,7 @@ gLAI <- ggplot(df_all %>% filter(variable == varname)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hwyear~., labeller = hw_labeller) + 
   scale_fill_gradientn('LAI bias shift [m2/m2]', 
                        colours = col_pal_df[,varname], 
                        limits = c(-1.5, 1.5),
@@ -113,7 +121,7 @@ gEVA <- ggplot(df_all %>% filter(variable == varname)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hwyear~., labeller = hw_labeller) + 
   scale_fill_gradientn('Evaporation bias shift [mm]', 
                        colours = col_pal_df[,varname], 
                        limits = c(-50, 50), 
@@ -127,7 +135,7 @@ gALB <- ggplot(df_all %>% filter(variable == varname)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hwyear~., labeller = hw_labeller) + 
   scale_fill_gradientn('Albedo bias shift [.]', 
                        colours = col_pal_df[,varname], 
                        limits = c(-0.05, 0.05), oob = squish) +
@@ -141,7 +149,7 @@ gSM <- ggplot(df_all %>% filter(variable == varname)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hw~., labeller = hw_labeller) + 
+  facet_grid(hwyear~., labeller = hw_labeller) + 
   scale_fill_gradientn('SM bias shift [.]', 
                        colours = col_pal_df[,varname], 
                        limits = c(-0.15, 0.15), oob = squish) +
@@ -151,7 +159,7 @@ gSM <- ggplot(df_all %>% filter(variable == varname)) +
 
 df_bars <- df_barsHW_all %>% 
   filter(metric %in% c('bias_hw_mu', 'bias_cl_mu')) %>%
-  left_join(by = c('variable', 'hw'), 
+  left_join(by = c('variable', 'hwname', 'hwyear'), 
             df_barsHW_all %>%
               filter(metric == 'bias_shift_mu') %>%
               mutate(shift_up = value > 0) %>%
@@ -166,10 +174,10 @@ mk_gbar_plot <- function(varname){
             'bias_cl_mu_TRUE' = col_pal[7], 'bias_cl_mu_FALSE' = col_pal[5])
   
   gbars <- ggplot(df_bars %>% filter(variable == varname)) + 
-    geom_col(aes(x = hw, fill = colorCodedBias, y = value), 
+    geom_col(aes(x = hwname, fill = colorCodedBias, y = value), 
              colour = 'grey20', position = 'dodge') + 
     geom_hline(yintercept = 0, colour = 'grey20') +
-    scale_x_discrete('', labels = hw_lbls) + 
+    scale_x_discrete('') + 
     scale_y_continuous(paste0(varname, ' bias (ERA - obs)')) +
     scale_fill_manual('', values = cols ) +
     theme_classic() + 
