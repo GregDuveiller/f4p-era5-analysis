@@ -12,3 +12,4 @@ The code also uses an ancillary repository to calculate metrics of agreement. Th
 
 - `climate_zones` : available at `http://koeppen-geiger.vu-wien.ac.at/present.htm`
 - `r_data_frames` : available in the JEODPP (calculated by Mark)
+- `world_vectors` : available at https://www.naturalearthdata.com/downloads/50m-physical-vectors/

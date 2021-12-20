@@ -22,7 +22,7 @@ require(patchwork)
 #### Load and prepare the data ####
 
 load('data/final_data/figures_for_paper/df_LSTLAI_tempAnomalyQuantile_aug.RData')
-load('data/final_data/figures_for_paper/hwAll_gislayers.RData')
+load('data/final_data/figures_for_paper/hw_gislayers.RData')
 load('data/inter_data/ancillary_info/df_KG_climatezones.RData') # df_lgd & df_cz   # <---- should probably be in "final_data"
 
 # set-up climate zones to show

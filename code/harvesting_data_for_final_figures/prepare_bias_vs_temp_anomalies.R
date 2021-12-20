@@ -2,45 +2,10 @@
 # ---------------------------------------------------------------------------- #
 # #### prepare_bias_vs_temp_anomalies.R ####
 # ---------------------------------------------------------------------------- #
-# Purpose: prepare selected gis (vector) layers for maps over Europe
+# Purpose: produce dataframes for producing temperature bias with temperature anomaly figures
 # Project: f4p-era5-analysis
 # Authors: M.Pickering, G.Duveiller
 # ---------------------------------------------------------------------------- #
-
-
-# original name : prepare_biasWtemp.R
-#
-# ########################################################
-# Title         : 
-# Description   : This code aims to produce dataframes for producing temperature bias with temperature anomaly figures
-#                 
-# Inputs	      : df_comb___LAI.RData etc produced by Greg initially
-#                 
-# Outputs	      : figures
-#                 /media/mark/HD/Mark/Mark_COPERNICUS/figures/COPERNICUSII_V3/
-#                 
-# Options	      : 
-# Date          : 07/12/21
-# Version       : 1.3 - this is updated for a new dataframe and to form a better plotting framework
-# Licence       : N/A
-# Authors       : Mark Pickering
-# Maintainer    : Mark Pickering
-# Notes		      : 
-#                 
-#                 
-# Example use   : 
-#                 
-# ########################################################
-
-###################################################
-######     INITIALISE                         #####
-###################################################
-rm(list = ls())
-start_time <- Sys.time()
-print(start_time)
-# find date:
-full_date <- as.character(Sys.time()) ; full_date <- strsplit(full_date, " ")
-full_time <- full_date[[1]][2] ; full_date <- full_date[[1]][1]
 
 
 ######     GLOBAL VARS                        #####
@@ -56,9 +21,6 @@ library(dplyr) # use %>%
 
 require(here)
 require(tidyr)
-
-
-root_script <- 'code/'  # <---- df_cz
 
 
 ###################################################
@@ -92,7 +54,7 @@ input_file <- 'df_comb___LAI.RData'
 
 load(paste0(input_dir, input_file))
 df_comb <- left_join(df_comb, df_cz)
-head(df_comb) ; dim(df_comb) ; summary(df_comb)
+
 
 df_comb <- df_comb %>% 
   filter(x >= v_lon_min  & x <= v_lon_max) %>%
@@ -121,20 +83,20 @@ if(input_file == 'df_comb___LST.RData' ){
 df <- left_join(df, df_comb, by = c('x','y','year',"month"), suffix = c('.LAI', '.LST'))
 # df <- df %>% filter(!is.na(obs.LST))
 
-input_file <- 'df_comb___E.RData'
-load(paste0(input_dir, input_file))
-colnames(df_comb)[5:6] <- c('obs.E', 'sim.E')
-df <- left_join(df, df_comb, by = c('x','y','year',"month"))
+# input_file <- 'df_comb___E.RData'
+# load(paste0(input_dir, input_file))
+# colnames(df_comb)[5:6] <- c('obs.E', 'sim.E')
+# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
+# 
+# # Use the MCD43C3 version as covers 2018 and we are only looking at summer in any case
+# input_file <- 'df_comb___Albedo.RData'
+# load(paste0(input_dir, input_file))
+# colnames(df_comb)[5:6] <- c('obs.albedo_wsa_vis', 'sim.albedo_wsa_vis')
+# df <- left_join(df, df_comb, by = c('x','y','year',"month"))
 
-# Use the MCD43C3 version as covers 2018 and we are only looking at summer in any case
-input_file <- 'df_comb___Albedo.RData'
-load(paste0(input_dir, input_file))
-colnames(df_comb)[5:6] <- c('obs.albedo_wsa_vis', 'sim.albedo_wsa_vis')
-df <- left_join(df, df_comb, by = c('x','y','year',"month"))
 
-
-head(df)
-summary(df)
+# head(df)
+# summary(df)
 rm(df_comb)
 
 ###################################################
@@ -148,14 +110,13 @@ df_avg <- df %>% group_by(x,y, monthS) %>%
              sim_mean.LAI = mean(sim.LAI, na.rm = T),
              obs_mean.LST = mean(obs.LST, na.rm = T),
              sim_mean.LST = mean(sim.LST, na.rm = T),
-             obs_mean.E   = mean(obs.E  , na.rm = T),
-             sim_mean.E   = mean(sim.E  , na.rm = T),
-             obs_mean.albedo_wsa_vis = mean(obs.albedo_wsa_vis, na.rm = T),
-             sim_mean.albedo_wsa_vis = mean(sim.albedo_wsa_vis, na.rm = T)
+             # obs_mean.E   = mean(obs.E  , na.rm = T),
+             # sim_mean.E   = mean(sim.E  , na.rm = T),
+             # obs_mean.albedo_wsa_vis = mean(obs.albedo_wsa_vis, na.rm = T),
+             # sim_mean.albedo_wsa_vis = mean(sim.albedo_wsa_vis, na.rm = T)
   )
 
 df <- left_join(df, df_avg, by = c('x','y',"monthS"))
-summary(df)
 
 # NOTE: percentage change in 'C temperature doesn't make sense (unless K)
 df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                      # raw difference ERA5-sat LAI
@@ -166,18 +127,17 @@ df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                   
                     diff_obs_mean.LST =  (obs.LST - obs_mean.LST),                 # raw difference obs - LT mean LST
                     diff_sim_mean.LST =  (sim.LST - sim_mean.LST),                 # raw difference sim - LT mean LST
                     
-                    diff_sim_obs.E  =  (sim.E - obs.E),                      # raw difference ERA5-sat E
-                    diff_obs_mean.E =  (obs.E - obs_mean.E),                 # raw difference obs - LT mean E
-                    diff_sim_mean.E =  (sim.E - sim_mean.E),                 # raw difference sim - LT mean E
-                    
-                    diff_sim_obs.albedo_wsa_vis  =  (sim.albedo_wsa_vis - obs.albedo_wsa_vis),                      # raw difference ERA5-sat albedo_wsa_vis
-                    diff_obs_mean.albedo_wsa_vis =  (obs.albedo_wsa_vis - obs_mean.albedo_wsa_vis),                 # raw difference obs - LT mean albedo_wsa_vis
-                    diff_sim_mean.albedo_wsa_vis =  (sim.albedo_wsa_vis - sim_mean.albedo_wsa_vis),                 # raw difference sim - LT mean albedo_wsa_vis
+                    # diff_sim_obs.E  =  (sim.E - obs.E),                      # raw difference ERA5-sat E
+                    # diff_obs_mean.E =  (obs.E - obs_mean.E),                 # raw difference obs - LT mean E
+                    # diff_sim_mean.E =  (sim.E - sim_mean.E),                 # raw difference sim - LT mean E
+                    # 
+                    # diff_sim_obs.albedo_wsa_vis  =  (sim.albedo_wsa_vis - obs.albedo_wsa_vis),                      # raw difference ERA5-sat albedo_wsa_vis
+                    # diff_obs_mean.albedo_wsa_vis =  (obs.albedo_wsa_vis - obs_mean.albedo_wsa_vis),                 # raw difference obs - LT mean albedo_wsa_vis
+                    # diff_sim_mean.albedo_wsa_vis =  (sim.albedo_wsa_vis - sim_mean.albedo_wsa_vis),                 # raw difference sim - LT mean albedo_wsa_vis
                     
 )
 
-summary(df) ; dim(df)
-
+# summary(df) ; dim(df)
 # save intermediary dataframe
 # save(df, file = paste0(output_path, 'df_Euro_selectedCZ_aug.RData') )
 
@@ -252,7 +212,6 @@ df_all$y_var <- factor(df_all$y_var)
 # so now there is a dataframe where - for each CZ in Europe and for each LST anomaly quantile (with mean mean LST anomaly temperature), we have:  the mean LAI bias, mean LST bias
 # this is done for all August European pixels from 2003-2018
 df_all <- as.data.frame(df_all)
-summary(df_all)
 
 # # OPTIONAL - centre the dataframe so we remove the average August ERA5-sat bias and only see the variation due to heatwaves
 # # centre the dataframe by removing the average bias to view only the bias due to heatwaves

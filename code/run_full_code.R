@@ -23,6 +23,8 @@ source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43GF.R')
 
 # prepare climate zone dataframe
 source('code/harvesting_data_for_final_figures/prepare_climzones.R')
+# prepare European maps for heatwaves and temperature anomaly
+source('code/harvesting_data_for_final_figures/prepare_gislayers_for_maps.R')
 
 # Global bias and correlation figures
 source('code/harvesting_data_for_final_figures/prepare_data_for_bias_and_cor_summaries.R')
@@ -38,12 +40,14 @@ source('code/making_figures_for_paper/plot_hyst_climspace.R')                   
 source('code/making_figures_for_paper/plot_hyst_summary_map.R')                                 # hysteresis maps
 
 
+# Europe LST/LAI bias with temperature
+source('code/harvesting_data_for_final_figures/prepare_bias_vs_temp_anomalies.R')
+source('code/making_figures_for_paper/plot_bias_against_temp_anomalies.R')
 
 # 
 # # Bias with temperature anomaly figures
 # prepare_bias_vs_temp_anomalies.R
 # 
 # # Heatwave figures
-# prepare_gislayers_for_maps.R
 # prepare_time_series_4_hw.R
 # prepare_data_for_heatwave_maps.R
