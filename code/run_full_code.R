@@ -21,15 +21,24 @@ source('code/combine_sim_with_obs/harvest___CombDFs___ET.R')
 source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43C3.R')
 source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43GF.R')
 
+# prepare climate zone dataframe
+source('code/harvesting_data_for_final_figures/prepare_climzones.R')
+
 # Global bias and correlation figures
 source('code/harvesting_data_for_final_figures/prepare_data_for_bias_and_cor_summaries.R')
-source('code/making_figures_for_paper/plot_bias_summaries.R')
-source('code/making_figures_for_paper/plot_interannual_correlation.R')
+source('code/making_figures_for_paper/plot_bias_summaries.R')                                   # average temporal bias represented in space
+source('code/making_figures_for_paper/plot_interannual_correlation.R')                          # temporal correlation between LST and LAI represented in space
+
+# Climate hystersis figures
+source('code/harvesting_data_for_final_figures/prepare_data_per_clim_bin.R')
+source('code/harvesting_data_for_final_figures/prepare_hysteresis_per_bin.R')
+source('code/harvesting_data_for_final_figures/prepare_hysteresis_dimensions.R')
+# source('code/making_figures_for_paper/plot_hyst_demo.R')                                      # hysteresis demonstration
+source('code/making_figures_for_paper/plot_hyst_climspace.R')                                   # full hysteresis climate space
+source('code/making_figures_for_paper/plot_hyst_summary_map.R')                                 # hysteresis maps
 
 
-# # Climate hystersis figures
-#     prepare_data_per_clim_bin.R   prepare_hysteresis_dimensions.R  
-# prepare_climzones.R                            prepare_hysteresis_per_bin.R     
+
 # 
 # # Bias with temperature anomaly figures
 # prepare_bias_vs_temp_anomalies.R

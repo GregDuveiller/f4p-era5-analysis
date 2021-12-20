@@ -36,7 +36,7 @@ output_path <- 'data/final_data/figures_for_paper/'
 dir.create(path = output_path, recursive = T, showWarnings = F) # MP
 
 # load clim zones - x,y, KG climatezone data 
-load('data/input_data/climate_zones/df_KG_climatezones.RData')  # <---- df_cz
+load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
 
 df_cz <- df_cz %>% mutate(cz_major_zone = substr(cz_name, 1, 1)) %>%
   select(-cz_ID, -cz_colours)
