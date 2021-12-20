@@ -10,7 +10,7 @@
 library(ggplot2)
 library(patchwork)
 
-
+  
 #### Setup...####
 
 fig.path <- 'paper/figures/'
@@ -20,7 +20,8 @@ fig.fmt <- 'png'
 gry_land <- 'grey50'
 gry_meer <- 'grey30'
 
-
+#### Figure for introduction of European heatwaves ####
+source('code/making_figures_for_paper/plot_heatwave_locations.R')
 
 #### Figure for the initial bias maps ####
 source('code/making_figures_for_paper/plot_bias_summaries.R')
