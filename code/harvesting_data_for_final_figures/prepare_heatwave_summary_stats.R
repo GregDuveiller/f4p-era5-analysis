@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------- #
 # Purpose: prepare the data to generate summaries of heatwaves
 # Project: f4p-era5-analysis
-# Authors: G.Duveiller
+# Authors: G.Duveiller, M.Pickering
 # ---------------------------------------------------------------------------- #
 
 

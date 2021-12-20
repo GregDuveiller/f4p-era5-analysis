@@ -1,8 +1,17 @@
+#!/usr/local/bin/Rscript
+# ---------------------------------------------------------------------------- #
+# #### prepare_time_series_4_hw.R ####
+# ---------------------------------------------------------------------------- #
+# Purpose: prepare the data to generate timeseries of heatwaves and effect on biases
+# Project: f4p-era5-analysis
+# Authors: G.Duveiller, M.Pickering
+# ---------------------------------------------------------------------------- #
+
 library(dplyr)
 library(tidyr)
 library(sf)
 
-load('data/final_data/figures_for_paper/hwAll_gislayers.RData')   # <---- hw_polygons
+load('data/final_data/figures_for_paper/hw_gislayers.RData')   # <---- hw_polygons
 
 
 
@@ -28,7 +37,7 @@ load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
 
 get_hw_spatial_average <- function(hwname, df_comb){
   
-  hw_bbox <- hw_polygons %>% filter(hw == hwname) %>% st_bbox()
+  hw_bbox <- hw_polygons %>% filter(hwname == hwname) %>% st_bbox()
   
   df_subsetHW <- df_comb %>%
     filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%

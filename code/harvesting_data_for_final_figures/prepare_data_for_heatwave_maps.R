@@ -22,7 +22,7 @@ require(sf)
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
 
 # list of variables to run over
-var_list <- c('LAI', 'LST',  'E', 'Albedo', 'SM')  # "Albedo" is "albedo_wsa_vis_MCD43C3"
+var_list <- c('LAI', 'LST',  'E', 'albedo_wsa_vis')  # , 'SM' # "Albedo" == "albedo_wsa_vis" = "albedo_wsa_vis_MCD43C3" 
 
 # here select the year, month, spatial extent of heatwave in question.
 # select also time period to compare it to (e.g. 2003-2018).
@@ -33,11 +33,6 @@ v_lon_min <- -12; v_lon_max <- 58; v_lat_min <- 36 ;v_lat_max <- 71 # limits to 
 df_hw <- data.frame(row.names = c("HW03", "HW10", "HW18"),
                     year = c(2003, 2010, 2018),
                     month = c(8, 7, 7))
-# Russian heatwave https://earthobservatory.nasa.gov/images/45069/heatwave-in-russia  
-# https://en.wikipedia.org/wiki/2018_European_heat_wave - no specific month, generally May-July.
-# But July is hottest and prob most out of kilter with LAI map (through browning)
-
-
 
 #### Collect and calc all spatial data ####
 

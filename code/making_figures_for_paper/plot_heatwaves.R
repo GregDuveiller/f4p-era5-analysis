@@ -50,8 +50,8 @@ col_pal_df <- data.frame(
   LST = rev(brewer.pal(11, "RdBu")),
   LAI = rev(brewer.pal(11, "BrBG")),
   E = rev(brewer.pal(11, "PRGn")),
-  Albedo = rev(brewer.pal(11, "PuOr")),
-  SM = rev(brewer.pal(11, "PiYG")),
+  albedo_wsa_vis = rev(brewer.pal(11, "PuOr")),
+  # SM = rev(brewer.pal(11, "PiYG")),
   stringsAsFactors = F)
 
 
@@ -129,7 +129,7 @@ gEVA <- ggplot(df_all %>% filter(variable == varname)) +
   gds + lgd
 
 # Albedo shift
-varname <- 'Albedo'
+varname <- 'albedo_wsa_vis'
 gALB <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
@@ -142,18 +142,18 @@ gALB <- ggplot(df_all %>% filter(variable == varname)) +
   gds + lgd
 
 
-# SM shift
-varname <- 'SM'
-gSM <- ggplot(df_all %>% filter(variable == varname)) + 
-  geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-  geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
-  geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
-  coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-  facet_grid(hwyear~., labeller = hw_labeller) + 
-  scale_fill_gradientn('SM bias shift [.]', 
-                       colours = col_pal_df[,varname], 
-                       limits = c(-0.15, 0.15), oob = squish) +
-  gds + lgd
+# # SM shift
+# varname <- 'SM'
+# gSM <- ggplot(df_all %>% filter(variable == varname)) + 
+#   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
+#   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
+#   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
+#   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
+#   facet_grid(hwyear~., labeller = hw_labeller) + 
+#   scale_fill_gradientn('SM bias shift [.]', 
+#                        colours = col_pal_df[,varname], 
+#                        limits = c(-0.15, 0.15), oob = squish) +
+#   gds + lgd
 
 # bar plots below... 
 
@@ -188,8 +188,8 @@ mk_gbar_plot <- function(varname){
 gbarLST <- mk_gbar_plot('LST')
 gbarLAI <- mk_gbar_plot('LAI')
 gbarEVA <- mk_gbar_plot('E')
-gbarALB <- mk_gbar_plot('Albedo')
-gbarSM <- mk_gbar_plot('SM')
+gbarALB <- mk_gbar_plot('albedo_wsa_vis')
+# gbarSM <- mk_gbar_plot('SM')
 
 
 

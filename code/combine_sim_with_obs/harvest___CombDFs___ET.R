@@ -10,9 +10,8 @@
 library(dplyr)
 library(tidyr)
 
-
 # input data
-dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
+dpath_r_dataframes <- 'data/input_data/r_data_frames' 
 #output data
 out_path <- 'data/inter_data/df_comb_obs_vs_sim'
 dir.create(path = out_path, recursive = T, showWarnings = F) # MP
@@ -27,8 +26,8 @@ get_df_comb_std(
   src_obs = 'GLEAM',
   src_sim = 'ERA5l',
   target_var_sim = 'ET',
-  path_obs = paste0(dat_path,'/GLEAM/dataframe_res', spres),
-  path_sim = paste0(dat_path,'/CDS/ET_ERA5l/dataframe_res', spres),
+  path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/GLEAM/dataframe_res025'
+  path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/ET_ERA5l/dataframe_res025'
   varDFname_obs = 'E',
   varDFname_sim = 'e',
   out_path = out_path

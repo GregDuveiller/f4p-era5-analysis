@@ -2,7 +2,8 @@
 # ---------------------------------------------------------------------------- #
 # #### run_full_code.R ####
 # ---------------------------------------------------------------------------- #
-# Purpose: Run through git code start to finish
+# Purpose: This script suggests a run through order for reproducing the figures 
+# of the paper, however it is recommended to run the scripts in separate shells
 # Project: f4p-era5-analysis
 # Authors: G.Duveiller, M.Pickering
 # ---------------------------------------------------------------------------- #
@@ -19,7 +20,7 @@ source('code/combine_sim_with_obs/harvest___CombDFs___LAI.R')
 source('code/combine_sim_with_obs/harvest___CombDFs___LST.R')
 source('code/combine_sim_with_obs/harvest___CombDFs___ET.R')
 source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43C3.R')
-source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43GF.R')
+# source('code/combine_sim_with_obs/harvest___CombDFs___Albedo_MCD43GF.R')
 
 # prepare climate zone dataframe
 source('code/harvesting_data_for_final_figures/prepare_climzones.R')
@@ -40,14 +41,14 @@ source('code/making_figures_for_paper/plot_hyst_climspace.R')                   
 source('code/making_figures_for_paper/plot_hyst_summary_map.R')                                 # hysteresis maps
 
 
-# Europe LST/LAI bias with temperature
+# Europe LST/LAI bias with temperature figure
 source('code/harvesting_data_for_final_figures/prepare_bias_vs_temp_anomalies.R')
-source('code/making_figures_for_paper/plot_bias_against_temp_anomalies.R')
+source('code/making_figures_for_paper/plot_bias_against_temp_anomalies.R')                      # plot the LST/LAI bias as a function of temperature anomaly
 
-# 
-# # Bias with temperature anomaly figures
-# prepare_bias_vs_temp_anomalies.R
-# 
-# # Heatwave figures
-# prepare_time_series_4_hw.R
-# prepare_data_for_heatwave_maps.R
+# Europe bias during heatwave figure
+source('code/harvesting_data_for_final_figures/prepare_time_series_4_hw.R')
+source('code/harvesting_data_for_final_figures/prepare_data_for_heatwave_maps.R')
+source('code/harvesting_data_for_final_figures/prepare_heatwave_summary_stats.R')
+# source('code/making_figures_for_paper/plot_heatwave_locations.R')                             # simple plot of the locations of heatwaves
+source('code/making_figures_for_paper/plot_heatwaves.R')                                        # plot the heatwave bias shift statistics and map
+

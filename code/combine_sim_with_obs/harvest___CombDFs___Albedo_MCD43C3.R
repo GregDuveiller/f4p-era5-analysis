@@ -11,7 +11,7 @@ library(dplyr)
 library(tidyr)
 
 # input data
-dat_path <- '/media/mark/HD/Mark/Mark_COPERNICUS/data/COPERNICUSII_V3'
+dpath_r_dataframes <- 'data/input_data/r_data_frames' 
 #output data
 out_path <- 'data/inter_data/df_comb_obs_vs_sim'
 dir.create(path = out_path, recursive = T, showWarnings = F) # MP
@@ -26,8 +26,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'MCD43C3',
   src_sim = 'ERA5l',
-  path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43C3/dataframe_res', spres),
-  path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
+  path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/NASA_LPDAAC/albedo_MCD43C3/dataframe_res'
+  path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/albedo_ERA5sl/dataframe_res'
   varDFname_obs = 'Albedo_WSA_vis',
   varDFname_sim = 'aluvd',
   out_path = out_path
