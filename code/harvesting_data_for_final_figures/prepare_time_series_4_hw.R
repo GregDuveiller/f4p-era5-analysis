@@ -14,12 +14,8 @@ library(sf)
 load('data/final_data/figures_for_paper/hw_gislayers.RData')   # <---- hw_polygons
 
 
-
 # input files are the 'df_comb___var.RData' produced by Greg's script
 input_dir <- 'data/inter_data/df_comb_obs_vs_sim/'
-
-# list of variables to run over
-var_list <- c('LAI', 'LST',  'E', 'Albedo') # albedo_bsa_nir albedo_bsa_vis albedo_wsa_nir 'SM',
 
 
 output_path <- 'data/final_data/figures_for_paper/'
@@ -32,121 +28,73 @@ df_hw <- data.frame(hwname = c("HW03", "HW10", "HW18a", "HW18b"),
                     hwmonth = c(8, 7, 7, 7))
 
 
-varname <- 'LAI'
-load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
-
-get_hw_spatial_average <- function(hwname, df_comb){
+get_ts_4_hw <- function(varname){
   
-  hw_bbox <- hw_polygons %>% filter(hwname == !!hwname) %>% st_bbox()
+  load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
   
-  df_subsetHW <- df_comb %>%
-    filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%
-    filter(y >= hw_bbox$ymin & y <= hw_bbox$ymax)
-
-  df_subset_ts <- df_subsetHW  %>%
-    group_by(year, month) %>%
-    summarise(obs = mean(obs, na.rm = T), sim = mean(sim, na.rm = T)) %>%
-    mutate(time = as.Date(paste(year, month, '15', sep = '-'), '%Y-%m-%d'),
-           hwname = hwname)
+  get_hw_spatial_average <- function(hwname, df_comb){
+    
+    hw_bbox <- hw_polygons %>% filter(hwname == !!hwname) %>% st_bbox()
+    
+    df_subsetHW <- df_comb %>%
+      filter(x >= hw_bbox$xmin & x <= hw_bbox$xmax) %>%
+      filter(y >= hw_bbox$ymin & y <= hw_bbox$ymax)
+    
+    df_subset_ts <- df_subsetHW  %>%
+      group_by(year, month) %>%
+      summarise(obs = mean(obs, na.rm = T), sim = mean(sim, na.rm = T)) %>%
+      mutate(time = as.Date(paste(year, month, '15', sep = '-'), '%Y-%m-%d'),
+             hwname = hwname)
+    
+    return(df_subset_ts)
+  }
   
-  return(df_subset_ts)
-}
-
-df_subset_ts <- bind_rows(
-  get_hw_spatial_average(hwname = 'HW03', df_comb),
-  get_hw_spatial_average(hwname = 'HW10', df_comb),
-  get_hw_spatial_average(hwname = 'HW18a', df_comb),
-  get_hw_spatial_average(hwname = 'HW18b', df_comb)
-)
-
-rm(df_comb)
-
-
-start_year <- 2003; end_year <- 2018
-
-hw_clim_ts <- df_subset_ts %>% 
-  filter(year >= start_year & year <= end_year ) %>%
-  group_by(month, hwname) %>%
-  summarise(obs = mean(obs, na.rm = T),
-            sim = mean(sim, na.rm = T)) %>%
-  pivot_longer(cols = c('obs', 'sim'), 
-               names_to = 'source', values_to = paste0(varname,'_clim'))
-
-
-ts_all <- df_subset_ts %>% 
-  inner_join(df_hw, by = c('hwname' = 'hwname', 'year' = 'hwyear')) %>%
-  pivot_longer(cols = c('obs', 'sim'), 
-               names_to = 'source', values_to = paste0(varname, '_year')) %>% 
-  left_join(hw_clim_ts, by = c('month', 'hwname', 'source')) %>%
-  # left_join(data.frame(year_of_hw = c(2003, 2010, 2018), 
-  #                      month_of_hw = c(8, 7, 7)), by = "year_of_hw") %>%
-  pivot_longer(cols = c(paste0(varname,'_year'), paste0(varname,'_clim')),
-               names_to = 'type', values_to = varname)
-
-# 
-# ts_all <- df_subset_ts %>% 
-#   filter(hwname == paste0('HW', year - 2000)) %>%
-#   pivot_longer(cols = c('obs', 'sim'), 
-#                names_to = 'source', values_to = paste0(varname, '_year')) %>% 
-#   left_join(hw_clim_ts, by = c('month', 'hwname', 'source')) %>%
-#   rename(year_of_hw = year) %>%
-#   left_join(data.frame(year_of_hw = c(2003, 2010, 2018), 
-#                        month_of_hw = c(8, 7, 7)), by = "year_of_hw") %>%
-#   pivot_longer(cols = c(paste0(varname,'_year'), paste0(varname,'_clim')),
-#                names_to = 'type', values_to = varname)
-# 
-
-lgd <- theme(legend.position = 'bottom',
-             #legend.key.width = unit(1.2, units = 'cm'),
-             #panel.grid = element_blank(),
-             strip.text = element_text(size = 12)) 
-# gds <- guides(fill = guide_colorbar(title.position = 'top', title.hjust = 0.5, 
-#                                     frame.colour = 'black', ticks.colour = 'black'))
-
-hw_labeller <- labeller(
-  hwname = c('HW03' = 'Aug. 2003', 'HW10' = 'Jul. 2010', 'HW18a' = 'Jul. 2018', 'HW18b' = 'Jul. 2018'))
+  df_subset_ts <- bind_rows(
+    get_hw_spatial_average(hwname = 'HW03', df_comb),
+    get_hw_spatial_average(hwname = 'HW10', df_comb),
+    get_hw_spatial_average(hwname = 'HW18a', df_comb),
+    get_hw_spatial_average(hwname = 'HW18b', df_comb)
+  )
+  
+  rm(df_comb)
+  
+  start_year <- 2003; end_year <- 2018
+  
+  hw_clim_ts <- df_subset_ts %>% 
+    filter(year >= start_year & year <= end_year ) %>%
+    group_by(month, hwname) %>%
+    summarise(obs = mean(obs, na.rm = T),
+              sim = mean(sim, na.rm = T)) %>%
+    pivot_longer(cols = c('obs', 'sim'), 
+                 names_to = 'source', values_to = paste0(varname,'_clim'))
+  
+  
+  ts_all <- df_subset_ts %>% 
+    inner_join(df_hw, by = c('hwname' = 'hwname', 'year' = 'hwyear')) %>%
+    pivot_longer(cols = c('obs', 'sim'), 
+                 names_to = 'source', values_to = paste0(varname, '_year')) %>% 
+    left_join(hw_clim_ts, by = c('month', 'hwname', 'source')) %>%
+    pivot_longer(cols = c(paste0(varname,'_year'), paste0(varname,'_clim')),
+                 names_to = 'type', values_to = varname)
+  
+  return(ts_all)}
 
 
-g <- ggplot(ts_all, aes(x = month)) +
-  geom_vline(aes(xintercept = hwmonth), size = 14, colour = 'grey80') +
-  geom_line(aes(y = E, colour = type, linetype = source)) +
-  facet_grid(hwname~., labeller = hw_labeller) +
-  #scale_colour_manual(values = c('LAI_clim'='grey20','LAI_year'= 'cornflowerblue')) +
-  scale_colour_manual(values = c('E_year'= 'cornflowerblue','E_clim'='grey20')) +
-  scale_y_continuous('E [mm]') + 
-  scale_x_continuous('', expand = c(0,0), 
-                     breaks = c(3,6,9,12),
-                     labels = c('3'='Mar', '6'='Jun', '9'='Sep', '12'='Dec')) +
-  #theme_bw() + 
-  lgd
+ts_LAI <- get_ts_4_hw(varname = 'LAI')
+ts_LST <- get_ts_4_hw(varname = 'LST')
+ts_Albedo <- get_ts_4_hw(varname = 'Albedo')
+ts_E <- get_ts_4_hw(varname = 'E')
 
 
-g <- ggplot(ts_all, aes(x = month)) +
-  geom_vline(aes(xintercept = hwmonth), size = 14, colour = 'grey80') +
-  geom_line(aes(y = E, colour = type, linetype = source)) +
-  facet_grid(hwname~., labeller = hw_labeller) +
-  #scale_colour_manual(values = c('LAI_clim'='grey20','LAI_year'= 'cornflowerblue')) +
-  scale_colour_manual(values = c('LAI_year'= 'cornflowerblue','LAI_clim'='grey20')) +
-  scale_y_continuous('LAI [m2/m2]') + 
-  scale_x_continuous('', expand = c(0,0), 
-                     breaks = c(3,6,9,12),
-                     labels = c('3'='Mar', '6'='Jun', '9'='Sep', '12'='Dec')) +
-  #theme_bw() + 
-  lgd
-
-#### Export the figure ####
 
 
-# plotting details, in case not inherited... 
-if(exists('fig.path') != T){ fig.path <- 'paper/figures/'}
-if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
 
-dir.create(path = fig.path, recursive = T, showWarnings = F)
 
-fig.name <- 'LAI_timeseries'
 
-ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g,
-       path = fig.path, width = 10, height = 8)
 
+#### Export the data ####
+
+save('ts_LAI', 'ts_LST', 'ts_Albedo', 'ts_E',
+     file = 'data/final_data/figures_for_paper/hw_ts.RData')
 
 
