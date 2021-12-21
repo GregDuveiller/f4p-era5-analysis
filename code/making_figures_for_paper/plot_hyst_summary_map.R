@@ -60,7 +60,7 @@ gcspBiasI <- ggplot(df_hyst_map) +
   scale_x_continuous('Mean annual temperature') +
   scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +
-  ggtitle('Which is the dominating bias?', subtitle = '(green for LAI, red for LST)') +
+  ggtitle('Which is the dominating bias?', subtitle = '(dark yellpw for LAI, light blue for LST)') +
   lgd + gds
 
 
