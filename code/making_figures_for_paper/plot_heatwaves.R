@@ -50,7 +50,7 @@ col_pal_df <- data.frame(
   LST = rev(brewer.pal(11, "RdBu")),
   LAI = rev(brewer.pal(11, "BrBG")),
   E = rev(brewer.pal(11, "PRGn")),
-  albedo_wsa_vis = rev(brewer.pal(11, "PuOr")),
+  Albedo = rev(brewer.pal(11, "PuOr")),
   # SM = rev(brewer.pal(11, "PiYG")),
   stringsAsFactors = F)
 
@@ -129,7 +129,7 @@ gEVA <- ggplot(df_all %>% filter(variable == varname)) +
   gds + lgd
 
 # Albedo shift
-varname <- 'albedo_wsa_vis'
+varname <- 'Albedo'
 gALB <- ggplot(df_all %>% filter(variable == varname)) + 
   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
@@ -188,7 +188,7 @@ mk_gbar_plot <- function(varname){
 gbarLST <- mk_gbar_plot('LST')
 gbarLAI <- mk_gbar_plot('LAI')
 gbarEVA <- mk_gbar_plot('E')
-gbarALB <- mk_gbar_plot('albedo_wsa_vis')
+gbarALB <- mk_gbar_plot('Albedo')
 # gbarSM <- mk_gbar_plot('SM')
 
 
