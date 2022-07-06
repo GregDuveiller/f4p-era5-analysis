@@ -99,6 +99,7 @@ df_LST_comb <- get.data.per.bin(varname = 'LST', rm_polar_and_sea = F)
 output_path <- 'data/inter_data/df_per_clim_bin'
 dir.create(path = output_path, recursive = T, showWarnings = F)
 
+save('df_climspace_bin', file = 'data/final_data/figures_for_paper/df_climspace_bin.RData')
 save('df_LAI_comb', file = paste0(output_path, '/df_LAI_per_clim_bin.RData'))
 save('df_LST_comb', file = paste0(output_path, '/df_LST_per_clim_bin.RData'))
 
