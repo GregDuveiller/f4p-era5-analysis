@@ -79,7 +79,7 @@ hw_polygons <- st_sf(cbind(labels, polys))
 
 #### Export the data ####
 
-save('ocean_europe', 'coast_europe', 'land_europe', 'hw_polygons',
+save('ocean_europe', 'coast_europe', 'land_europe', 'hw_polygons', 'land', 'ocean','coast',
      file = 'data/final_data/figures_for_paper/hw_gislayers.RData')
 
 

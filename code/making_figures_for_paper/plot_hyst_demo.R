@@ -27,9 +27,13 @@ case_list <- list(
   A = list(t2.bin.val = "26", sm.bin.val = "0.24",
            case_longname = "24 < T2M <= 28 | 0.22 < SM <= 0.26 ",
            map_pos = c(0.025, 0.025, 0.6, 0.4)),
-  B = list(t2.bin.val =  "6", sm.bin.val = "0.44",
-           case_longname = "4 < T2M <= 8 | 0.42 < SM <=0.46",
-           map_pos = c(0.025, 0.6, 0.6, 0.975)))
+  B = list(t2.bin.val =  "2", sm.bin.val = "0.32",
+           case_longname = "0 < T2M <= 4 | 0.30 < SM <=0.34",
+           map_pos = c(0.025, 0.6, 0.6, 0.975))
+  # B = list(t2.bin.val =  "6", sm.bin.val = "0.44",
+  #          case_longname = "4 < T2M <= 8 | 0.42 < SM <=0.46",
+  #          map_pos = c(0.025, 0.6, 0.6, 0.975))
+  )
 
 
 # filter out
@@ -66,7 +70,7 @@ df_m <- df_r %>%
 
 plot.case <- function(caseID, varname){
   
-  if(varname == 'LST'){ ebarheight <- 0.05 }
+  if(varname == 'LST'){ ebarheight <- 0.2}
   if(varname == 'Albedo'){ ebarheight <- 0.0005 }
   
   ebarwidth <- 0.02
@@ -120,13 +124,14 @@ plot.case <- function(caseID, varname){
     ggtitle(label = 'For climate zone:', subtitle = case_list[[caseID]]$case_longname) + 
     theme(plot.title = element_text(hjust = 0.5, size = 10),
           plot.subtitle = element_text(hjust = 0.5, size = 8), 
+          panel.grid = element_blank(),
           axis.title = element_blank(),
           axis.ticks = element_blank(),
           axis.text = element_blank(),
           panel.border = element_rect(colour = gry2, fill = NA)) 
   
   pos <- case_list[[caseID]]$map_pos
-  g + inset_element(g_map, pos[1],  pos[2],  pos[3],  pos[4])
+  g + inset_element(g_map, pos[1],  pos[2],  pos[3],  pos[4], ignore_tag = T)
   
 }
 
@@ -143,9 +148,14 @@ if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
 
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 
-fig.name <- 'hystereris_demo'
+fig.name <- 'hysteresis_demo'
 
-g <- g1 + g2 + plot_layout(guides = "collect") & theme(legend.position = 'left')
+g <- g1 + g2 + plot_layout(guides = "collect")  + 
+  plot_annotation(
+    title = 'Examples of hysteresis patterns between biases in LAI and biases in LST for different climates',
+    subtitle = '[LAI obs from GEOV2/AVHRR, LST obs from on MYD11A1, model data from ERA5-Land]') & 
+  theme(legend.position = 'left') 
+
 ggsave(filename = paste0(fig.name, '.', fig.fmt),
        path = fig.path, width = 12, height = 6)
 
