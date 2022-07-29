@@ -52,6 +52,7 @@ gmapBiasI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = x, y = y, fill = biasI)) +
   scale_fill_gradientn(colours = col_pal_BD, na.value = gry_land) + 
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
+  #coord_sf(expand = F) +
   lgd_map
 
 gcspBiasI <- ggplot(df_hyst_map) +
@@ -68,6 +69,7 @@ gmapHystI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = x, y = y, fill = hystI)) +
   scale_fill_viridis_c(option = 'F', na.value = gry_land) +
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
+  #coord_sf(expand = F) +
   lgd_map
 
 gcspHystI <- ggplot(df_hyst_map) +

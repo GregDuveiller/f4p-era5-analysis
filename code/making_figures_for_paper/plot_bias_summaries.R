@@ -61,14 +61,12 @@ gLAImaps <- ggplot(df_LAI_bias) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "left") + bck_details +
-  ggtitle('Mean interannual bias for LAI', 
-          subtitle = '[Represented by a single seasonally-corrected month]')
+  theme(legend.position = "left") + bck_details 
 
 
 
 # LST maps... 
-LST_bias_colpal <- RColorBrewer::brewer.pal(n = 9, name = 'RdBu')
+LST_bias_colpal <- rev(RColorBrewer::brewer.pal(n = 9, name = 'RdBu'))
 
 gLSTmaps <- ggplot(df_LST_bias) + 
   geom_sf(data = land, fill = gry_land, colour = NA) +
@@ -80,9 +78,7 @@ gLSTmaps <- ggplot(df_LST_bias) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "right") + bck_details +
-  ggtitle('Mean interannual bias for LST', 
-          subtitle = '[Represented by a single seasonally-corrected month]')
+  theme(legend.position = "right") + bck_details 
 
 
 
@@ -91,7 +87,11 @@ gLSTmaps <- ggplot(df_LST_bias) +
 # assemble the panels...
 
 # organise the layout
-g_all <- gLAImaps + gLSTmaps #+ plot_layout(guides = 'collect')
+g_all <- gLAImaps + gLSTmaps + plot_annotation(
+  title = 'Mean interannual bias for leaf area index (LAI) and for land surface temperature (LST)',
+  subtitle = 'Biases are defined as ERA5L minus observations',
+  caption = '[Each season in this plot is represented by a single month, consisting of either January or July depeding on whether the data is in the Northern or Southern Hemisphere]')
+#+ plot_layout(guides = 'collect')
 
 
 # plotting details, in case not inherited... 

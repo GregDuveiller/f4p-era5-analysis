@@ -53,16 +53,17 @@ gmaps <- ggplot(df_LSTb_LAIb_corr) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "right") + bck_details +
-  ggtitle('Inter-annual correlation between the biases in LAI and those in LST', 
-          subtitle = '[Represented by a single seasonally-corrected month]')
-
-
+  theme(legend.position = "right") + bck_details 
 
 #### Export the figure #### 
 
 # assemble the panels...
-g_all <- gmaps
+g_all <- gmaps +
+  plot_annotation( 
+    title = 'Inter-annual correlation between the biases in LAI and in LST', 
+    subtitle = 'Biases are defined as ERA5L minus observations',
+    caption = '[Each season in this plot is represented by a single month, consisting of either January or July\n depeding on whether the data is in the Northern or Southern Hemisphere]')
+
 
 # plotting details, in case not inherited... 
 if(exists('fig.path') != T){ fig.path <- 'paper/figures/'}
