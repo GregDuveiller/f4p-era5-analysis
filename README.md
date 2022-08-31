@@ -50,7 +50,7 @@ The code also uses an ancillary repository to calculate metrics of agreement. Th
 - Create df_climspace_bin.RData, df_LAI_per_clim_bin.RData and df_LST_per_clim_bin.RData containing the data in bins of climate space
   Run: `code/harvesting_data_for_final_figures/prepare_data_per_clim_bin.R`
 - Create hysteresis plotting dataframes
-  Run: code/harvesting_data_for_final_figures/prepare_hysteresis_per_bin.R`
+  Run: `code/harvesting_data_for_final_figures/prepare_hysteresis_per_bin.R`
   `code/harvesting_data_for_final_figures/prepare_hysteresis_dimensions.R`
 - Produce Figure 3: Diagnostic plots illustrating the hysteretic behaviour between the biases in LAI and the biases in LST for two different climate zones
   Run: `code/making_figures_for_paper/plot_hyst_demo.R`
