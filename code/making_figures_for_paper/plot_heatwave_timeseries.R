@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------- #
 # Purpose: plot time series of spatially averaged heatwave effects 
 # Project: f4p-era5-analysis
-# Authors: G.Duveiller
+# Authors: G.Duveiller, M.Pickering
 # ---------------------------------------------------------------------------- #
 
 

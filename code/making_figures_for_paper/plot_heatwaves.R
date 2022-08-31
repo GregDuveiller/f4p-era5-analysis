@@ -24,7 +24,9 @@ load('data/final_data/figures_for_paper/hw_maps.RData')   # <---- "df_all"
 load('data/final_data/figures_for_paper/hw_gislayers.RData')   # <---- ... 
 load('data/final_data/figures_for_paper/hw_stats.RData')   # <---- "df_barsHW_all" 
 
-
+# only interested in wsa_vis albedo 
+levels(df_all$variable)[levels(df_all$variable) == 'albedo_wsa_vis'] <- 'Albedo'
+levels(df_barsHW_all$variable)[levels(df_barsHW_all$variable) == 'albedo_wsa_vis'] <- 'Albedo'
 
 #### Make the plots and sf ####
 
@@ -142,21 +144,6 @@ gALB <- ggplot(df_all %>% filter(variable == varname)) +
   gds + lgd
 
 
-# # SM shift
-# varname <- 'SM'
-# gSM <- ggplot(df_all %>% filter(variable == varname)) + 
-#   geom_raster(aes(x = x, y = y, fill = diff_simSobsSmean)) +
-#   geom_sf(data = ocean_europe, fill = gry_meer, size = .2, colour = 'grey10') +
-#   geom_sf(data = hw_polygons, fill = NA, size = 0.8, colour = 'black') +
-#   coord_sf(expand = F, xlim = xlims, ylim = ylims) +
-#   facet_grid(hwyear~., labeller = hw_labeller) + 
-#   scale_fill_gradientn('SM bias shift [.]', 
-#                        colours = col_pal_df[,varname], 
-#                        limits = c(-0.15, 0.15), oob = squish) +
-#   gds + lgd
-
-# bar plots below... 
-
 df_bars <- df_barsHW_all %>% 
   filter(metric %in% c('bias_hw_mu', 'bias_cl_mu')) %>%
   left_join(by = c('variable', 'hwname', 'hwyear'), 
@@ -189,7 +176,6 @@ gbarLST <- mk_gbar_plot('LST')
 gbarLAI <- mk_gbar_plot('LAI')
 gbarEVA <- mk_gbar_plot('E')
 gbarALB <- mk_gbar_plot('Albedo')
-# gbarSM <- mk_gbar_plot('SM')
 
 
 

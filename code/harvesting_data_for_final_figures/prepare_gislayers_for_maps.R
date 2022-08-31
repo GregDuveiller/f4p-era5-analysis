@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------- #
 # Purpose: prepare selected gis (vector) layers for maps over Europe
 # Project: f4p-era5-analysis
-# Authors: G.Duveiller
+# Authors: G.Duveiller, M.Pickering
 # ---------------------------------------------------------------------------- #
 
 #### Initialization ####
@@ -42,10 +42,6 @@ land_europe <- sf::st_crop(land, y = bbox)
 
 
 #### Define the Heatwave zones ####
-
-df_hw2003 <- data.frame(lon = c(-5, 10), lat = c(43, 52))
-df_hw2010 <- data.frame(lon = c(35, 57), lat = c(48, 58))
-df_hw2018 <- data.frame(lon = c(-4, 16), lat = c(48, 63))
 
 df_hw2003 <- data.frame(lon = c( 0,  8), lat = c(44, 50))
 df_hw2010 <- data.frame(lon = c(39, 57), lat = c(50, 58))

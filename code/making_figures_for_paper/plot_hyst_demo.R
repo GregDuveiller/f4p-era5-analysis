@@ -11,6 +11,7 @@
 #### Initialization ####
 
 require(ggplot2)
+require(dplyr)
 require(scales)
 require(viridis)
 require(patchwork)

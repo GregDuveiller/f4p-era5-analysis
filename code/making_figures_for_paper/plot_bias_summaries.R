@@ -23,7 +23,6 @@ require(patchwork)
 load('data/final_data/figures_for_paper/data_for_bias_summary_maps.RData')   
 
 # load land shapefile of the world
-# [note, could/should be added to 'final_data' repo]
 land_shapefile <- "data/input_data/world_vectors/ne_50m_land.shp"
 land <- sf::st_read(land_shapefile, quiet = TRUE)
 

@@ -26,8 +26,8 @@ get_df_comb_std(
   spres = spres,
   src_obs = 'MCD43C3',
   src_sim = 'ERA5l',
-  path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/NASA_LPDAAC/albedo_MCD43C3/dataframe_res'
-  path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/albedo_ERA5sl/dataframe_res'
+  path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes 
+  path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes 
   varDFname_obs = 'Albedo_WSA_vis',
   varDFname_sim = 'aluvd',
   out_path = out_path
@@ -42,8 +42,8 @@ get_df_comb_std(
 #   spres = spres,
 #   src_obs = 'MCD43C3',
 #   src_sim = 'ERA5l',
-#   path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43C3/dataframe_res', spres),
-#   path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
+#   path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/NASA_LPDAAC/albedo_MCD43C3/dataframe_res'
+#   path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/albedo_ERA5sl/dataframe_res'
 #   varDFname_obs = 'Albedo_WSA_nir',
 #   varDFname_sim = 'alnid',
 #   out_path = out_path
@@ -56,8 +56,8 @@ get_df_comb_std(
 #   spres = spres,
 #   src_obs = 'MCD43C3',
 #   src_sim = 'ERA5l',
-#   path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43C3/dataframe_res', spres),
-#   path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
+#   path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/NASA_LPDAAC/albedo_MCD43C3/dataframe_res'
+#   path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/albedo_ERA5sl/dataframe_res'
 #   varDFname_obs = 'Albedo_BSA_vis',
 #   varDFname_sim = 'aluvp',
 #   out_path = out_path
@@ -70,8 +70,8 @@ get_df_comb_std(
 #   spres = spres,
 #   src_obs = 'MCD43C3',
 #   src_sim = 'ERA5l',
-#   path_obs = paste0(dat_path,'/NASA_LPDAAC/albedo_MCD43C3/dataframe_res', spres),
-#   path_sim = paste0(dat_path,'/CDS/albedo_ERA5sl/dataframe_res', spres),
+#   path_obs = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/NASA_LPDAAC/albedo_MCD43C3/dataframe_res'
+#   path_sim = paste0(dpath_r_dataframes,''), # path extension to dataframes within dataframe dir , e.g: '/CDS/albedo_ERA5sl/dataframe_res'
 #   varDFname_obs = 'Albedo_BSA_nir',
 #   varDFname_sim = 'alnip',
 #   out_path = out_path

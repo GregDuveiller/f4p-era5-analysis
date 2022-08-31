@@ -67,14 +67,16 @@ gcspBiasI <- ggplot(df_hyst_map) +
 
 gmapHystI <- ggplot(df_hyst_map) + 
   geom_tile(aes(x = x, y = y, fill = hystI)) +
-  scale_fill_viridis_c(option = 'F', na.value = gry_land) +
+  # scale_fill_viridis_c(option = 'F', na.value = gry_land) +
+  scale_fill_viridis_c(option = 'magma', na.value = gry_land) +
   coord_cartesian(expand = F, ylim = c(-54, 86)) +
   #coord_sf(expand = F) +
   lgd_map
 
 gcspHystI <- ggplot(df_hyst_map) +
   geom_tile(aes(x = t2.clim, y = sm.clim, fill = hystI)) +
-  scale_fill_viridis_c('HI', option = 'F') +
+  # scale_fill_viridis_c('HI', option = 'F') +
+  scale_fill_viridis_c('HI', option = 'magma') +
   scale_x_continuous('Mean annual temperature') +
   scale_y_continuous('Mean annual soil moisture') +
   coord_cartesian(expand = F) +

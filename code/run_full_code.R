@@ -36,7 +36,7 @@ source('code/making_figures_for_paper/plot_interannual_correlation.R')          
 source('code/harvesting_data_for_final_figures/prepare_data_per_clim_bin.R')
 source('code/harvesting_data_for_final_figures/prepare_hysteresis_per_bin.R')
 source('code/harvesting_data_for_final_figures/prepare_hysteresis_dimensions.R')
-# source('code/making_figures_for_paper/plot_hyst_demo.R')                                      # hysteresis demonstration
+source('code/making_figures_for_paper/plot_hyst_demo.R')                                      # hysteresis demonstration
 source('code/making_figures_for_paper/plot_hyst_climspace.R')                                   # full hysteresis climate space
 source('code/making_figures_for_paper/plot_hyst_summary_map.R')                                 # hysteresis maps
 

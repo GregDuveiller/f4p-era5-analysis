@@ -22,6 +22,8 @@ require(patchwork)
 
 load('data/final_data/figures_for_paper/data_for_corr_summary_maps.RData')   
 
+land_shapefile <- "data/input_data/world_vectors/ne_50m_land.shp"
+land <- sf::st_read(land_shapefile, quiet = TRUE)
 
 #### Make the plots ####
 

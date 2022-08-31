@@ -2,38 +2,36 @@
 # ---------------------------------------------------------------------------- #
 # #### setup_data_folder_structure.R ####
 # ---------------------------------------------------------------------------- #
-# Purpose: setup data structure and symlinks in the project folder
+# Purpose: setup data structure/symlinks in the project folder
 # Project: f4p-era5-analysis
-# Authors: G.Duveiller
+# Authors: G.Duveiller & M.Pickering
 # ---------------------------------------------------------------------------- #
 
 
-#### Location of necessary input files ####
-# [this will be specific to a given local set-up]
-# [this could be automatized, or separated into another user-specific file]
-
-# NATURAL EARTH VECTOR FILES #
-dpath_vectors <- '/Users/gduveiller/data/external_datasets/natural_earth_data/'
-
-# Preprocessed R dataframes with ERA5 data
-dpath_r_dataframes <- '/Users/gduveiller/data/internal_datasets/f4p-era5-analysis/r_data_frames/'
-
-# Koppen-Geiger climate zones
-dpath_climate_zones <- '/Users/gduveiller/data/external_datasets/climate_zones/Map_KG-Global/'
-
-
-
 #### Input data directory setup ####
+# setup input directories and move input data to these directories
 
 # folder for input data, which can be downloaded from elsewhere
 dir.create('data/input_data', recursive = T)
+# create directories and move input data (see readme) to these directories
+dir.create('data/input_data/world_vectors', recursive = T)
+dir.create('data/input_data/r_data_frames', recursive = T)
+dir.create('data/input_data/climate_zones', recursive = T)
 
-# setup symlink for shapefile vector data 
-file.symlink(to = 'data/input_data/world_vectors', from = dpath_vectors)
-# setup symlink to pre-processed R dataframes of ERA5 and satellite data 
-file.symlink(to = 'data/input_data/r_data_frames', from = dpath_r_dataframes)
-# setup link to KG climate zones...
-file.symlink(to = 'data/input_data/climate_zones', from = dpath_climate_zones)
+# ## alternative - create links to input files
+# # PATH TO DIRECTORY CONTAINING NATURAL EARTH VECTOR FILES (WORLD VECTORS) #
+# dpath_vectors <- ''
+# # PATH TO DIRECTORY CONTAINING ZENODO ERA5 AND INDEPENDENT DATASETS #
+# dpath_r_dataframes <- ''
+# # PATH TO DIRECTORY CONTAINING KOPPEN-GEIGER CLIMATE ZONES #
+# dpath_climate_zones <- ''
+
+# # setup symlink for shapefile vector data
+# file.symlink(to = 'data/input_data/world_vectors', from = dpath_vectors)
+# # setup symlink to pre-processed R dataframes of ERA5 and satellite data
+# file.symlink(to = 'data/input_data/r_data_frames', from = dpath_r_dataframes)
+# # setup link to KG climate zones...
+# file.symlink(to = 'data/input_data/climate_zones', from = dpath_climate_zones)
 
 
 #### Intermediate data directory setup ####

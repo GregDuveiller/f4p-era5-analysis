@@ -30,6 +30,7 @@ df_hw <- data.frame(hwname = c("HW03", "HW10", "HW18a", "HW18b"),
 
 get_ts_4_hw <- function(varname){
   
+  varname_short <- ifelse( grepl('albedo', varname, fixed=TRUE), 'Albedo', varname )
   load(paste0(input_dir, 'df_comb___', varname, '.RData'))  # <--- df_comb
   
   get_hw_spatial_average <- function(hwname, df_comb){
@@ -66,25 +67,25 @@ get_ts_4_hw <- function(varname){
     summarise(obs = mean(obs, na.rm = T),
               sim = mean(sim, na.rm = T)) %>%
     pivot_longer(cols = c('obs', 'sim'), 
-                 names_to = 'source', values_to = paste0(varname,'_clim'))
+                 names_to = 'source', values_to = paste0(varname_short,'_clim'))
   
   
   ts_all <- df_subset_ts %>% 
     inner_join(df_hw, by = c('hwname' = 'hwname', 'year' = 'hwyear')) %>%
     pivot_longer(cols = c('obs', 'sim'), 
-                 names_to = 'source', values_to = paste0(varname, '_year')) %>% 
+                 names_to = 'source', values_to = paste0(varname_short, '_year')) %>% 
     left_join(hw_clim_ts, by = c('month', 'hwname', 'source')) %>%
-    pivot_longer(cols = c(paste0(varname,'_year'), paste0(varname,'_clim')),
-                 names_to = 'type', values_to = varname)
+    pivot_longer(cols = c(paste0(varname_short,'_year'), paste0(varname_short,'_clim')),
+                 names_to = 'type', values_to = varname_short)
   
   return(ts_all)}
 
 
 ts_LAI <- get_ts_4_hw(varname = 'LAI')
 ts_LST <- get_ts_4_hw(varname = 'LST')
-ts_Albedo <- get_ts_4_hw(varname = 'Albedo')
+# ts_Albedo <- get_ts_4_hw(varname = 'Albedo')
+ts_Albedo <- get_ts_4_hw(varname = 'albedo_wsa_vis')
 ts_E <- get_ts_4_hw(varname = 'E')
-
 
 
 

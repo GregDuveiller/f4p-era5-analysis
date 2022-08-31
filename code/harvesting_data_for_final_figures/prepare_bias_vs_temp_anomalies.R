@@ -8,19 +8,16 @@
 # ---------------------------------------------------------------------------- #
 
 
-######     GLOBAL VARS                        #####
-start_year <- 2003 ; end_year <- 2018   # select time period to consider
-v_month <- c(8)                      # select months we want to consider in analysis
-v_lon_min <- -12 ; v_lon_max <- 58  ; v_lat_min <- 36 ; v_lat_max <- 71 # reduce area of interest
-
-
 
 ######     SET LIBRARIES                      #####
 library(chron) # useful for converting time values
 library(dplyr) # use %>%
-
-require(here)
 require(tidyr)
+
+######     GLOBAL VARS                        #####
+start_year <- 2003 ; end_year <- 2018   # select time period to consider
+v_month <- c(8)                      # select months we want to consider in analysis
+v_lon_min <- -12 ; v_lon_max <- 58  ; v_lat_min <- 36 ; v_lat_max <- 71 # reduce area of interest
 
 
 ###################################################
