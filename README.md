@@ -10,8 +10,7 @@ The code also uses an ancillary repository to calculate metrics of agreement. Th
 
 ## Input data
 - download the following datasets 
-- `climate_zones` : available at `http://koeppen-geiger.vu-wien.ac.at/present.htm`
-  		    and df_climspace_t2xsm.RData at Zenodo DOI `10.5281/zenodo.6976942`
+- `climate_zones` : available at `http://koeppen-geiger.vu-wien.ac.at/present.htm` and `df_climspace_t2xsm.RData` at Zenodo DOI `10.5281/zenodo.6976942`
 - `r_data_frames` : available Zenodo DOI `10.5281/zenodo.6976942`
 - `world_vectors` : available at https://www.naturalearthdata.com/downloads/50m-physical-vectors/
 
