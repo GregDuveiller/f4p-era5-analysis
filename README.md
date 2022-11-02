@@ -10,7 +10,7 @@ All necessary scripts are stored in the `code` folder and relate to data that is
 
 The `input_data` subfolder within this `data` folder should include the following subfolders, which should be populated with a series of files available respectively at the following links:
 
-- `climate_zones` : files `KG_1986-2010.grd`, `KG_1986-2010.gri` and `Map_KG-Global.R` available at `http://koeppen-geiger.vu-wien.ac.at/present.htm` 
+- `climate_zones` : files `KG_1986-2010.grd`, `KG_1986-2010.gri` and `Map_KG-Global.R` available at http://koeppen-geiger.vu-wien.ac.at/present.htm
 - `climate_space` : file `df_climspace_t2xsm.RData` available in https://doi.org/10.5281/zenodo.6976942
 - `r_data_frames` : all other `.RData` files available in https://doi.org/10.5281/zenodo.6976942
 - `world_vectors` : files `ne_50m_land.shp`, `ne_50m_ocean.shp` and `ne_50m_coastline.shp` available at https://www.naturalearthdata.com/downloads/50m-physical-vectors/
