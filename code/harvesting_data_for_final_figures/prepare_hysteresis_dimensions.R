@@ -12,7 +12,7 @@ require(tidyr)
 
 #### Get the data ####
 
-load('data/input_data/climate_zones/df_climspace_t2xsm.RData') # <---- df_climspace
+load('data/input_data/climate_space/df_climspace_t2xsm.RData') # <---- df_climspace
 load('data/final_data/figures_for_paper/hysteresis_data_ready4fig.RData', verbose = T)
 
 df_2dim <- df_p_all %>%
@@ -32,7 +32,7 @@ df_2dim <- df_p_all %>%
 
 #### Prepare Map based on bins ####
 
-load('data/input_data/climate_zones/df_climspace_t2xsm.RData') # <---- df_climspace
+load('data/input_data/climate_space/df_climspace_t2xsm.RData') # <---- df_climspace
 #df_climspace <- df_climspace %>% select(x, y, clim.x, clim.y) %>% rename(clim.t2 = clim.x, clim.sm = clim.y)
 
 x.bin.width <- 4

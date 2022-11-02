@@ -17,6 +17,7 @@ dir.create('data/input_data', recursive = T)
 dir.create('data/input_data/world_vectors', recursive = T)
 dir.create('data/input_data/r_data_frames', recursive = T)
 dir.create('data/input_data/climate_zones', recursive = T)
+dir.create('data/input_data/climate_space', recursive = T)
 
 # ## alternative - create links to input files
 # # PATH TO DIRECTORY CONTAINING NATURAL EARTH VECTOR FILES (WORLD VECTORS) #
@@ -25,6 +26,8 @@ dir.create('data/input_data/climate_zones', recursive = T)
 # dpath_r_dataframes <- ''
 # # PATH TO DIRECTORY CONTAINING KOPPEN-GEIGER CLIMATE ZONES #
 # dpath_climate_zones <- ''
+# # PATH TO DIRECTORY CONTAINING TEMP VS SM CLIMATE SPACE #
+# dpath_climate_space <- ''
 
 # # setup symlink for shapefile vector data
 # file.symlink(to = 'data/input_data/world_vectors', from = dpath_vectors)

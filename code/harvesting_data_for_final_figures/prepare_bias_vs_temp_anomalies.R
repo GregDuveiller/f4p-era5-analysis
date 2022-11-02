@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------- #
 # #### prepare_bias_vs_temp_anomalies.R ####
 # ---------------------------------------------------------------------------- #
-# Purpose: produce dataframes for producing temperature bias with temperature anomaly figures
+# Purpose: produce dataframes for figures of temperature bias vs anomaly
 # Project: f4p-era5-analysis
 # Authors: M.Pickering, G.Duveiller
 # ---------------------------------------------------------------------------- #
@@ -151,7 +151,7 @@ df <- df %>% mutate(diff_sim_obs.LAI  =  (sim.LAI - obs.LAI),                   
 f_summarise_byQuantile <- function(df_in, v_quantiles , q_col_name_x , q_col_name_y , q_col_name_quantile, ribbon_size = 0.0 ){
   
   # if only number 1 entered for quantiles then set v_quantiles such that there is only a single quantile (i.e an average of all data is taken)
-  if(v_quantiles == 1){v_quantiles <- c(0,1)}
+  #if(v_quantiles == 1){v_quantiles <- c(0,1)}
   
   df_in <- df_in %>% filter(!is.na(!!as.symbol(q_col_name_y)))
   df_in <- df_in %>% filter(!is.na(!!as.symbol(q_col_name_x)))

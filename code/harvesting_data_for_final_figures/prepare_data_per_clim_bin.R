@@ -19,7 +19,7 @@ load('data/inter_data/ancillary_info/df_KG_climatezones.RData')  # <---- df_cz
 df_cz <- df_cz %>% dplyr::select(-cz_ID, -cz_colours)
 
 
-load('data/input_data/climate_zones/df_climspace_t2xsm.RData') # <---- df_climspace
+load('data/input_data/climate_space/df_climspace_t2xsm.RData') # <---- df_climspace
 #df_climspace <- df_climspace %>% select(x, y, clim.x, clim.y) %>% rename(clim.t2 = clim.x, clim.sm = clim.y)
 
 x.bin.width <- 4

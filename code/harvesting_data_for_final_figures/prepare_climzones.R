@@ -11,7 +11,7 @@ require(raster)
 require(dplyr)
 
 
-r_HR <- raster('data/input_data/climate_zones/Map_KG-Global/KG_1986-2010.grd')
+r_HR <- raster('data/input_data/climate_zones/KG_1986-2010.grd')
 
 # define function to calc the mode
 getmode <- function(v, na.rm) {

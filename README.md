@@ -10,9 +10,10 @@ The code also uses an ancillary repository to calculate metrics of agreement. Th
 
 ## Input data
 - download the following datasets 
-- `climate_zones` : available at `http://koeppen-geiger.vu-wien.ac.at/present.htm` and `df_climspace_t2xsm.RData` at Zenodo DOI `10.5281/zenodo.6976942`
-- `r_data_frames` : available Zenodo DOI `10.5281/zenodo.6976942`
-- `world_vectors` : available at https://www.naturalearthdata.com/downloads/50m-physical-vectors/
+- `climate_zones` : available at `http://koeppen-geiger.vu-wien.ac.at/present.htm` 
+- `climate_space` : `df_climspace_t2xsm.RData` available Zenodo repository with DOI `10.5281/zenodo.6976942`
+- `r_data_frames` : all other `.RData` available Zenodo repository with DOI `10.5281/zenodo.6976942`
+- `world_vectors` : `ne_50m_land.shp`, `ne_50m_ocean.shp` and `ne_50m_coastline.shp` available at https://www.naturalearthdata.com/downloads/50m-physical-vectors/
 
 ## Setup folder structure and input data
 - Run `setup_data_folder_structure.R` 
