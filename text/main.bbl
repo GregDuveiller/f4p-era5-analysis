@@ -1,0 +1,437 @@
+\begin{thebibliography}{58}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{\tt #1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{https://doi.org/\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{https://doi.org/\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem[{Alkama and Cescatti(2016)}]{Alkama2016}
+Alkama, R. and Cescatti, A.: {Biophysical climate impacts of recent changes in
+  global forest cover.}, Science, 351, 600--4, 2016.
+
+\bibitem[{Anderson et~al.(2011)Anderson, Canadell, Randerson, Jackson, Hungate,
+  Baldocchi, Ban-Weiss, Bonan, Caldeira, Cao et~al.}]{anderson2011biophysical}
+Anderson, R.~G., Canadell, J.~G., Randerson, J.~T., Jackson, R.~B., Hungate,
+  B.~A., Baldocchi, D.~D., Ban-Weiss, G.~A., Bonan, G.~B., Caldeira, K., Cao,
+  L., et~al.: {Biophysical considerations in forestry for climate protection},
+  Frontiers in Ecology and the Environment, 9, 174--182, 2011.
+
+\bibitem[{Anderson-Teixeira et~al.(2012)Anderson-Teixeira, Snyder, Twine,
+  Cuadra, Costa, and DeLucia}]{anderson2012climate}
+Anderson-Teixeira, K.~J., Snyder, P.~K., Twine, T.~E., Cuadra, S.~V., Costa,
+  M.~H., and DeLucia, E.~H.: {Climate-regulation services of natural and
+  agricultural ecoregions of the Americas}, Nature Climate Change, 2, 177--181,
+  2012.
+
+\bibitem[{Balsamo et~al.(2009)Balsamo, Beljaars, Scipal, Viterbo, van~den Hurk,
+  Hirschi, and Betts}]{Balsamo_2009}
+Balsamo, G., Beljaars, A., Scipal, K., Viterbo, P., van~den Hurk, B., Hirschi,
+  M., and Betts, A.~K.: {A Revised Hydrology for the {ECMWF} Model:
+  Verification from Field Site to Terrestrial Water Storage and Impact in the
+  Integrated Forecast System}, Journal of Hydrometeorology, 10, 623--643,
+  \doi{10.1175/2008jhm1068.1}, 2009.
+
+\bibitem[{Balsamo et~al.(2021)Balsamo, Engelen, Thiemert, Agusti-Panareda,
+  Bousserez, Broquet, Brunner, Buchwitz, Chevallier, Choulga, Gon, Florentie,
+  Haussaire, Janssens-Maenhout, Jones, Kaminski, Krol, Qu{\'{e}}r{\'{e}},
+  Marshall, McNorton, Prunet, Reuter, Peters, and Scholze}]{Balsamo_2021}
+Balsamo, G., Engelen, R., Thiemert, D., Agusti-Panareda, A., Bousserez, N.,
+  Broquet, G., Brunner, D., Buchwitz, M., Chevallier, F., Choulga, M., Gon, H.
+  D. V.~D., Florentie, L., Haussaire, J.-M., Janssens-Maenhout, G., Jones,
+  M.~W., Kaminski, T., Krol, M., Qu{\'{e}}r{\'{e}}, C.~L., Marshall, J.,
+  McNorton, J., Prunet, P., Reuter, M., Peters, W., and Scholze, M.: {The {CO}2
+  Human Emissions ({CHE}) Project: First Steps Towards a European Operational
+  Capacity to Monitor Anthropogenic {CO}2 Emissions}, Frontiers in Remote
+  Sensing, 2, \doi{10.3389/frsen.2021.707247}, 2021.
+
+\bibitem[{Bonan(2008)}]{Bonan2008}
+Bonan, G.~B.: {Forests and climate change: forcings, feedbacks, and the climate
+  benefits of forests}, Science, 320, 1444--9, 2008.
+
+\bibitem[{Boussetta et~al.(2012)Boussetta, Balsamo, Beljaars, Kral, and
+  Jarlan}]{Boussetta_2012}
+Boussetta, S., Balsamo, G., Beljaars, A., Kral, T., and Jarlan, L.: {Impact of
+  a satellite-derived leaf area index monthly climatology in a global numerical
+  weather prediction model}, International Journal of Remote Sensing, 34,
+  3520--3542, \doi{10.1080/01431161.2012.716543}, 2012.
+
+\bibitem[{Boussetta et~al.(2013)Boussetta, Balsamo, Beljaars, Panareda, Calvet,
+  Jacobs, van~den Hurk, Viterbo, Lafont, Dutra, Jarlan, Balzarolo, Papale, and
+  van~der Werf}]{Boussetta_2013}
+Boussetta, S., Balsamo, G., Beljaars, A., Panareda, A.-A., Calvet, J.-C.,
+  Jacobs, C., van~den Hurk, B., Viterbo, P., Lafont, S., Dutra, E., Jarlan, L.,
+  Balzarolo, M., Papale, D., and van~der Werf, G.: {Natural land carbon dioxide
+  exchanges in the {ECMWF} integrated forecasting system: Implementation and
+  offline validation}, Journal of Geophysical Research: Atmospheres, 118,
+  5923--5946, \doi{10.1002/jgrd.50488}, 2013.
+
+\bibitem[{Boussetta et~al.(2015)Boussetta, Balsamo, Dutra, Beljaars, and
+  Albergel}]{boussetta2015assimilation}
+Boussetta, S., Balsamo, G., Dutra, E., Beljaars, A., and Albergel, C.:
+  {Assimilation of surface albedo and vegetation states from satellite
+  observations and their impact on numerical weather prediction}, Remote
+  Sensing of Environment, 163, 111--126, 2015.
+
+\bibitem[{Boussetta et~al.(2021)Boussetta, Balsamo, Arduini, Dutra, McNorton,
+  Choulga, Agust{\'{\i}}-Panareda, Beljaars, Wedi, Mun{\~{o}}z-Sabater,
+  de~Rosnay, Sandu, Hadade, Carver, Mazzetti, Prudhomme, Yamazaki, and
+  Zsoter}]{Boussetta_2021}
+Boussetta, S., Balsamo, G., Arduini, G., Dutra, E., McNorton, J., Choulga, M.,
+  Agust{\'{\i}}-Panareda, A., Beljaars, A., Wedi, N., Mun{\~{o}}z-Sabater, J.,
+  de~Rosnay, P., Sandu, I., Hadade, I., Carver, G., Mazzetti, C., Prudhomme,
+  C., Yamazaki, D., and Zsoter, E.: {{ECLand}: The {ECMWF} Land Surface
+  Modelling System}, Atmosphere, 12, 723, \doi{10.3390/atmos12060723}, 2021.
+
+\bibitem[{Bright et~al.(2017)Bright, Davin, O'Halloran, Pongratz, Zhao, and
+  Cescatti}]{bright2017local}
+Bright, R.~M., Davin, E., O'Halloran, T., Pongratz, J., Zhao, K., and Cescatti,
+  A.: {Local temperature response to land cover and management change driven by
+  non-radiative processes}, Nature Climate Change, 7, 296--302, 2017.
+
+\bibitem[{Brunner(2018)}]{brunner2018}
+Brunner: {Dependence of Present and Future European Temperature Extremes on the
+  Location of Atmospheric Blocking}, Geophysical Research Letters, 45,
+  6311--6320,
+  \urlprefix\url{https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/2018GL077837},
+  accessed on Fri, December 03, 2021, 2018.
+
+\bibitem[{Christidis(2015)}]{christidis2015}
+Christidis: {Dramatically increasing chance of extremely hot summers since the
+  2003 European heatwave - Nature Climate Change}, Nature Climate Change, 5,
+  46--50, \urlprefix\url{https://www.nature.com/articles/nclimate2468},
+  accessed on Fri, December 03, 2021, 2015.
+
+\bibitem[{Coumou et~al.(2018)Coumou, Di~Capua, Vavrus, Wang, and
+  Wang}]{coumou2018influence}
+Coumou, D., Di~Capua, G., Vavrus, S., Wang, L., and Wang, S.: {The influence of
+  Arctic amplification on mid-latitude summer circulation}, Nature
+  Communications, 9, 1--12, 2018.
+
+\bibitem[{de~Rosnay et~al.(2022)de~Rosnay, Browne, de~Boiss{\'{e}}son,
+  Fairbairn, Hirahara, Ochi, Schepers, Weston, Zuo, Alonso-Balmaseda, Balsamo,
+  Bonavita, Borman, Brown, Chrust, Dahoui, Chiara, English, Geer, Healy,
+  Hersbach, Laloyaux, Magnusson, Massart, McNally, Pappenberger, and
+  Rabier}]{de_Rosnay_2022}
+de~Rosnay, P., Browne, P., de~Boiss{\'{e}}son, E., Fairbairn, D., Hirahara, Y.,
+  Ochi, K., Schepers, D., Weston, P., Zuo, H., Alonso-Balmaseda, M., Balsamo,
+  G., Bonavita, M., Borman, N., Brown, A., Chrust, M., Dahoui, M., Chiara, G.,
+  English, S., Geer, A., Healy, S., Hersbach, H., Laloyaux, P., Magnusson, L.,
+  Massart, S., McNally, A., Pappenberger, F., and Rabier, F.: {Coupled data
+  assimilation at {ECMWF}: current status challenges and future developments},
+  Quarterly Journal of the Royal Meteorological Society, \doi{10.1002/qj.4330},
+  2022.
+
+\bibitem[{Dee et~al.(2011)Dee, Uppala, Simmons, Berrisford, Poli, Kobayashi,
+  Andrae, Balmaseda, Balsamo, Bauer, Bechtold, Beljaars, van~de Berg, Bidlot,
+  Bormann, Delsol, Dragani, Fuentes, Geer, Haimberger, Healy, Hersbach,
+  H{\'{o}}lm, Isaksen, K{\aa}llberg, K{\"o}hler, Matricardi, McNally,
+  Monge-Sanz, Morcrette, Park, Peubey, de~Rosnay, Tavolato, Th{\'{e}}paut, and
+  Vitart}]{Dee_2011}
+Dee, D.~P., Uppala, S.~M., Simmons, A.~J., Berrisford, P., Poli, P., Kobayashi,
+  S., Andrae, U., Balmaseda, M.~A., Balsamo, G., Bauer, P., Bechtold, P.,
+  Beljaars, A. C.~M., van~de Berg, L., Bidlot, J., Bormann, N., Delsol, C.,
+  Dragani, R., Fuentes, M., Geer, A.~J., Haimberger, L., Healy, S.~B.,
+  Hersbach, H., H{\'{o}}lm, E.~V., Isaksen, L., K{\aa}llberg, P., K{\"o}hler,
+  M., Matricardi, M., McNally, A.~P., Monge-Sanz, B.~M., Morcrette, J.-J.,
+  Park, B.-K., Peubey, C., de~Rosnay, P., Tavolato, C., Th{\'{e}}paut, J.-N.,
+  and Vitart, F.: {The {ERA}-Interim reanalysis: configuration and performance
+  of the data assimilation system}, Quarterly Journal of the Royal
+  Meteorological Society, 137, 553--597, \doi{10.1002/qj.828}, 2011.
+
+\bibitem[{Dickinson(1995)}]{dickinson1995land}
+Dickinson, R.~E.: {Land-atmosphere interaction}, Reviews of Geophysics, 33,
+  917--922, 1995.
+
+\bibitem[{Dirmeyer et~al.(2021)Dirmeyer, Balsamo, Blyth, Morrison, and
+  Cooper}]{Dirmeyer_2021}
+Dirmeyer, P.~A., Balsamo, G., Blyth, E.~M., Morrison, R., and Cooper, H.~M.:
+  {Land-Atmosphere Interactions Exacerbated the Drought and Heatwave Over
+  Northern Europe During Summer 2018}, {AGU} Advances, 2,
+  \doi{10.1029/2020av000283}, 2021.
+
+\bibitem[{Duveiller et~al.(2018)Duveiller, Hooker, and
+  Cescatti}]{Duveiller_2018}
+Duveiller, G., Hooker, J., and Cescatti, A.: {The mark of vegetation change on
+  Earth's surface energy balance}, Nature Communications, 9,
+  \doi{10.1038/s41467-017-02810-8}, 2018.
+
+\bibitem[{Duveiller et~al.(2021)Duveiller, Filipponi, Ceglar, Bojanowski,
+  Alkama, and Cescatti}]{Duveiller_2021}
+Duveiller, G., Filipponi, F., Ceglar, A., Bojanowski, J., Alkama, R., and
+  Cescatti, A.: {Revealing the widespread potential of forests to increase low
+  level cloud cover}, Nature Communications, 12,
+  \doi{10.1038/s41467-021-24551-5}, 2021.
+
+\bibitem[{Fairbairn et~al.(2019)Fairbairn, de~Rosnay, and
+  Browne}]{Fairbairn_2019}
+Fairbairn, D., de~Rosnay, P., and Browne, P.~A.: {The New Stand-Alone Surface
+  Analysis at {ECMWF}: Implications for Land{\textendash}Atmosphere {DA}
+  Coupling}, Journal of Hydrometeorology, 20, 2023--2042,
+  \doi{10.1175/jhm-d-19-0074.1}, 2019.
+
+\bibitem[{Fang et~al.(2019)Fang, Baret, Plummer, and
+  Schaepman-Strub}]{fang2019overview}
+Fang, H., Baret, F., Plummer, S., and Schaepman-Strub, G.: {An overview of
+  global leaf area index (LAI): Methods, products, validation, and
+  applications}, Reviews of Geophysics, 57, 739--799, 2019.
+
+\bibitem[{Forzieri et~al.(2017)Forzieri, Alkama, Miralles, and
+  Cescatti}]{Forzieri_2017}
+Forzieri, G., Alkama, R., Miralles, D.~G., and Cescatti, A.: {Satellites reveal
+  contrasting responses of regional climate to the widespread greening of
+  Earth}, Science, 356, 1180--1184, \doi{10.1126/science.aal1727}, 2017.
+
+\bibitem[{Gorelick et~al.(2017)Gorelick, Hancher, Dixon, Ilyushchenko, Thau,
+  and Moore}]{Gorelick_2017}
+Gorelick, N., Hancher, M., Dixon, M., Ilyushchenko, S., Thau, D., and Moore,
+  R.: {Google Earth Engine: Planetary-scale geospatial analysis for everyone},
+  Remote Sensing of Environment, 202, 18--27, \doi{10.1016/j.rse.2017.06.031},
+  2017.
+
+\bibitem[{Hauser et~al.(2016)Hauser, Orth, and Seneviratne}]{hauser2016role}
+Hauser, M., Orth, R., and Seneviratne, S.~I.: {Role of soil moisture versus
+  recent climate change for the 2010 heat wave in western Russia}, Geophysical
+  Research Letters, 43, 2819--2826, 2016.
+
+\bibitem[{Hersbach et~al.(2020)Hersbach, Bell, Berrisford, Hirahara,
+  Hor{\'{a}}nyi, Mu{\~{n}}oz-Sabater, Nicolas, Peubey, Radu, Schepers, Simmons,
+  Soci, Abdalla, Abellan, Balsamo, Bechtold, Biavati, Bidlot, Bonavita, Chiara,
+  Dahlgren, Dee, Diamantakis, Dragani, Flemming, Forbes, Fuentes, Geer,
+  Haimberger, Healy, Hogan, H{\'{o}}lm, Janiskov{\'{a}}, Keeley, Laloyaux,
+  Lopez, Lupu, Radnoti, Rosnay, Rozum, Vamborg, Villaume, and
+  Th{\'{e}}paut}]{Hersbach_2020}
+Hersbach, H., Bell, B., Berrisford, P., Hirahara, S., Hor{\'{a}}nyi, A.,
+  Mu{\~{n}}oz-Sabater, J., Nicolas, J., Peubey, C., Radu, R., Schepers, D.,
+  Simmons, A., Soci, C., Abdalla, S., Abellan, X., Balsamo, G., Bechtold, P.,
+  Biavati, G., Bidlot, J., Bonavita, M., Chiara, G., Dahlgren, P., Dee, D.,
+  Diamantakis, M., Dragani, R., Flemming, J., Forbes, R., Fuentes, M., Geer,
+  A., Haimberger, L., Healy, S., Hogan, R.~J., H{\'{o}}lm, E., Janiskov{\'{a}},
+  M., Keeley, S., Laloyaux, P., Lopez, P., Lupu, C., Radnoti, G., Rosnay, P.,
+  Rozum, I., Vamborg, F., Villaume, S., and Th{\'{e}}paut, J.-N.: {The {ERA}5
+  global reanalysis}, Quarterly Journal of the Royal Meteorological Society,
+  146, 1999--2049, \doi{10.1002/qj.3803}, 2020.
+
+\bibitem[{Horton et~al.(2016)Horton, Mankin, Lesk, Coffel, and
+  Raymond}]{horton2016review}
+Horton, R.~M., Mankin, J.~S., Lesk, C., Coffel, E., and Raymond, C.: {A review
+  of recent advances in research on extreme heat events}, Current Climate
+  Change Reports, 2, 242--259, 2016.
+
+\bibitem[{Jia et~al.(2019)Jia, Shevliakova, Artaxo, De~Noblet-Ducoudr{\'e},
+  Houghton, House, Kitajima, Lennard, Popp, Sirin et~al.}]{jia2019land}
+Jia, G., Shevliakova, E., Artaxo, P., De~Noblet-Ducoudr{\'e}, N., Houghton, R.,
+  House, J., Kitajima, K., Lennard, C., Popp, A., Sirin, A., et~al.:
+  {Land--Climate Interactions. Climate Change and Land: An IPCC Special Report
+  on Climate Change, Desertification, Land Degradation, Sustainable Land
+  Management, Food Security, and Greenhouse Gas Fluxes in Terrestrial
+  Ecosystems}, food security, and greenhouse gas fluxes in terrestrial
+  ecosystems, pp. 1--186, 2019.
+
+\bibitem[{Johannsen et~al.(2019)Johannsen, Ermida, Martins, Trigo, Nogueira,
+  and Dutra}]{Johannsen_2019}
+Johannsen, Ermida, Martins, Trigo, Nogueira, and Dutra: {Cold Bias of {ERA}5
+  Summertime Daily Maximum Land Surface Temperature over Iberian Peninsula},
+  Remote Sensing, 11, 2570, \doi{10.3390/rs11212570}, 2019.
+
+\bibitem[{Koster et~al.(2004)Koster, Dirmeyer, Guo, Bonan, Chan, Cox, Gordon,
+  Kanae, Kowalczyk, Lawrence, Liu, Lu, Malyshev, McAvaney, Mitchell, Mocko,
+  Oki, Oleson, Pitman, Sud, Taylor, Verseghy, Vasic, Xue, and
+  Yamada}]{Koster_2004}
+Koster, R.~D., Dirmeyer, P.~A., Guo, Z., Bonan, G., Chan, E., Cox, P., Gordon,
+  C.~T., Kanae, S., Kowalczyk, E., Lawrence, D., Liu, P., Lu, C.-H., Malyshev,
+  S., McAvaney, B., Mitchell, K., Mocko, D., Oki, T., Oleson, K., Pitman, A.,
+  Sud, Y.~C., Taylor, C.~M., Verseghy, D., Vasic, R., Xue, Y., and Yamada, T.:
+  {Regions of Strong Coupling Between Soil Moisture and Precipitation},
+  Science, 305, 1138--1140, \doi{10.1126/science.1100217}, 2004.
+
+\bibitem[{Kottek et~al.(2006)Kottek, Grieser, Beck, Rudolf, and
+  Rubel}]{Kottek_2006}
+Kottek, M., Grieser, J., Beck, C., Rudolf, B., and Rubel, F.: {World Map of the
+  K{\"o}ppen-Geiger climate classification updated}, Meteorologische
+  Zeitschrift, 15, 259--263, \doi{10.1127/0941-2948/2006/0130}, 2006.
+
+\bibitem[{Li et~al.(2015)Li, Zhao, Motesharrei, Mu, Kalnay, and Li}]{Li2015}
+Li, Y., Zhao, M., Motesharrei, S., Mu, Q., Kalnay, E., and Li, S.: {Local
+  cooling and warming effects of forests based on satellite observations.},
+  Nature Communications, 6, 6603, 2015.
+
+\bibitem[{Liu et~al.(2020)Liu, He, Guo, Huang, and Chen}]{liu2020similarities}
+Liu, X., He, B., Guo, L., Huang, L., and Chen, D.: {Similarities and
+  differences in the mechanisms causing the European summer heatwaves in 2003,
+  2010, and 2018}, Earth's Future, 8, e2019EF001\,386, 2020.
+
+\bibitem[{Lorenz et~al.(2013)Lorenz, Davin, Lawrence, St{\"o}ckli, and
+  Seneviratne}]{Lorenz_2013}
+Lorenz, R., Davin, E.~L., Lawrence, D.~M., St{\"o}ckli, R., and Seneviratne,
+  S.~I.: {How Important is Vegetation Phenology for European Climate and Heat
+  Waves?}, Journal of Climate, 26, 10\,077--10\,100,
+  \doi{10.1175/jcli-d-13-00040.1}, 2013.
+
+\bibitem[{Martens et~al.(2017)Martens, Miralles, Lievens, van~der Schalie,
+  de~Jeu, Fern{\'{a}}ndez-Prieto, Beck, Dorigo, and Verhoest}]{Martens_2017}
+Martens, B., Miralles, D.~G., Lievens, H., van~der Schalie, R., de~Jeu, R.
+  A.~M., Fern{\'{a}}ndez-Prieto, D., Beck, H.~E., Dorigo, W.~A., and Verhoest,
+  N. E.~C.: {{GLEAM}~v3: satellite-based land evaporation and root-zone soil
+  moisture}, Geoscientific Model Development, 10, 1903--1925,
+  \doi{10.5194/gmd-10-1903-2017}, 2017.
+
+\bibitem[{Miralles et~al.(2011)Miralles, Holmes, Jeu, Gash, Meesters, and
+  Dolman}]{Miralles_2011}
+Miralles, D.~G., Holmes, T. R.~H., Jeu, R. A. M.~D., Gash, J.~H., Meesters, A.
+  G. C.~A., and Dolman, A.~J.: {Global land-surface evaporation estimated from
+  satellite-based observations}, Hydrology and Earth System Sciences, 15,
+  453--469, \doi{10.5194/hess-15-453-2011}, 2011.
+
+\bibitem[{Miralles et~al.(2012)Miralles, Van Den~Berg, Teuling, and
+  De~Jeu}]{miralles2012soil}
+Miralles, D.~G., Van Den~Berg, M., Teuling, A., and De~Jeu, R.: {Soil
+  moisture-temperature coupling: A multiscale observational analysis},
+  Geophysical Research Letters, 39, 2012.
+
+\bibitem[{Mu{\~{n}}oz-Sabater et~al.(2021)Mu{\~{n}}oz-Sabater, Dutra,
+  Agust{\'{\i}}-Panareda, Albergel, Arduini, Balsamo, Boussetta, Choulga,
+  Harrigan, Hersbach, Martens, Miralles, Piles,
+  Rodr{\'{\i}}guez-Fern{\'{a}}ndez, Zsoter, Buontempo, and
+  Th{\'{e}}paut}]{Munoz_Sabater_2021}
+Mu{\~{n}}oz-Sabater, J., Dutra, E., Agust{\'{\i}}-Panareda, A., Albergel, C.,
+  Arduini, G., Balsamo, G., Boussetta, S., Choulga, M., Harrigan, S., Hersbach,
+  H., Martens, B., Miralles, D.~G., Piles, M.,
+  Rodr{\'{\i}}guez-Fern{\'{a}}ndez, N.~J., Zsoter, E., Buontempo, C., and
+  Th{\'{e}}paut, J.-N.: {{ERA}5-Land: a state-of-the-art global reanalysis
+  dataset for land applications}, Earth System Science Data, 13, 4349--4383,
+  \doi{10.5194/essd-13-4349-2021}, 2021.
+
+\bibitem[{Nogueira et~al.(2020)Nogueira, Albergel, Boussetta, Johannsen, Trigo,
+  Ermida, Martins, and Dutra}]{Nogueira_2020}
+Nogueira, M., Albergel, C., Boussetta, S., Johannsen, F., Trigo, I.~F., Ermida,
+  S.~L., Martins, J. P.~A., and Dutra, E.: {Role of vegetation in representing
+  land surface temperature in the {CHTESSEL} ({CY}45R1) and {SURFEX}-{ISBA}
+  (v8.1) land surface models: a case study over Iberia}, Geoscientific Model
+  Development, 13, 3975--3993, \doi{10.5194/gmd-13-3975-2020}, 2020.
+
+\bibitem[{Nogueira et~al.(2021)Nogueira, Boussetta, Balsamo, Albergel, Trigo,
+  Johannsen, Miralles, and Dutra}]{Nogueira_2021}
+Nogueira, M., Boussetta, S., Balsamo, G., Albergel, C., Trigo, I.~F.,
+  Johannsen, F., Miralles, D.~G., and Dutra, E.: {Upgrading Land-Cover and
+  Vegetation Seasonality in the {ECMWF} Coupled System: Verification With
+  {FLUXNET} Sites {METEOSAT} Satellite Land Surface Temperatures, and {ERA}5
+  Atmospheric Reanalysis}, Journal of Geophysical Research: Atmospheres, 126,
+  \doi{10.1029/2020jd034163}, 2021.
+
+\bibitem[{Orth et~al.(2017)Orth, Dutra, Trigo, and Balsamo}]{Orth_2017}
+Orth, R., Dutra, E., Trigo, I.~F., and Balsamo, G.: {Advancing land surface
+  model development with satellite-based Earth observations}, Hydrology and
+  Earth System Sciences, 21, 2483--2495, \doi{10.5194/hess-21-2483-2017}, 2017.
+
+\bibitem[{Perkins-Kirkpatrick and Lewis(2020)}]{perkins2020increasing}
+Perkins-Kirkpatrick, S. and Lewis, S.: {Increasing trends in regional
+  heatwaves}, Nature Communications, 11, 1--8, 2020.
+
+\bibitem[{Pielke~Sr et~al.(2002)Pielke~Sr, Marland, Betts, Chase, Eastman,
+  Niles, Niyogi, and Running}]{pielke2002influence}
+Pielke~Sr, R.~A., Marland, G., Betts, R.~A., Chase, T.~N., Eastman, J.~L.,
+  Niles, J.~O., Niyogi, D. D.~S., and Running, S.~W.: {The influence of
+  land-use change and landscape dynamics on the climate system: relevance to
+  climate-change policy beyond the radiative effect of greenhouse gases},
+  Philosophical Transactions of the Royal Society of London. Series A:
+  Mathematical, Physical and Engineering Sciences, 360, 1705--1719, 2002.
+
+\bibitem[{Rasmijn et~al.(2018)Rasmijn, van~der Schrier, Bintanja, Barkmeijer,
+  Sterl, and Hazeleger}]{Rasmijn_2018}
+Rasmijn, L.~M., van~der Schrier, G., Bintanja, R., Barkmeijer, J., Sterl, A.,
+  and Hazeleger, W.: Future equivalent of 2010 Russian heatwave intensified by
+  weakening soil moisture constraints, Nature Climate Change, 8, 381--385,
+  \doi{10.1038/s41558-018-0114-0}, 2018.
+
+\bibitem[{Renaud and Rebetez(2009)}]{renaud2009comparison}
+Renaud, V. and Rebetez, M.: {Comparison between open-site and below-canopy
+  climatic conditions in Switzerland during the exceptionally hot summer of
+  2003}, Agricultural and Forest Meteorology, 149, 873--880, 2009.
+
+\bibitem[{Richardson et~al.(2013)Richardson, Keenan, Migliavacca, Ryu,
+  Sonnentag, and Toomey}]{RICHARDSON2013156}
+Richardson, A.~D., Keenan, T.~F., Migliavacca, M., Ryu, Y., Sonnentag, O., and
+  Toomey, M.: {Climate change, phenology, and phenological control of
+  vegetation feedbacks to the climate system}, Agricultural and Forest
+  Meteorology, 169, 156--173,
+  \doi{https://doi.org/10.1016/j.agrformet.2012.09.012}, 2013.
+
+\bibitem[{Santanello~Jr et~al.(2018)Santanello~Jr, Dirmeyer, Ferguson, Findell,
+  Tawfik, Berg, Ek, Gentine, Guillod, Van~Heerwaarden
+  et~al.}]{santanello2018land}
+Santanello~Jr, J.~A., Dirmeyer, P.~A., Ferguson, C.~R., Findell, K.~L., Tawfik,
+  A.~B., Berg, A., Ek, M., Gentine, P., Guillod, B.~P., Van~Heerwaarden, C.,
+  et~al.: {Land--atmosphere interactions: The LoCo perspective}, Bulletin of
+  the American Meteorological Society, 99, 1253--1272, 2018.
+
+\bibitem[{Schaaf and Wang(2015)}]{Schaaf_2015}
+Schaaf, C. and Wang, Z.: {MCD43C3 MODIS/Terra+Aqua BRDF/Albedo Albedo Daily L3
+  Global 0.05Deg CMG V006 [Data set]. NASA EOSDIS Land Processes DAAC}, 2015.
+
+\bibitem[{Sch{\"a}r et~al.(2004)Sch{\"a}r, Vidale, L{\"u}thi, Frei,
+  H{\"a}berli, Liniger, and Appenzeller}]{schar2004role}
+Sch{\"a}r, C., Vidale, P.~L., L{\"u}thi, D., Frei, C., H{\"a}berli, C.,
+  Liniger, M.~A., and Appenzeller, C.: {The role of increasing temperature
+  variability in European summer heatwaves}, Nature, 427, 332--336, 2004.
+
+\bibitem[{Schubert et~al.(2014)Schubert, Wang, Koster, Suarez, and
+  Groisman}]{schubert2014northern}
+Schubert, S.~D., Wang, H., Koster, R.~D., Suarez, M.~J., and Groisman, P.~Y.:
+  {Northern Eurasian heat waves and droughts}, Journal of Climate, 27,
+  3169--3207, 2014.
+
+\bibitem[{Schumacher et~al.(2019)Schumacher, Keune, Van~Heerwaarden,
+  de~Arellano, Teuling, and Miralles}]{schumacher2019amplification}
+Schumacher, D.~L., Keune, J., Van~Heerwaarden, C.~C., de~Arellano, J. V.-G.,
+  Teuling, A.~J., and Miralles, D.~G.: {Amplification of mega-heatwaves through
+  heat torrents fuelled by upwind drought}, Nature Geoscience, 12, 712--717,
+  2019.
+
+\bibitem[{Seneviratne et~al.(2010)Seneviratne, Corti, Davin, Hirschi, Jaeger,
+  Lehner, Orlowsky, and Teuling}]{Seneviratne_2010}
+Seneviratne, S.~I., Corti, T., Davin, E.~L., Hirschi, M., Jaeger, E.~B.,
+  Lehner, I., Orlowsky, B., and Teuling, A.~J.: {Investigating soil
+  moisture{\textendash}climate interactions in a changing climate: A review},
+  Earth-Science Reviews, 99, 125--161, \doi{10.1016/j.earscirev.2010.02.004},
+  2010.
+
+\bibitem[{Seneviratne et~al.(2014)Seneviratne, Donat, Mueller, and
+  Alexander}]{seneviratne2014no}
+Seneviratne, S.~I., Donat, M.~G., Mueller, B., and Alexander, L.~V.: {No pause
+  in the increase of hot temperature extremes}, Nature Climate Change, 4,
+  161--163, 2014.
+
+\bibitem[{Skinner et~al.(2018)Skinner, Poulsen, and
+  Mankin}]{skinner2018amplificationa}
+Skinner, C.~B., Poulsen, C.~J., and Mankin, J.~S.: {Amplification of heat
+  extremes by plant CO 2 physiological forcing}, Nature Communications, 9,
+  1--11, 2018.
+
+\bibitem[{St{\'e}fanon et~al.(2012)St{\'e}fanon, Drobinski, d'Andrea, and
+  de~Noblet-Ducoudr{\'e}}]{stefanon2012effects}
+St{\'e}fanon, M., Drobinski, P., d'Andrea, F., and de~Noblet-Ducoudr{\'e}, N.:
+  {Effects of interactive vegetation phenology on the 2003 summer heat waves},
+  Journal of Geophysical Research: Atmospheres, 117, 2012.
+
+\bibitem[{Wan et~al.(2015)Wan, Hook, and Hulley.}]{Wan_2015}
+Wan, Z., Hook, S., and Hulley., G.: {MYD11A1 MODIS/Aqua Land Surface
+  Temperature/Emissivity Daily L3 Global 1km SIN Grid V006. 2015, distributed
+  by NASA EOSDIS Land Processes DAAC}, 2015.
+
+\bibitem[{Xu et~al.(2022)Xu, Li, Teuling, Zhao, Spracklen, Garcia-Carreras,
+  Meier, Chen, Zheng, Lin, and Fu}]{Xu2022}
+Xu, R., Li, Y., Teuling, A., Zhao, L., Spracklen, D., Garcia-Carreras, L.,
+  Meier, R., Chen, L., Zheng, Y., Lin, H., and Fu, B.: {Contrasting impacts of
+  forests on cloud cover based on satellite observations.}, Nature
+  Communications, 13, 670, 2022.
+
+\bibitem[{Yan et~al.(2019)Yan, Hu, Luo, Weiss, Jiang, Mu, Xie, and
+  Zhang}]{yan2019review}
+Yan, G., Hu, R., Luo, J., Weiss, M., Jiang, H., Mu, X., Xie, D., and Zhang, W.:
+  {Review of indirect optical measurements of leaf area index: Recent advances,
+  challenges, and perspectives}, Agricultural and forest meteorology, 265,
+  390--411, 2019.
+
+\end{thebibliography}

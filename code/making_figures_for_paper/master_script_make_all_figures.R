@@ -13,7 +13,7 @@ library(patchwork)
   
 #### Setup...####
 
-fig.path <- 'paper/figures/'
+fig.path <- 'figs/'
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.fmt <- 'png'
 
