@@ -13,3 +13,5 @@
 
 *.pdf
 *.log
+
+/text/submission_history
