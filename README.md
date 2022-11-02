@@ -23,5 +23,5 @@ To reproduce the figures in the study, it is necessary to:
 Finally, the current latex version of the manuscript is also available in the `text` folder of the present repository.
 
 ## Versioning
-This repository is available on GitHub at https://github.com/GregDuveiller/f4p-era5-analysis/. All versions of this repository, including the last release, are archived on Zenodo: [DOI: xxxxxx].
+This repository is available on GitHub at https://github.com/GregDuveiller/f4p-era5-analysis/. All versions of this repository, including the last release, are archived on Zenodo: [DOI: 10.5281/zenodo.7275088 ].
 
