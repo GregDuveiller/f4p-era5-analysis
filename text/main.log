@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  2 NOV 2022 22:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.6.24)  2 NOV 2022 22:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -3176,11 +3176,7 @@ Underfull \hbox (badness 5548) in paragraph at lines 394--399
 hang-ing cli-mate: A re-view, Earth-Science Re-views, 99, 125--161,
  []
 
-) [26] (./main.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- )
+) [26] (./main.aux) )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 580 ({)
