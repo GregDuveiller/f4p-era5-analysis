@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: copernicus.bst
+Database file #1: biblio.bib
+Warning--entry type for "Wan_2015" isn't style-file defined
+--line 322 of file biblio.bib
+Warning--entry type for "Schaaf_2015" isn't style-file defined
+--line 364 of file biblio.bib
+You've used 58 entries,
+            2819 wiz_defined-function locations,
+            1413 strings with 27983 characters,
+and the built_in function-call counts, 71947 in all, are:
+= -- 7283
+> -- 4363
+< -- 9
++ -- 1744
+- -- 1401
+* -- 5099
+:= -- 7922
+add.period$ -- 58
+call.type$ -- 58
+change.case$ -- 582
+chr.to.int$ -- 58
+cite$ -- 174
+duplicate$ -- 6300
+empty$ -- 3194
+format.name$ -- 1575
+if$ -- 14065
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 857
+newline$ -- 183
+num.names$ -- 232
+pop$ -- 3077
+preamble$ -- 1
+purify$ -- 580
+quote$ -- 0
+skip$ -- 3710
+stack$ -- 0
+substring$ -- 2445
+swap$ -- 5475
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 522
+warning$ -- 0
+while$ -- 305
+width$ -- 0
+write$ -- 672
+(There were 2 warnings)
