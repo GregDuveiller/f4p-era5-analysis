@@ -122,7 +122,9 @@ df_comb_cor <- df_comb_cor %>% filter(year >= 2003 & year <= 2018)
 
 df_LSTb_LAIb_corr <- df_comb_cor %>%
   group_by(y, x, monthS) %>%
-  summarise(r = cor(bias, bias.LAI)
+  summarise(n = length(year),
+            r = cor(bias, bias.LAI),
+            p = ifelse(n > 10, cor.test(bias, bias.LAI)$p.value, NA)
   )
 df_LSTb_LAIb_corr <- df_LSTb_LAIb_corr %>% filter(!is.na(r))
 

@@ -13,5 +13,7 @@
 
 *.pdf
 *.log
+*.doc
+*.docx
 
 /text/submission_history

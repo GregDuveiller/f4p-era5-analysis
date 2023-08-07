@@ -1,12 +1,15 @@
 %% Copernicus Publications Manuscript Preparation Template for LaTeX Submissions
 %% ---------------------------------
 %% This template should be used for copernicus.cls
-%% The class file and some style files are bundled in the Copernicus Latex Package, which can be downloaded from the different journal webpages.
+%% The class file and some style files are bundled in the Copernicus Latex Package, which can be 
+%% downloaded from the different journal webpages.
 %% For further assistance please contact Copernicus Publications at: production@copernicus.org
 %% https://publications.copernicus.org/for_authors/manuscript_preparation.html
 
 
-%% Please use the following documentclass and journal abbreviations for preprints and final revised papers.
+%% Please use the following documentclass and journal abbreviations for preprints and final 
+%% revised 
+%% papers.
 
 %% 2-column papers and preprints
 \documentclass[gmd, manuscript]{copernicus}
@@ -32,7 +35,8 @@
 % Earth System Dynamics (esd)
 % Earth System Science Data (essd)
 % E&G Quaternary Science Journal (egqsj)
-% EGUsphere (egusphere) | This is only for EGUsphere preprints submitted without relation to an EGU journal.
+% EGUsphere (egusphere) | This is only for EGUsphere preprints submitted without relation to an 
+% EGU journal.
 % European Journal of Mineralogy (ejm)
 % Fossil Record (fr)
 % Geochronology (gchron)
@@ -97,11 +101,18 @@
 \affil[4]{European Centre for Medium Range Weather Forecasts, Reading, UK}
 
 
-%% The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should be inserted.
+%% The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should 
+%% be inserted.
 
-%% If an author is deceased, please mark the respective author name(s) with a dagger, e.g. "\Author[2,$\dag$]{Anton}{Smith}", and add a further "\affil[$\dag$]{deceased, 1 July 2019}".
+%% If an author is deceased, please mark the respective author name(s) with a dagger, e.g. 
+%% "\Author[2,$\dag$]{Anton}{Smith}", 
+%% and add a further "\affil[$\dag$]{deceased, 1 July 2019}".
 
-%% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
+%% If authors contributed equally, please mark the respective author names with an asterisk, 
+%% e.g. 
+%% "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further 
+%% affiliation: 
+%% "\affil[*]{These authors contributed equally to this work.}".
 
 
 \correspondence{Gregory Duveiller (gduveiller@bgc-jena.mpg.de)}
@@ -131,7 +142,44 @@
 
 \begin{abstract}
 
-Atmospheric reanalyses combine observations and models through data assimilation techniques to provide spatio-temporally continuous fields of key surface variables. They can do so for extended historical periods whilst ensuring a coherent representation of the main Earth system cycles. ERA5, and its enhanced land surface component ERA5-Land, are widely used in Earth System science and form the flagship products of the Copernicus Climate Change Service (C3S) of the European Commission. Such land surface modelling frameworks generally rely on a state variable called leaf area index (LAI), representing the amount of leaves in a grid cell at a given time, to quantify the fluxes of carbon, water and energy between the vegetation and the atmosphere. However, the LAI within the modelling framework behind ERA5 and ERA5-Land is prescribed as a climatological seasonal cycle, neglecting any inter-annual variability and the potential consequences that this uncoupling between vegetation and atmosphere may have on the surface energy balance and the climate. To evaluate the impact of this mismatch in LAI, we analyse the corresponding effect it has on land surface temperature (LST) by comparing what is simulated to satellite observations. We characterise a hysteretic behaviour between LST biases and LAI biases that evolves differently along the year depending on the background climate. We further analyse their repercussion on the reconstructed climate during the more extreme conditions in terms of LAI deviations, with a specific focus on the 2003, 2010 and 2018 heatwaves in Europe where LST mismatches are exacerbated. We anticipate that our results will assist users of ERA5 and ERA5-Land data to understand where and when the larger discrepancies can be expected, but also guide developers towards improving the modelling framework. Finally, this study could provide a blueprint for a wider benchmarking framework for land surface model evaluation that exploits the capacity of LST to integrate the effects of both radiative and non-radiative processes affecting the surface energy.
+Atmospheric reanalyses combine observations and models through data assimilation techniques to 
+provide 
+spatio-temporally continuous fields of key surface variables. They can do so for extended 
+historical periods whilst ensuring a coherent representation of the main Earth system cycles. 
+ERA5, 
+and its enhanced land surface component ERA5-Land, are widely used in Earth System science 
+and 
+form the flagship products of the Copernicus Climate Change Service (C3S) of the European 
+Commission. 
+Such land surface modelling frameworks generally rely on a state variable called leaf 
+area 
+index (LAI), representing the amount of leaves in a grid cell at a given time, to quantify 
+the 
+fluxes of carbon, water and energy between the vegetation and the atmosphere. However, the 
+LAI 
+within the modelling framework behind ERA5 and ERA5-Land is prescribed as a climatological 
+seasonal 
+cycle, neglecting any inter-annual variability and the potential consequences that this 
+uncoupling 
+between vegetation and atmosphere may have on the surface energy balance and the 
+climate. 
+To evaluate the impact of this mismatch in LAI, we analyse the corresponding effect it has on 
+land surface temperature (LST) by comparing what is simulated to satellite observations. We 
+characterise 
+a hysteretic behaviour between LST biases and LAI biases that evolves differently along 
+the year depending on the background climate. We further analyse their repercussion on the 
+reconstructed 
+climate during the more extreme conditions in terms of LAI deviations, with a specific 
+focus on the 2003, 2010 and 2018 heatwaves in Europe where LST mismatches are exacerbated. We 
+anticipate 
+that our results will assist users of ERA5 and ERA5-Land data to understand where and 
+when 
+the larger discrepancies can be expected, but also guide developers towards improving the 
+modelling 
+framework. Finally, this study could provide a blueprint for a wider benchmarking 
+framework 
+for land surface model evaluation that exploits the capacity of LST to integrate the effects 
+of both radiative and non-radiative processes affecting the surface energy.
 \end{abstract}
 
 
@@ -178,14 +226,17 @@ albedo, surface roughness length and fluxes of water
 and energy~\citep{RICHARDSON2013156}. Another way to characterise the overall
 state of the vegetated land that more readily catches such differences
 in a spatially continuous way is to consider the state variable known as
-Leaf Area Index (LAI). LAI is defined as half of the total green leaf area
-per unit horizontal ground surface area~\citep{yan2019review}. It is a key
-variable as it represents the exchange surface between plants and the
-atmosphere, at the intersection between water, energy and carbon cycles,
-thus playing a critical role in the feedback of vegetation to the
-climate system~\citep{fang2019overview, Forzieri_2017}. LAI exhibits a large seasonal
-variability accordingly to climate zones and vegetation types and a
-substantial inter-annual variability linked to year-to-year variability
+Leaf Area Index (LAI).
+
+LAI is defined as half of the total green leaf area
+per unit horizontal ground surface area~\citep{yan2019review}. The reason for only considering 
+half of the total area in this definition (rather than simply the one-sided leaf area) is to ensure 
+non-flat leaves to be considered according to the actual surface area, which is proportional to their capacity to exchange water and carbon.
+LAI's importance is indeed that it can represent the exchange surface between plants and the atmosphere, at 
+the intersection between water, energy and carbon cycles, thus playing a critical role in the 
+feedback of vegetation to the climate system~\citep{fang2019overview, Forzieri_2017}. 
+LAI exhibits a large seasonal variability accordingly to climate zones and vegetation types and a substantial 
+inter-annual variability linked to year-to-year variability
 in weather or in management~\citep{boussetta2015assimilation}. To a large extent,
 LAI drives the temporal changes in biophysical properties within a given
 land cover type, since some properties, such as albedo and stomatal
@@ -200,8 +251,9 @@ The impacts of land-atmosphere interactions on local temperature are
 exacerbated during extreme events such as
 heatwaves~\citep{jia2019land}.~The trigger of such events is often an
 atmospheric circulation anomaly governed by persistent
-anticyclones~\citep{schubert2014northern, brunner2018}, enabling cloud-free conditions and an
-increase of net solar radiation.~ Heatwaves can be locally intensified
+anticyclones~\citep{schubert2014northern, brunner2018}, enabling cloud-free conditions and an 
+increase 
+of net solar radiation.~ Heatwaves can be locally intensified
 by land-atmosphere feedbacks, which in turn may result in enhanced
 growth of the atmospheric boundary layer that increases the entrainment
 of heat~\citep{Miralles_2011} and/or horizontal heat
@@ -293,8 +345,10 @@ variable that a modelling system should ideally predict accurately is
 LST, as it governs the interface between water and energy
 fluxes.~}Several studies have revealed how the land model behind ERA5
 and ERA5-Land suffers from a strong bias~in its representation of
-LST~\citep{Johannsen_2019,Nogueira_2020,Orth_2017}. They all conclude that incorrect descriptions
-of the vegetation are largely responsible for such poor model
+LST~\citep{Johannsen_2019,Nogueira_2020,Orth_2017}. They all conclude that incorrect 
+descriptions
+of 
+the vegetation are largely responsible for such poor model
 performances.~\citet{Orth_2017} demonstrated that there is no region
 across Europe or Africa where both mean LST or its seasonal dynamics are
 well captured by the CHTESSEL model, but they also suggest that
@@ -331,7 +385,11 @@ will lead to a discrepancy between reality and the land representation
 in the modelling framework. Such mismatch may be particularly
 exacerbated in situations of heatwaves, as plant phenology has been
 shown to vary substantially under dry/hot extremes and have important
-impacts on the development of these events~\citep{stefanon2012effects, skinner2018amplificationa, Lorenz_2013}. The benchmarking exercises mentioned before~\citep{Johannsen_2019,Nogueira_2020,Nogueira_2021} only considered changes in the sources of the LAI products, but always kept
+impacts on the development of these events~\citep{stefanon2012effects, 
+skinner2018amplificationa, 
+Lorenz_2013}. The benchmarking exercises mentioned 
+before~\citep{Johannsen_2019,Nogueira_2020,Nogueira_2021} 
+only considered changes in the sources of the LAI products, but always kept
 it as a prescribed seasonal cycle, leaving no room to explore the
 dynamical nature of the LST bias with respect to the LAI
 mismatch.
@@ -386,7 +444,7 @@ discussed on a per-variable basis in the following subsections.
 \subsection{Leaf Area Index}
 
 The satellite-derived LAI product that we use in this study is
-GEOV2/AVHRR (Verger et al. 2021). This product is based on applying a
+GEOV2/AVHRR (Verger et al. 2021), which is available at~\url{https://www.theia-land.fr/en/product/series-of-vegetation-variables-avhrr/}. This product is based on applying a
 neural network retrieval algorithm on the AVHRR Long Term Data Record
 (LTDR, version 4, available
 at~\url{https://ltdr.modaps.eosdis.nasa.gov/cgi-bin/ltdr/ltdrPage.cgi}).
@@ -454,12 +512,28 @@ of whether the LST bias in ERA5L is caused by the radiative effect of
 changes in LAI, as an increase in LAI reduces albedo, which in turn
 increases net radiation leading to a radiative warming of the surface.
 
-The variable we use in ERA5 is "\emph{UV visible albedo for diffuse radiation}", which is the fraction of diffuse solar (shortwave) radiation with wavelengths between 0.3 and 0.7 \selectlanguage{greek}µ\selectlanguage{english}m reflected by snow-free land surfaces. Like LAI, albedo in ERA5 is not dynamic, but consists instead of a static seasonal climatology. From the satellite-based perspective, 
+The variable we use in ERA5 is "\emph{UV visible albedo for diffuse radiation}", which is the 
+fraction 
+of diffuse solar (shortwave) radiation with wavelengths between 0.3 and 0.7 
+\selectlanguage{greek}µ\selectlanguage{english}m 
+reflected by snow-free land surfaces. Like LAI, albedo in 
+ERA5 
+is not dynamic, but consists instead of a static seasonal climatology. From the 
+satellite-based 
+perspective, 
 we use the standard MODIS daily albedo product, MCD43C3 V006~\citep{Schaaf_2015}. From this
 dataset, we use the broadband white-sky estimations for the visible part
-of the spectrum, defined for this product as ranging from 0.4 to 0.7 \selectlanguage{greek}µ\selectlanguage{english}m. This means some slight discrepancy with ERA5 might occur for
-ultraviolet light over the 0.3 to 0.4 \selectlanguage{greek}µ\selectlanguage{english}m range, but this is expected to be very marginal due to the low contribution of UV light to ecosystem
-scale albedo. There is a second discrepancy with ERA5 in that this MODIS albedo product is not snow-free, but this should not be a problem as albedo is only used here in the context of studying summer heatwaves were only minimal snow cover is expected over the mountain ranges.
+of the spectrum, defined for this product as ranging from 0.4 to 0.7 
+\selectlanguage{greek}µ\selectlanguage{english}m. 
+This means some slight discrepancy with ERA5 might occur for
+ultraviolet light over the 0.3 to 0.4 \selectlanguage{greek}µ\selectlanguage{english}m range, 
+but 
+this is expected to be very marginal due to the low contribution of UV light to ecosystem
+scale albedo. There is a second discrepancy with ERA5 in that this MODIS albedo product is not 
+snow-free, 
+but this should not be a problem as albedo is only used here in the context of 
+studying 
+summer heatwaves were only minimal snow cover is expected over the mountain ranges.
 
 
 \subsection{Land evaporation}
@@ -476,9 +550,9 @@ estimation can be obtained from dedicated modelling frameworks. The one
 we use here is the Global Land Evaporation Amsterdam Model (GLEAM)
 product~\citep{Martens_2017,Miralles_2011}.~ The GLEAM model estimates land evaporation
 and its components: transpiration, bare-soil evaporation, interception
-loss, open-water evaporation and sublimation.~ The version used here is
+loss, open-water evaporation and sublimation. The version used here is
 version 3.3b, which does not rely on ERA5 reanalysis data in order to
-avoid any circularity in our benchmarking work.
+avoid any circularity in our benchmarking work. Similarly, while GLEAM uses various remote sensing products as inputs, LST is not one of them~\citep{Martens_2017} thereby ensuring it can be confronted against MODIS LST without fearing circularity.
 
 
 \subsection{Climate zones}
@@ -657,39 +731,34 @@ from a harmonic fit.
 \end{figure}
 
 
+%\selectlanguage{english}
+%\begin{figure}[h]
+%\begin{center}
+%\includegraphics[width=0.80\columnwidth]{../../figs/hystereris_climspace}
+%\caption{{Hysteretic behaviour between the biases in LAI and the biases in LST for
+%a range of climate zones defined by classes of annual mean 2m
+%temperatures (T2m) and soil moisture (SM). The biases are always defined
+%as ERA5L variables minus the values from reference observational
+%datasets. Only interpolated curves are shown for clarity purposes.
+%{\label{925458}}%
+%}}
+%\end{center}
+%\end{figure}
+%
+%\par\null
 
-{Fig~}{\ref{925458}}{ }further extends this analysis to
-a full climate space delimited by mean surface soil moisture and mean
-air temperature. This figure exposes two general gradients in the
+Such analysis can further be extended to a full climate space delimited by mean surface soil moisture and mean air temperature. A figure depicting the resulting effects of such gradients on the shapes of the hysteretic curves can be found in the supplementary material for this study. Such figure reveals two general gradients in the
 patterns of how the LAI and LST biases behave during the seasonal cycle.
 The first gradient shows how the hysteretic behaviour increases for
 colder and moister climates, while very dry and hot regions show little
 variation in either bias and thereby does~not show any significant
-hysteretic patterns. {Beyond this first general gradient on the
-intensity of hyste}resis, there is second gradient showing a notable
+hysteretic patterns. Beyond this first general gradient on the
+intensity of hysteresis, there is second gradient showing a notable
 difference between cold and dry regions, where the magnitude of the
 seasonal variation in LST bias dominates, and warm and humid regions,
-where this seasonal variation of the bias is stronger for LAI.
+where this seasonal variation of the bias is stronger for LAI. 
 
-\selectlanguage{english}
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.80\columnwidth]{../../figs/hystereris_climspace}
-\caption{{Hysteretic behaviour between the biases in LAI and the biases in LST for
-a range of climate zones defined by classes of annual mean 2m
-temperatures (T2m) and soil moisture (SM). The biases are always defined
-as ERA5L variables minus the values from reference observational
-datasets. Only interpolated curves are shown for clarity purposes.
-{\label{925458}}%
-}}
-\end{center}
-\end{figure}
-
-\par\null
-
-{In order} to quantify the two main gradients described in
-Fig.~{\ref{925458}}, we propose two indices that
-respectively generalise these patterns of hysteretic intensity and bias
+In order to quantify these two gradients of hyteretic patterns, we propose two indices that respectively generalise these patterns of hysteretic intensity and bias
 dominance. {{Hysteretic intensity (}}\emph{{HI}}{)} is simply summarised
 by the total area (\emph{A}) formed by the hysteretic loop in a given
 climate zone (\emph{i})\emph{~}divided by the area\emph{~}of the largest
@@ -705,16 +774,20 @@ generating positive areas, which would not be the standard procedure
 from a topological perspective (as intersecting loops would generate
 areas with opposite signs).
 
-The second gradient in Fig.~{\ref{925458}} relates to
+The second gradient relates to
 describing which of the two biases (LAI or LST) dominates in terms of
 seasonal amplitude. The index to describe this behaviour follows the
 logic of a normalised difference index based on the standardised ranges
 of both LAI and LST axes in the smoothed hysteresis curves. The
 resulting bias dominance (\emph{BD}) index is expressed as follows:
 
-\(BD\ =\ \frac{\left(\frac{range\left(x\right)}{\sigma_x}\ -\ \frac{range\left(y\right)}{\sigma_y}\right)}{\left(\frac{range\left(x\right)}{\sigma_x}\ +\ \frac{range\left(y\right)}{\sigma_y}\right)}\)
+\(BD\ =\ \frac{\left(\frac{range\left(x\right)}{\sigma_x}\ -\ 
+\frac{range\left(y\right)}{\sigma_y}\right)}{\left(\frac{range\left(x\right)}{\sigma_x}\ 
++\ 
+\frac{range\left(y\right)}{\sigma_y}\right)}\)
 
-where~\emph{x~}stands for the bias in LAI and \emph{y} is the bias in
+where~\emph{x~}stands 
+for the bias in LAI and \emph{y} is the bias in
 LST.
 
 {These two indices can be mapped in climate space, but then also back
@@ -801,12 +874,12 @@ the North with January values in the South.~
 To better understand how the relationship between LAI and LST reacts
 under conditions that deviate from the normal, the next analysis
 concentrates on using anomalies of temperature as a grouping variable.
-For the scope of this analysis, the focus is placed on Europe.
+For the scope of this analysis, the focus is placed on Europe and for the month of August.
 Fig.~{\ref{560364}} summarises how the LAI and LST
 biases evolve when considering the full range of temperature anomalies
-encountered in our dataset across different climate zones in Europe. {To
-construct this plot}, the entire distribution of values for a given bias
-are considered, effectively mixing space and time. This distribution is
+encountered in our dataset across different climate zones in Europe. To
+construct this plot, the entire distribution of values for a given bias
+are considered for the month of August. This distribution is
 divided in quantiles (deciles in this case) based on their value of land
 surface temperature monthly anomalies. For each group of anomalies, the
 average bias in LST or LAI is shown. There is a clear difference across
@@ -828,7 +901,7 @@ will considerably aggravate the discrepancies in LST.
 \includegraphics[width=1.00\columnwidth]{../../figs/bias_vs_anomaly}
 \caption{{Description of how the biases in both LAI and LST (between ERA5L and
 observations) changes over different climate zones within Europe
-depending on anomaly intensities in LST.
+depending on anomaly intensities in LST for the month of August.
 {\label{560364}}%
 }}
 \end{center}
@@ -916,7 +989,9 @@ the GLEAM product, which is here considered as the reference
 observations. GLEAM does not directly measure evaporation, but rather
 infers it from the data based on several modelling assumptions. Compared
 to flux tower estimations, GLEAM was also shown to underestimate
-transpiration more than ERA5-Land~\citep{Munoz_Sabater_2021}. Therefore, the discrepancy in HW18a may require more investigation based on other
+transpiration more than ERA5-Land~\citep{Munoz_Sabater_2021}. Therefore, the discrepancy in 
+HW18a 
+may require more investigation based on other
 reference sources.
 
 \par\null\selectlanguage{english}
@@ -1077,8 +1152,12 @@ evaluation that exploits the capacity of LST to integrate effects of
 both radiative and non-radiative processes affecting the surface energy
 balance.
 
-%% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
-%% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
+%% The following commands are for the statements about the availability of data sets and/or 
+%% software 
+%% code corresponding to the manuscript.
+%% It is strongly recommended to make use of these sections in case data sets and/or software 
+%% code 
+%% have been part of your research the article is based on.
 
 %\codeavailability{TEXT} %% use this section when having only software code available
 
@@ -1086,7 +1165,13 @@ balance.
 %\dataavailability{TEXT} %% use this section when having only data sets available
 
 
-\codedataavailability{The code necessary to reproduce this analysis is available in a Zenodo repository: https://doi.org/10.5281/zenodo.7275088. The input data for this work is available in another dedicated Zenodo repository: https://doi.org/10.5281/zenodo.6976942} %% use this section when having data sets and software code available
+\codedataavailability{The code necessary to reproduce this analysis is available in a Zenodo 
+repository: 
+https://doi.org/10.5281/zenodo.7275088. The input data for this work is available in 
+another 
+dedicated Zenodo repository: https://doi.org/10.5281/zenodo.6976942} %% use this section 
+%% when 
+%% having data sets and software code available
 
 
 %\sampleavailability{TEXT} %% use this section when having geoscientific samples available
@@ -1101,21 +1186,29 @@ balance.
 %\subsection{}     %% Appendix A1, A2, etc.
 
 
-%\noappendix       %% use this to mark the end of the appendix section. Otherwise the figures might be numbered incorrectly (e.g. 10 instead of 1).
+%\noappendix       %% use this to mark the end of the appendix section. Otherwise the figures 
+%might 
+%be numbered incorrectly (e.g. 10 instead of 1).
 
-%% Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
+%% Regarding figures and tables in appendices, the following two options are possible depending 
+%% on your general handling of figures and tables in the manuscript environment:
 
-%% Option 1: If you sorted all figures and tables into the sections of the text, please also sort the appendix figures and appendix tables into the respective appendix sections.
+%% Option 1: If you sorted all figures and tables into the sections of the text, please also 
+%% sort 
+%% the appendix figures and appendix tables into the respective appendix sections.
 %% They will be correctly named automatically.
 
-%% Option 2: If you put all figures after the reference list, please insert appendix tables and figures after the normal tables and figures.
+%% Option 2: If you put all figures after the reference list, please insert appendix tables and 
+%% figures after the normal tables and figures.
 %% To rename them correctly to A1, A2, etc., please add the following commands in front of them:
 
 \appendixfigures  %% needs to be added in front of appendix figures
 
 \appendixtables   %% needs to be added in front of appendix tables
 
-%% Please add \clearpage between each table and/or figure. Further guidelines on figures and tables can be found below.
+%% Please add \clearpage between each table and/or figure. Further guidelines on figures and 
+%% tables 
+%% can be found below.
 
 
 
@@ -1125,7 +1218,8 @@ with contributions from all co-authors.} %% this section is mandatory
 
 
 
-\competinginterests{The authors declare that they have no conflict of interest.} %% this section is mandatory even if you declare that no competing interests are present
+\competinginterests{The authors declare that they have no conflict of interest.} %% this section 
+%% is mandatory even if you declare that no competing interests are present
 
 %\disclaimer{TEXT} %% optional section
 
@@ -1195,13 +1289,18 @@ and is distributed by Theia.
 
 %% FIGURES
 
-%% When figures and tables are placed at the end of the MS (article in one-column style), please add \clearpage
-%% between bibliography and first table and/or figure as well as between each table and/or figure.
+%% When figures and tables are placed at the end of the MS (article in one-column style), please 
+%% add \clearpage
+%% between bibliography and first table and/or figure as well as between each table and/or 
+%% figure.
 
-% The figure files should be labelled correctly with Arabic numerals (e.g. fig01.jpg, fig02.png).
+% 
+%% The figure files should be labelled correctly with Arabic numerals (e.g. fig01.jpg, 
+% fig02.png).
 
 
-%% ONE-COLUMN FIGURES
+%% 
+% ONE-COLUMN FIGURES
 
 %%f
 %\begin{figure}[t]
@@ -1273,16 +1372,21 @@ and is distributed by Theia.
 %
 %%% All papers typeset by Copernicus Publications follow the math typesetting regulations
 %%% given by the IUPAC Green Book (IUPAC: Quantities, Units and Symbols in Physical Chemistry,
-%%% 2nd Edn., Blackwell Science, available at: http://old.iupac.org/publications/books/gbook/green_book_2ed.pdf, 1993).
+%%% 2nd Edn., Blackwell Science, available at: 
+%%% http://old.iupac.org/publications/books/gbook/green_book_2ed.pdf, 
+%%% 1993).
 %%%
 %%% Physical quantities/variables are typeset in italic font (t for time, T for Temperature)
 %%% Indices which are not defined are typeset in italic font (x, y, z, a, b, c)
 %%% Items/objects which are defined are typeset in roman font (Car A, Car B)
-%%% Descriptions/specifications which are defined by itself are typeset in roman font (abs, rel, ref, tot, net, ice)
+%%% Descriptions/specifications which are defined by itself are typeset in roman font (abs, rel, 
+%%% ref, tot, net, ice)
 %%% Abbreviations from 2 letters are typeset in roman font (RH, LAI)
 %%% Vectors are identified in bold italic font using \vec{x}
 %%% Matrices are identified in bold roman font
-%%% Multiplication signs are typeset using the LaTeX commands \times (for vector products, grids, and exponential notations) or \cdot
+%%% Multiplication signs are typeset using the LaTeX commands \times (for vector products, 
+%%% grids, 
+%%% and exponential notations) or \cdot
 %%% The character * should not be applied as mutliplication sign
 %
 %

@@ -45,7 +45,7 @@ season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
 # Corr maps... 
 corr_colpal <- c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE090", "#F7F7F7", "#E0F3F8", "#ABD9E9", "#74ADD1", "#4575B4", "#313695")
 
-gmaps <- ggplot(df_LSTb_LAIb_corr) + 
+gmaps <- ggplot(df_LSTb_LAIb_corr %>% filter(p < 0.05)) + 
   geom_sf(data = land, fill = gry_land, colour = NA) +
   geom_tile(aes(x = x, y = y, fill = r)) +  
   scale_fill_gradientn('Correlation', 
@@ -62,7 +62,7 @@ gmaps <- ggplot(df_LSTb_LAIb_corr) +
 # assemble the panels...
 g_all <- gmaps +
   plot_annotation( 
-    title = 'Inter-annual correlation between the biases in LAI and in LST', 
+    title = 'Inter-annual correlation (p < 0.05) between the biases in LAI and in LST', 
     subtitle = 'Biases are defined as ERA5L minus observations',
     caption = '[Each season in this plot is represented by a single month, consisting of either January or July\n depeding on whether the data is in the Northern or Southern Hemisphere]')
 

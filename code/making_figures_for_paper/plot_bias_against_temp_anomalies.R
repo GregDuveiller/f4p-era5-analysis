@@ -54,7 +54,7 @@ df_qtls <- df_all %>%
 
 # set-up gray colours for maps
 if(exists('gry_land') != T){ gry_land <- 'grey50'}
-if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
+gry_meer_light <- 'grey90' # <-- lighter colour for the sea to help contrast
 
 # Set-up some colour parameters
 gry1 <- 'grey60'  # <-- the axes
@@ -71,14 +71,14 @@ var_labeller = labeller(y_var = c('LAI' = 'Bias in LAI [m2/m2]', 'LST' = 'Bias i
 g_maps <- ggplot(df_cz_sub) + 
   geom_sf(data = land_europe, fill = gry_land, colour = gry_land, size = 0) + 
   geom_tile(aes(x = x, y = y, fill = cz_name)) + 
-  geom_sf(data = ocean_europe, fill = gry_meer, colour = gry_meer, size = 0) +
+  geom_sf(data = ocean_europe, fill = gry_meer_light, colour = gry_meer_light, size = 0) +
   facet_grid(.~cz_name) +
   coord_sf(ylim = c(v_lat_min, v_lat_max)) + 
   scale_fill_manual('Koppen-Geiger climate zones', values = cz_cols) + 
   scale_y_continuous('', expand = c(0, 0)) + 
   scale_x_continuous('', expand = c(0, 0)) + 
   theme(legend.position = 'none') +
-  ggtitle('How the biases change for different thermal anomalies',
+  ggtitle('How the biases change for different thermal anomalies for the month of August',
           subtitle = "Detailed for selected Koppen-Geiger climate zones across Europe")
 
 # plot for the quantiles
