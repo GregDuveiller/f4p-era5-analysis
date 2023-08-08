@@ -36,14 +36,15 @@ if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
 
 
 # some background details
-bck_details <- theme(legend.key.height = unit(1.5, 'cm'),
+bck_details <- theme(legend.key.width = unit(2.0, 'cm'),
                      panel.background = element_rect(fill = gry_meer),
                      panel.grid = element_line(colour = gry_meer))
 
 
 season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
 
-
+lgd_guides <- guides(fill = guide_colourbar(title.position = "top", 
+                                            title.hjust = 0.5))
 
 
 
@@ -60,7 +61,7 @@ gLAImaps <- ggplot(df_LAI_bias) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "left") + bck_details 
+  theme(legend.position = "bottom") + bck_details + lgd_guides
 
 
 
@@ -77,7 +78,7 @@ gLSTmaps <- ggplot(df_LST_bias) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "right") + bck_details 
+  theme(legend.position = "bottom") + bck_details + lgd_guides
 
 
 
@@ -102,4 +103,4 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.name <- 'bias_summaries'
 
 ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g_all,
-       path = fig.path, width = 12, height = 5)
+       path = fig.path, width = 12, height = 7)

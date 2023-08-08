@@ -26,17 +26,18 @@ land_shapefile <- "data/input_data/world_vectors/ne_50m_land.shp"
 land <- sf::st_read(land_shapefile, quiet = TRUE)
 
 #### Make the plots ####
-
 # set-up gray colours for maps
 if(exists('gry_land') != T){ gry_land <- 'grey50'}
 if(exists('gry_meer') != T){ gry_meer <- 'grey30'}
 
 
 # some background details
-bck_details <- theme(legend.key.height = unit(1.5, 'cm'),
+bck_details <- theme(legend.key.width = unit(2.0, 'cm'),
                      panel.background = element_rect(fill = gry_meer),
                      panel.grid = element_blank())
 
+lgd_guides <- guides(fill = guide_colourbar(title.position = "top", 
+                                            title.hjust = 0.5))
 
 season_labeller <- labeller(monthS = c('1' = 'Winter', '7' = 'Summer'))
 
@@ -55,16 +56,16 @@ gmaps <- ggplot(df_LSTb_LAIb_corr %>% filter(p < 0.05)) +
   scale_y_continuous('Latitude') +
   facet_grid(monthS~., labeller = season_labeller) + 
   coord_sf(expand = F) +
-  theme(legend.position = "right") + bck_details 
+  theme(legend.position = "bottom") + bck_details + lgd_guides
 
 #### Export the figure #### 
 
 # assemble the panels...
 g_all <- gmaps +
   plot_annotation( 
-    title = 'Inter-annual correlation (p < 0.05) between the biases in LAI and in LST', 
+    title = 'Inter-annual correlation between the biases in LAI and in LST', 
     subtitle = 'Biases are defined as ERA5L minus observations',
-    caption = '[Each season in this plot is represented by a single month, consisting of either January or July\n depeding on whether the data is in the Northern or Southern Hemisphere]')
+    caption = '[Each season in this plot is represented by a single month, consisting of either January or July\n depeding on whether the data is in the Northern or Southern Hemisphere.\n Only significant (p < 0.05) correlations are shown.]')
 
 
 # plotting details, in case not inherited... 
@@ -76,5 +77,5 @@ dir.create(path = fig.path, recursive = T, showWarnings = F)
 fig.name <- 'corr_summaries'
 
 ggsave(filename = paste0(fig.name, '.', fig.fmt), plot = g_all,
-       path = fig.path, width = 6, height = 5)
+       path = fig.path, width = 6, height = 7)
 
