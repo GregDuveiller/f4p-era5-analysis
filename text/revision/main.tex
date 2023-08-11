@@ -143,42 +143,26 @@
 \begin{abstract}
 
 Atmospheric reanalyses combine observations and models through data assimilation techniques to 
-provide 
-spatio-temporally continuous fields of key surface variables. They can do so for extended 
+provide spatio-temporally continuous fields of key surface variables. They can do so for extended 
 historical periods whilst ensuring a coherent representation of the main Earth system cycles. 
-ERA5, 
-and its enhanced land surface component ERA5-Land, are widely used in Earth System science 
-and 
-form the flagship products of the Copernicus Climate Change Service (C3S) of the European 
-Commission. 
-Such land surface modelling frameworks generally rely on a state variable called leaf 
-area 
-index (LAI), representing the amount of leaves in a grid cell at a given time, to quantify 
-the 
-fluxes of carbon, water and energy between the vegetation and the atmosphere. However, the 
-LAI 
-within the modelling framework behind ERA5 and ERA5-Land is prescribed as a climatological 
-seasonal 
-cycle, neglecting any inter-annual variability and the potential consequences that this 
-uncoupling 
-between vegetation and atmosphere may have on the surface energy balance and the 
-climate. 
-To evaluate the impact of this mismatch in LAI, we analyse the corresponding effect it has on 
+ERA5, and its enhanced land surface component ERA5-Land, are widely used in Earth System science 
+and form the flagship products of the Copernicus Climate Change Service (C3S) of the European 
+Commission. Such land surface modelling frameworks generally rely on a state variable called leaf 
+area index (LAI), representing the amount of leaves in a grid cell at a given time, to quantify 
+the fluxes of carbon, water and energy between the vegetation and the atmosphere. However, the 
+LAI within the modelling framework behind ERA5 and ERA5-Land is prescribed as a climatological 
+seasonal cycle, neglecting any inter-annual variability and the potential consequences that this 
+uncoupling between vegetation and atmosphere may have on the surface energy balance and the 
+climate. To evaluate the impact of this mismatch in LAI, we analyse the corresponding effect it has on 
 land surface temperature (LST) by comparing what is simulated to satellite observations. We 
-characterise 
-a hysteretic behaviour between LST biases and LAI biases that evolves differently along 
+characterise a hysteretic behaviour between LST biases and LAI biases that evolves differently along 
 the year depending on the background climate. We further analyse their repercussion on the 
-reconstructed 
-climate during the more extreme conditions in terms of LAI deviations, with a specific 
+reconstructed climate during the more extreme conditions in terms of LAI deviations, with a specific 
 focus on the 2003, 2010 and 2018 heatwaves in Europe where LST mismatches are exacerbated. We 
-anticipate 
-that our results will assist users of ERA5 and ERA5-Land data to understand where and 
-when 
-the larger discrepancies can be expected, but also guide developers towards improving the 
-modelling 
-framework. Finally, this study could provide a blueprint for a wider benchmarking 
-framework 
-for land surface model evaluation that exploits the capacity of LST to integrate the effects 
+anticipate that our results will assist users of ERA5 and ERA5-Land data to understand where and 
+when the larger discrepancies can be expected, but also guide developers towards improving the 
+modelling framework. Finally, this study could provide a blueprint for a wider benchmarking 
+framework for land surface model evaluation that exploits the capacity of LST to integrate the effects 
 of both radiative and non-radiative processes affecting the surface energy.
 \end{abstract}
 
@@ -487,17 +471,20 @@ the temperature's surface in the absence of clouds, which typically
 leads to sampling the warmer days benefiting from unobstructed solar
 radiation. The reanalysis dataset contains values for both sunny and
 overcasts days, when the skin temperature is closer to air temperature.
-To ensure comparability and have information at monthly scale, only the
+To ensure comparability and have information at monthly scale only the
 5 warmest days of each month are selected from both the MYD11A1 and the
-ERA5-Land datasets.~ To facilitate processing for the satellite data,
+ERA5-Land datasets. To facilitate processing for the satellite data,
 this procedure is directly implemented in the Google Earth Engine (GEE)
 platform~\citep{Gorelick_2017}, which hosts a copy of the MYD11A1
 catalogue. The aggregation to the 0.25\textbf{°} grid is done in a
 second step. As a consequence of this matching procedure, the LST bias
-is always referring to a bias in the five warmest{ days of the month}.~
-This assumes that the five warmest days are clear sky, but this
-assumption should generally hold as we are using LST at around 14:00,
-which is a variable that is highly sensitive to radiation.
+is always referring to a bias in the five warmest days of the month.~
+This assumes that the five warmest days are clear sky in both the satellite 
+and the reanalysis, even if they might not be exactly the same days. Such 
+assumption should hold in general for most conditions, especially as we are 
+using LST at 14:00, a variable that is highly sensitive to radiation. 
+However, under some circumstances, such as in snowy conditions during 
+wintertime, cloudy days may be warmer than clear-sky days.
 
 
 \subsection{Albedo}
@@ -512,32 +499,23 @@ of whether the LST bias in ERA5L is caused by the radiative effect of
 changes in LAI, as an increase in LAI reduces albedo, which in turn
 increases net radiation leading to a radiative warming of the surface.
 
-The variable we use in ERA5 is "\emph{UV visible albedo for diffuse radiation}", which is the 
-fraction 
-of diffuse solar (shortwave) radiation with wavelengths between 0.3 and 0.7 
-\selectlanguage{greek}µ\selectlanguage{english}m 
-reflected by snow-free land surfaces. Like LAI, albedo in 
-ERA5 
-is not dynamic, but consists instead of a static seasonal climatology. From the 
-satellite-based 
-perspective, 
-we use the standard MODIS daily albedo product, MCD43C3 V006~\citep{Schaaf_2015}. From this
-dataset, we use the broadband white-sky estimations for the visible part
-of the spectrum, defined for this product as ranging from 0.4 to 0.7 
+The variable we use in ERA5 is "\emph{UV visible albedo for diffuse radiation}", 
+which is the fraction of diffuse solar (shortwave) radiation with wavelengths between 
+0.3 and 0.7 \selectlanguage{greek}µ\selectlanguage{english}m reflected by snow-free 
+land surfaces. Like LAI, the snow-free albedo in ERA5 is not dynamic, but consists instead of a static seasonal climatology based on satellite observations. We can note, however, that the changes in albedo due to snow are “prognostic”, i.e. it changes along with snow cover as modelled in the re-analysis system (i.e. in-sync with dynamic weather).  
+From the satellite-based perspective, we use the 
+standard MODIS daily albedo product, MCD43C3 V006~\citep{Schaaf_2015}. From this
+dataset, we use the broadband white-sky estimations for the visible part of the spectrum, 
+defined for this product as ranging from 0.4 to 0.7 
 \selectlanguage{greek}µ\selectlanguage{english}m. 
 This means some slight discrepancy with ERA5 might occur for
 ultraviolet light over the 0.3 to 0.4 \selectlanguage{greek}µ\selectlanguage{english}m range, 
-but 
-this is expected to be very marginal due to the low contribution of UV light to ecosystem
-scale albedo. There is a second discrepancy with ERA5 in that this MODIS albedo product is not 
-snow-free, 
-but this should not be a problem as albedo is only used here in the context of 
-studying 
-summer heatwaves were only minimal snow cover is expected over the mountain ranges.
+but this is expected to be very marginal due to the low contribution of UV light to ecosystem
+scale albedo. There is a second discrepancy with ERA5 in that this MODIS albedo product is not snow-free, but this should not be a problem as albedo is only used here in the context of 
+studying summer heatwaves were only minimal snow cover is expected over the mountain ranges.
 
 
 \subsection{Land evaporation}
-
 
 The second associated variable is land evaporation. This is the amount
 of water that is evaporated from the land surface, including the
@@ -645,24 +623,31 @@ reference GEOV2-AVHRR LAI during winter, and this corresponds to an
 overestimation of LST by ERA5L in the northern latitudes.~ This
 relationship between the bias in LST and the bias in LAI is consistent
 for such energy limited situation where biophysical effects of
-vegetation on climate are dominated by radiative effects. In fact, the
+vegetation on climate are dominated by radiative effects. As the
 modelling framework assumes there is an excess of leaves covering the
-background, the former being generally darker than the latter
-(especially when the background is covered with snow) resulting in more
+background, and that this background is very likely covered by snow which is 
+brighter than the simulated leaves, this may explain the higher
 heat accumulation than what would be observed in a situation with fewer
 leaves. Since the winter evapotranspiration is strongly limited by the
 atmospheric evaporative demand at such high latitudes,~{there is no
 compensation of the enhanced radiative warming from evaporative
-cooling~\citep{bright2017local}. On the other hand, there is a considerable
-underestimation of the LST for many drier parts of the world where
-winter evapotranspiration is not energy-limited. This pattern can be
-explained by the additional evaporative cooling generated by the excess
-LAI in these climate conditions.~The situation is summertime is more
-complex, as LAI can either~be overestimated or underestimated~ depending
-on the geographical location. The biases in LST generally consist of an
-underestimation in ERA5L with respect to the satellite reference, which
-is particularly strong in deserts and drylands. There is a notable
-exception in Central and Western Africa where the LST is rather
+cooling~\citep{bright2017local}. However, as mentioned previously 
+care may be warranted when analysing the situation in winter in boreal areas. 
+The pragmatic approach we have employed to match 
+clear-sky LST days in the satellite record with those of the reanalysis 
+(i.e. taking the warmest days) does not ensure we are strictly comparing the 
+same days during wintertime, as winter days with snow and clear-sky conditions 
+could be colder than overcast days because of a stronger radiative cooling. 
+Another point regarding winter is that for the many drier parts of the world where
+winter evapotranspiration is not energy-limited, there is a considerable
+underestimation of the LST. This pattern can be explained by the additional 
+evaporative cooling generated by the excess LAI in such climate conditions.
+
+The situation in summertime is more complex, as LAI can either~be overestimated 
+or underestimated~ depending on the geographical location. The biases in LST 
+generally consist of an underestimation in ERA5L with respect to the satellite 
+reference, which is particularly strong in deserts and drylands. There is a 
+notable exception in Central and Western Africa where the LST is rather
 overestimated in ERA5L. The interpretation of how both LAI and LST
 biases are related is not straightforward due to the dynamic nature of
 this relationship along the growing season and between climate regions.~
@@ -691,12 +676,11 @@ seasonal patterns as shown in Fig~{\ref{842529}}. These
 plots summarise the bias for all areas under a specific climatic regime
 defined by a range in a yearly average of soil moisture and 2m air
 temperature. Fig~{\ref{842529}}a represents a region in
-a tropical semi-humid climate,~ while
-Fig~{\ref{842529}}b is a colder and more humid climate.
-In both plots, a typical hysteretic pattern emerges, indicating how the
-relationship between the biases is depending on the background climate
-and changes during the course of the year. For the tropical region
-(Fig~{\ref{842529}}a), the relationship is consistent
+a tropical semi-humid climate,~ while Fig~{\ref{842529}}b is a colder and 
+more humid climate. In both plots, a typical hysteretic pattern emerges, 
+indicating how the relationship between the biases is depending on the 
+background climate and changes during the course of the year. For the 
+tropical region (Fig~{\ref{842529}}a), the relationship is consistent
 with a land biophysical signal dominated by evaporative cooling: an
 overestimation in LAI is associated with an underestimation in LST,
 which is more pronounced in the months of January to May, while during
@@ -706,12 +690,15 @@ growing season follows a stronger hysteretic pattern that even leads to
 an underestimation of LAI by ERA5L (as had been observed in
 Fig.~{\ref{220254}}), but there is a stark difference
 in pattern for the wintertime where a strong change in LST bias occurs
-independently of the bias in LAI. This pattern is consistent with the
+independently of the bias in LAI. This pattern can be consistent with the
 explanation provided before in which a winter overestimation of LAI by
 ERA5L in cold regions could lead to radiative warming due to the darker
-surface of dense vegetation, which is not compensated~by~any additional
+surface of dense vegetation, which is not compensated by any additional
 evaporative cooling due to the energy limitation of evapotranspiration
-in winter conditions.~
+in winter conditions. However, it may also be affected by the potential 
+wintertime mismatch of the 5 warmest days between ERA5L and the satellite 
+data mentioned before.
+
 
 \par\null\selectlanguage{english}
 \begin{figure}[H]
@@ -758,7 +745,8 @@ difference between cold and dry regions, where the magnitude of the
 seasonal variation in LST bias dominates, and warm and humid regions,
 where this seasonal variation of the bias is stronger for LAI. 
 
-In order to quantify these two gradients of hyteretic patterns, we propose two indices that respectively generalise these patterns of hysteretic intensity and bias
+In order to quantify these two gradients of hyteretic patterns, we propose 
+two indices that respectively generalise these patterns of hysteretic intensity and bias
 dominance. {{Hysteretic intensity (}}\emph{{HI}}{)} is simply summarised
 by the total area (\emph{A}) formed by the hysteretic loop in a given
 climate zone (\emph{i})\emph{~}divided by the area\emph{~}of the largest
@@ -767,17 +755,16 @@ loop encountered among all climate spaces:
 \(HI\ =\ \frac{A_{i\ }}{\max\left(A\right)}\)
 
 The area is calculated based on the smoothed seasonal cycles, which
-themselves were fitted using {3rd order harmonics fits applied
-separetely to both variables as a function of time}.~ The area A is
+themselves were fitted using 3rd order harmonics fits applied
+separately to both variables as a function of time. The area A is
 calculated for each climate zone considering all intersecting loops as
 generating positive areas, which would not be the standard procedure
 from a topological perspective (as intersecting loops would generate
 areas with opposite signs).
 
-The second gradient relates to
-describing which of the two biases (LAI or LST) dominates in terms of
-seasonal amplitude. The index to describe this behaviour follows the
-logic of a normalised difference index based on the standardised ranges
+The second gradient relates to describing which of the two biases (LAI or LST) 
+dominates in terms of seasonal amplitude. The index to describe this behaviour 
+follows the logic of a normalised difference index based on the standardised ranges
 of both LAI and LST axes in the smoothed hysteresis curves. The
 resulting bias dominance (\emph{BD}) index is expressed as follows:
 
@@ -786,8 +773,7 @@ resulting bias dominance (\emph{BD}) index is expressed as follows:
 +\ 
 \frac{range\left(y\right)}{\sigma_y}\right)}\)
 
-where~\emph{x~}stands 
-for the bias in LAI and \emph{y} is the bias in
+where~\emph{x~}stands for the bias in LAI and \emph{y} is the bias in
 LST.
 
 {These two indices can be mapped in climate space, but then also back
@@ -851,9 +837,12 @@ overestimation of LAI in the modelling framework coincides with an
 underestimation of the LST, but further indicates how this effect
 changes on a year-to-year basis. In other words, the years when the
 seasonally prescribed LAI of ERA5L is further from the reality, e.g. in
-years where the LAI peak is lower or shifted due to particular~growing
-conditions of that~year, the underestimation of LST can be expected to
-be more severe.~
+years where the LAI peak is lower or shifted due to particular growing
+conditions of that year, the underestimation of LST can be expected to
+be more severe. Care is warranted while interpreting these results, as 
+LAI anomalies are also reflected on other aspects of the land surface 
+(e.g. drier soils, changes in albedo, changes in surface roughness), but 
+it remains that ERA5L seems to show larger errors during extremes.
 
 \par\null\selectlanguage{english}
 \begin{figure}[H]
@@ -989,9 +978,8 @@ the GLEAM product, which is here considered as the reference
 observations. GLEAM does not directly measure evaporation, but rather
 infers it from the data based on several modelling assumptions. Compared
 to flux tower estimations, GLEAM was also shown to underestimate
-transpiration more than ERA5-Land~\citep{Munoz_Sabater_2021}. Therefore, the discrepancy in 
-HW18a 
-may require more investigation based on other
+transpiration more than ERA5-Land~\citep{Munoz_Sabater_2021}. Therefore, 
+the discrepancy in HW18a may require more investigation based on other
 reference sources.
 
 \par\null\selectlanguage{english}
@@ -1012,10 +1000,6 @@ represents the direction of the bias shift.
 
 
 
-
-
-
-
 \section{Discussion}
 
 The present study proposes a novel diagnostic for land surface models
@@ -1024,13 +1008,15 @@ evaluation of ERA5L, the analysis reveals the magnitude of the LST bias
 and its strong but heterogenous co-variation with spatio-temporal biases
 in LAI. It further demonstrates that these have even stronger
 consequences for heatwaves, when the bias in LST caused by the
-mis-representation of LAI is often exacerbated. The main outcome
-therefore is a general warning for users of both ERA5 and ERA5-Land that
-the magnitude of heatwaves in particular may be underestimated in these
-datasets. A secondary caveat is that these datasets should not be used
-to assess the sensitivity of LAI to temperature, nor to other variables
-related to the surface energy balance, as there is a clear disconnection
-between both.
+mis-representation of LAI is often exacerbated. The main outcome of this 
+study is therefore a general warning for users of both ERA5 and ERA5-Land 
+about the possible shortcomings these datasets may have under heatwave 
+conditions. Furthermore, if heatwaves were to be defined based on the skin 
+temperature using these datasets, their magnitude would be seriously 
+underestimated. A secondary caveat is that these datasets should not be used
+to assess the sensitivity of LAI to skin temperature (i.e. LST), nor 
+to other variables related to the surface energy balance, as there is a 
+clear disconnection between both.
 
 LST is particularly suited to assess how models represent
 land-atmosphere interaction as it summarises an equilibrium point of the
@@ -1052,23 +1038,23 @@ incorporate changes in land cover, there are further layers of subtlety
 to be evaluated. Indeed, the distinction between different classes of
 low and high vegetation~can have the same LAI but with different
 clumping patterns, resulting in different roughness lengths, which
-themselves could have different effects on LST.
+themselves could have different effects on LST. 
 
 Several discussion points can be raised with regards to extending or
 improving the present framework for model evaluation. A first aspect
-relates to the clear-sky bias in the satellite remote sensing data. Our
-approach to focus on the subset of days within the month that have the
-highest values in ERA5L should generally be robust to ensure
+relates to the clear-sky bias in the satellite remote sensing data. As 
+mentioned before, our approach to focus on the subset of days within the 
+month that have the highest values in ERA5L should generally be robust to ensure
 comparability with the highest values of LST measured by the satellites,
 especially during the warmer season when clear skies are directly
-associated with higher temperatures. This max LST metric may be less
+associated with higher temperatures. This maximum LST metric may be less
 effective or appropriate in wintertime, as this assumption may not
 always hold: clear-sky days may sometimes be colder than overcast days.
 Because the measurements are done in the early afternoon when radiation
 load is high, it is still reasonable to believe that radiation will be
 the main driver determining skin temperature (rather than air
 temperature) in many cases, but arguably the assumption may not be as
-strong in winter than in summer. A possible improvement could be to work
+strong in winter as in summer. A possible improvement could be to work
 with daily values and select explicitly days in ERA5L that have
 clear-sky conditions. Working at a daily scale would have the added
 benefit of being able to isolate the effects of heatwaves more precisely
@@ -1083,14 +1069,17 @@ clear-sky conditions, which could arguably be affected by the
 misrepresentation of LAI, introducing some kind of circularity.
 
 Another point where the current model diagnostic could be improved
-relates to the associated variables used to~help interpret the
+relates to the associated variables used to help interpret the
 mechanistic interpretation of the discrepancies between LAI and LST. In
 the present work, we limited ourselves to albedo from MODIS and
 evaporation from GLEAM, and only for the heat wave analysis in the
 summer. First, their use as explanatory variables could be extended
 beyond the summer period. This was currently not done because the values
 provided in ERA5L only represent snow-free albedo, which do not reflect
-the same reality as the MODIS albedo covering all conditions. Second,
+the same reality as the MODIS albedo covering all conditions. A possible 
+improvement could be to compute a MODIS comparable albedo from other 
+variables that are available within ERA5L (i.e. from the surface net solar 
+radiation and the downwards surface solar radiation). Second,
 the GLEAM v3.3b used here relies on vegetation optical depth (VOD) to
 characterise vegetation growth, a variable that is sensitive to humidity
 conditions and which may thus not always be comparable with the LAI
@@ -1105,17 +1094,40 @@ using it because the corresponding C3S project had many spatial gaps
 (especially for year 2003) that complicated their interpretation when
 comparing it to the other variables.
 
+The use of LAI in both ERA5 and ERA5-Land deserves a little 
+more discussion. Currently, LAI is not directly used in the land surface 
+model, but it is rather used as a predictor for certain parameters in 
+some parametrisations, these latter replacing some processes that are 
+too small or complex to be physically represented and explicitly resolved. 
+In the case of processes relevant towards representing LST for instance, the 
+canopy resistance is parametrised based on LAI within ERA5 and ERA5-Land. 
+The present study can advance our knowledge of the modelling system by 
+clearly showing the relation between vegetation status 
+(via the LAI) and the LST biases, suggesting it can be improved both by revising 
+the actual LAI data that is used, but also how the model uses this data in 
+the different parameterisations. Furthermore, the LAI data could also be 
+used dynamically beyond static parameterisations by incorporating it in 
+under a data assimilation scheme. There are pragmatic reasons why LAI is 
+currently not being used dynamically within the ERA5 modelling framework. Some 
+of ERA5's main strengths are its consistency and temporal depth, with an archive 
+going back to the 1940s. To be properly assimilated, LAI should be available 
+throughout the entire period, while the satellite era does not reach that far.
+
 Despite the strong discrepancies in terms of LAI and LST biases that we
 present in this study, it is important to point out that~ERA5-Land and
 ERA5 remain invaluable assets for the field. They remain for many the
 best tools to describe many meteorological state variables in a
-consistent way at hourly scale since the 1950s. We certainly continue to
+consistent way at hourly scale since the 1940s. We certainly continue to
 encourage their use. However, we should stress that the biases we expose
 in our results indicate that some diagnostics based on the relationships
 between variables in ERA5-Land and ERA5, such as assessing the
 sensitivity of LAI to temperature, should probably not be done as it
-could lead to wrong assessments.
-
+could lead to wrong assessments. Finally, another point to raise is that 
+the LST biases in ERA5L are not completely explained by LAI. Other factors 
+can also come into play, such as the absence of a proper representation of 
+irrigation, misrepresentation of snow, altitude, slope effects in complex 
+terrain and solar radiation biases in mountainous area. Improvements in 
+these fields could also translate in a reduction of biases and should be pursued.
 
 \conclusions  %% \conclusions[modified heading if necessary]
 
@@ -1166,10 +1178,8 @@ balance.
 
 
 \codedataavailability{The code necessary to reproduce this analysis is available in a Zenodo 
-repository: 
-https://doi.org/10.5281/zenodo.7275088. The input data for this work is available in 
-another 
-dedicated Zenodo repository: https://doi.org/10.5281/zenodo.6976942} %% use this section 
+repository: https://doi.org/10.5281/zenodo.7275088. The input data for this work is available in 
+another dedicated Zenodo repository: https://doi.org/10.5281/zenodo.6976942} %% use this section 
 %% when 
 %% having data sets and software code available
 
