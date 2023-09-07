@@ -92,8 +92,9 @@ g_all_smooth <- ggplot(df_s_all) +
 
 
 # plotting details, in case not inherited... 
-if(exists('fig.path') != T){ fig.path <- 'paper/figures/'}
-if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
+if(exists('fig.path') != T){ fig.path <- 'figs/'}
+# if(exists('fig.fmt') != T){ fig.fmt <- 'png'}
+fig.fmt <- "pdf"
 
 dir.create(path = fig.path, recursive = T, showWarnings = F)
 

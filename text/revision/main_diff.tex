@@ -1,7 +1,7 @@
 %% Copernicus Publications Manuscript Preparation Template for LaTeX Submissions
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL text/submission/main.tex   Mon Aug  7 09:18:32 2023
-%DIF ADD text/revision/main.tex     Fri Aug 11 15:37:47 2023
+%DIF ADD text/revision/main.tex     Fri Aug 18 16:35:21 2023
 %% ---------------------------------
 %% This template should be used for copernicus.cls
 %DIF 4c4-5
@@ -141,7 +141,8 @@
 \author[1,2]{Gregory Duveiller}%
 \author[3]{Mark Pickering}%
 \author[4]{Joaquin Muñoz-Sabater}%
-\author[2]{Luca Caporaso}%
+\DIFdelbegin %DIFDELCMD < \author[2]{%%%
+\DIFdelend \DIFaddbegin \author[2,5]{\DIFaddend Luca Caporaso}%
 \author[4]{Souhail Boussetta}%
 \author[4]{Gianpaolo Balsamo}%
 \author[2]{Alessandro Cescatti}%
@@ -150,6 +151,8 @@
 \affil[2]{European Commission Joint Research Centre, Ispra, Italy}
 \affil[3]{JRC consultant, Ispra, Italy}
 \affil[4]{European Centre for Medium Range Weather Forecasts, Reading, UK}
+\DIFaddbegin \affil[5]{National Research Council of Italy, Institute of BioEconomy, Rome, Italy}
+\DIFaddend 
 
 
 %DIF < % The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should be inserted.
